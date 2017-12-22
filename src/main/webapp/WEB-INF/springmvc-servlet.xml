@@ -24,15 +24,15 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	</mvc:annotation-driven> -->
 	
 	<!-- 设置主页面：访问/自动跳转到home视图 -->
-	<!-- <mvc:view-controller path="/" view-name="index"/> -->
+	<mvc:view-controller path="/" view-name="index"/>
 	<!-- springmvc 页面重定向设置： -->
-	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
 	<mvc:resources  mapping="/classic/**" location="/classic/" />
 	<mvc:resources  mapping="/resources/**" location="/resources/" />
-	<mvc:resources  mapping="/classic.json" location="/" /> -->
+	<mvc:resources  mapping="/classic.json" location="/" />
 	
 </beans>
