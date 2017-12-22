@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.hrsys.common.entity.BaseEntity;
@@ -24,84 +27,87 @@ public class Wage extends BaseEntity implements Serializable {
 	private String awardMoney;//奖金
 	private String finedMoney;//罚金
 	private String overtimePay;//加班费
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getWageId() {
 		return wageId;
-	}
-	public void setWageId(int wageId) {
-		this.wageId = wageId;
 	}
 	public String getPersonnelId() {
 		return personnelId;
 	}
-	public void setPersonnelId(String personnelId) {
-		this.personnelId = personnelId;
-	}
 	public String getPersonnelName() {
 		return personnelName;
-	}
-	public void setPersonnelName(String personnelName) {
-		this.personnelName = personnelName;
 	}
 	public String getDepartment() {
 		return department;
 	}
-	public void setDepartment(String department) {
-		this.department = department;
-	}
 	public String getPosition() {
 		return position;
-	}
-	public void setPosition(String position) {
-		this.position = position;
 	}
 	public String getBasicWage() {
 		return basicWage;
 	}
-	public void setBasicWage(String basicWage) {
-		this.basicWage = basicWage;
-	}
 	public String getFinalWage() {
 		return finalWage;
-	}
-	public void setFinalWage(String finalWage) {
-		this.finalWage = finalWage;
 	}
 	public Date getWageTime() {
 		return wageTime;
 	}
-	public void setWageTime(Date wageTime) {
-		this.wageTime = wageTime;
-	}
 	public String getInsurance() {
 		return insurance;
-	}
-	public void setInsurance(String insurance) {
-		this.insurance = insurance;
 	}
 	public String getSubsidise() {
 		return subsidise;
 	}
-	public void setSubsidise(String subsidise) {
-		this.subsidise = subsidise;
-	}
 	public String getAwardMoney() {
 		return awardMoney;
-	}
-	public void setAwardMoney(String awardMoney) {
-		this.awardMoney = awardMoney;
 	}
 	public String getFinedMoney() {
 		return finedMoney;
 	}
-	public void setFinedMoney(String finedMoney) {
-		this.finedMoney = finedMoney;
-	}
 	public String getOvertimePay() {
 		return overtimePay;
+	}
+	public void setWageId(int wageId) {
+		this.wageId = wageId;
+	}
+	public void setPersonnelId(String personnelId) {
+		this.personnelId = personnelId;
+	}
+	public void setPersonnelName(String personnelName) {
+		this.personnelName = personnelName;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public void setBasicWage(String basicWage) {
+		this.basicWage = basicWage;
+	}
+	public void setFinalWage(String finalWage) {
+		this.finalWage = finalWage;
+	}
+	public void setWageTime(Date wageTime) {
+		this.wageTime = wageTime;
+	}
+	public void setInsurance(String insurance) {
+		this.insurance = insurance;
+	}
+	public void setSubsidise(String subsidise) {
+		this.subsidise = subsidise;
+	}
+	public void setAwardMoney(String awardMoney) {
+		this.awardMoney = awardMoney;
+	}
+	public void setFinedMoney(String finedMoney) {
+		this.finedMoney = finedMoney;
 	}
 	public void setOvertimePay(String overtimePay) {
 		this.overtimePay = overtimePay;
 	}
+
 	
 	
 }
