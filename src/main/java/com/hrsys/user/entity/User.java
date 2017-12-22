@@ -11,9 +11,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name="t_user")
 public class User implements Serializable {
-	private String userId;
+	private Long userId;
 	private String userNo;//职员编号
 	private String userName;//用户姓名
+	private String password;//用户密码
 	private String userNickName;//用户昵称
 	private String sex;   //性别
 	private Date birthday;//出生日期
@@ -33,7 +34,7 @@ public class User implements Serializable {
 	private String remark;//备注
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 	public String getUserNo() {
@@ -93,7 +94,7 @@ public class User implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public void setUserNo(String userNo) {
@@ -152,6 +153,21 @@ public class User implements Serializable {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userNo=" + userNo + ", userName=" + userName + ", password=" + password
+				+ ", userNickName=" + userNickName + ", sex=" + sex + ", birthday=" + birthday + ", age=" + age
+				+ ", nativePlace=" + nativePlace + ", nation=" + nation + ", culture=" + culture + ", college="
+				+ college + ", body=" + body + ", marriage=" + marriage + ", idCord=" + idCord + ", phone=" + phone
+				+ ", familyPhone=" + familyPhone + ", email=" + email + ", userAccount=" + userAccount + ", deptId="
+				+ deptId + ", remark=" + remark + "]";
 	}
 	
 	

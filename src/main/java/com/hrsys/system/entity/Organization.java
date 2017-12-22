@@ -13,7 +13,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Entity
 @Table(name="t_organization")
 public class Organization extends BaseEntity implements Serializable {
-	private String organizationId;
+	private Long organizationId;
 	private Integer deptId;//部门编号
 	private String deptName;//部门名字
 	private Integer deptPhone;//部门联系电话
@@ -24,7 +24,7 @@ public class Organization extends BaseEntity implements Serializable {
 	private String remark;//备注
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public String getOrganizationId() {
+	public Long getOrganizationId() {
 		return organizationId;
 	}
 	public Integer getDeptId() {
@@ -52,7 +52,7 @@ public class Organization extends BaseEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-	public void setOrganizationId(String organizationId) {
+	public void setOrganizationId(Long organizationId) {
 		this.organizationId = organizationId;
 	}
 	public void setDeptId(Integer deptId) {

@@ -14,7 +14,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Entity
 @Table(name="t_module")
 public class Module extends BaseEntity implements Serializable {
-	private String moduleId;
+	private Long moduleId;
 	private String parentId;
 	private String parentName;//父节点名字
 	private String moduleName;//模块名
@@ -28,7 +28,7 @@ public class Module extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public String getModuleId() {
+	public Long getModuleId() {
 		return moduleId;
 	}
 	public String getParentId() {
@@ -61,7 +61,7 @@ public class Module extends BaseEntity implements Serializable {
 	public Integer getOrderNo() {
 		return orderNo;
 	}
-	public void setModuleId(String moduleId) {
+	public void setModuleId(Long moduleId) {
 		this.moduleId = moduleId;
 	}
 	public void setParentId(String parentId) {
