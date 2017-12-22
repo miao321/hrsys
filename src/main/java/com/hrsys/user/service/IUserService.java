@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.user.entity.User;
 
 public interface IUserService {
@@ -14,6 +15,10 @@ public interface IUserService {
 	public void delete(List<Long> ids);
 	public User findOne(Long id);
 	public List<User> findAll();
+	//登录注销、修改密码
+	public ExtAjaxResponse login(String userName,String password);
+	public ExtAjaxResponse changePassword(Long id,String password,String comfirPassword);
+	public ExtAjaxResponse logout();
 	
 	//动态条件查询
 	public Page<User> findAll(Specification<User> spec,Pageable pageable);

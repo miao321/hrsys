@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="t_user")
 public class User implements Serializable {
-	private Long userId;
+	private Long id;
 	private String userNo;//职员编号
 	private String userName;//用户姓名
 	private String password;//用户密码
@@ -34,12 +34,12 @@ public class User implements Serializable {
 	private String remark;//备注
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Long getUserId() {
-		return userId;
+	public Long getId() {
+		return id;
 	}
 	public String getUserNo() {
 		return userNo;
-	}
+	}	
 	public String getUserName() {
 		return userName;
 	}
@@ -94,8 +94,9 @@ public class User implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
@@ -162,7 +163,7 @@ public class User implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userNo=" + userNo + ", userName=" + userName + ", password=" + password
+		return "User [id=" + id + ", userNo=" + userNo + ", userName=" + userName + ", password=" + password
 				+ ", userNickName=" + userNickName + ", sex=" + sex + ", birthday=" + birthday + ", age=" + age
 				+ ", nativePlace=" + nativePlace + ", nation=" + nation + ", culture=" + culture + ", college="
 				+ college + ", body=" + body + ", marriage=" + marriage + ", idCord=" + idCord + ", phone=" + phone

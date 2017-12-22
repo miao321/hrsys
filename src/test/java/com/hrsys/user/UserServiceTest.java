@@ -22,7 +22,7 @@ import com.hrsys.user.service.IUserService;
 public class UserServiceTest {
 	@Autowired
 	private IUserService userService;
-	//@Test
+	@Test
 	@Rollback(value = false)
 	public void save() {
 		for(int i=0;i<100;i++) {
