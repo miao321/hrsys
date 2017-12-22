@@ -62,7 +62,7 @@ public class UserService implements IUserService {
 	
 	public ExtAjaxResponse changePassword(Long id, String password, String comfirPassword) {
 		// TODO Auto-generated method stub
-		return false;
+		return;
 	}
 	
 	public ExtAjaxResponse logout() {
