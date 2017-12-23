@@ -46,27 +46,4 @@ public class UserService implements IUserService {
 	public Page<User> findAll(Specification<User> spec, Pageable pageable) {
 		return userRepository.findAll(spec, pageable);
 	}
-	@Override
-	public ExtAjaxResponse login(String userName, String password) {
-		if (userName == null || password == null || userName.equals("") || password.equals("")) {
-			return new ExtAjaxResponse(false, "用户名或者密码不能为空");
-		}
-		List<User> users = (List<User>) userRepository.findAll();
-		for(User user : users) {
-			if (user.getUserName() == null) {
-				return new ExtAjaxResponse(false, "没有该用户");
-			}
-		}
-		return null;
-	}
-	
-	public ExtAjaxResponse changePassword(Long id, String password, String comfirPassword) {
-		// TODO Auto-generated method stub
-		return;
-	}
-	
-	public ExtAjaxResponse logout() {
-		// TODO Auto-generated method stub
-		return false;
-	}	
 }
