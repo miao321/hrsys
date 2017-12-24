@@ -6,9 +6,9 @@
 		<meta charset="UTF-8"/>
 		<title>登录</title>
 		<!--CSS -->
-		<link rel="stylesheet" type="text/css" href="theme-neptune\resources\theme-neptune-all_1.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="theme-neptune\resources\theme-neptune-all_1.css" />
 		<link rel="stylesheet" type="text/css" href="theme-neptune\resources\theme-neptune-all_2.css" />
-		<link rel="stylesheet" type="text/css" href="css/Admin-all_1.css"/>
+		 --><link rel="stylesheet" type="text/css" href="css/Admin-all_1.css"/>
 		<link rel="stylesheet" type="text/css" href="css/Admin-all_2.css"/>
 		<link rel="stylesheet" type="text/css" href="css/Admin-all_3.css"/>
 		<link rel="stylesheet" type="text/css" href="css/Admin-all.css"/>
@@ -40,6 +40,7 @@
 					        name: 'user',
 					        emptyText: '请输入用户名'
 					    }, {
+					    	
 					        allowBlank: false,
 					        fieldLabel: '密  码:',
 					        name: 'password',

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.hrsys.system.entity.Role;
 import com.hrsys.user.entity.User;
 @Repository
-public interface RoleRepository extends PagingAndSortingRepository<Role, Long>,JpaSpecificationExecutor<User> {
+public interface RoleRepository extends PagingAndSortingRepository<Role, Long>,JpaSpecificationExecutor<Role> {
 
 }

@@ -1,11 +1,13 @@
 package com.hrsys.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,8 +20,9 @@ import com.hrsys.user.service.IUserService;
 		"classpath*:applicationContext-core.xml"
 		,"classpath*:applicationContext-jpa.xml"
 })
-@Transactional
+//@Transactional
 public class UserServiceTest {
+	
 	@Autowired
 	private IUserService userService;
 	@Test
@@ -29,6 +32,7 @@ public class UserServiceTest {
 			User user = new User();
 			user.setUserName("张三");
 			user.setPassword("123");
+			user.setBirthday(new Date());
 			userService.saveOrUpdate(user);
 			System.out.println(user);
 		}
@@ -41,16 +45,14 @@ public class UserServiceTest {
 		User user = userService.findOne(4L);
 		userService.delete(user);
 	}
-	
-	/*@Test
+	/*
+	@Test
 	@Rollback(value=false)
 	public void deletes() {
-		User user1 = userService.findOne(5L);
-		User user2 = userService.findOne(6L);
-		List<User> users = new ArrayList<>();
-		users.add(user1);
-		users.add(user2);
-		userService.delete(users);
+		for(int i=1;i<=100;i++) {
+			userService.findOne()
+		}
+		
 	}*/
 	//@Test
 	@Rollback(value=false)

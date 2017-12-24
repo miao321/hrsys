@@ -1,4 +1,4 @@
-package com.hrsys.user.service;
+package com.hrsys.user.service.impl;
 
 import java.util.List;
 
@@ -14,9 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.user.dao.UserRepository;
 import com.hrsys.user.entity.User;
+import com.hrsys.user.service.IUserService;
 @Service
-public class UserService implements IUserService {
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+public class UserServiceImpl implements IUserService {
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Autowired
 	private UserRepository userRepository;
 	@Override

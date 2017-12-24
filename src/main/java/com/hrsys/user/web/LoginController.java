@@ -1,4 +1,4 @@
-package com.hrsys.user.web;
+/*package com.hrsys.user.web;
 
 
 
@@ -27,10 +27,10 @@ public class LoginController {
 	
 	@Autowired
 	private ILoginService loginService;
-	/*@Autowired
+	@Autowired
 	HttpServletRequest request;
 	@Autowired
-	HttpServletResponse response;*/
+	HttpServletResponse response;
 	//登录
 	@RequestMapping("/login")
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password) throws Exception, IOException {
@@ -76,3 +76,4 @@ public class LoginController {
 		}
 	}
 }
+*/
