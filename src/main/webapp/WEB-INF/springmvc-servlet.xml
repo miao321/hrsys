@@ -34,8 +34,8 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<mvc:resources  mapping="/classic/**" location="/classic/" />
 	<mvc:resources  mapping="/resources/**" location="/resources/" />
 	<mvc:resources  mapping="/classic.json" location="/" />
-	<mvc:resources location="/WEB-INF/css" mapping="/css/**"/>
+	<!-- <mvc:resources location="/WEB-INF/css" mapping="/css/**"/>
 	<mvc:resources location="/WEB-INF/js" mapping="/js/**"/>
 	<mvc:resources location="/WEB-INF/images" mapping="/images/**"/>
-	
+	 -->
 </beans>
