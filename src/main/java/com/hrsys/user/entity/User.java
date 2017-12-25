@@ -8,14 +8,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name="t_user")
 public class User implements Serializable {
-	private String userId;
+	private Long id;
 	private String userNo;//职员编号
 	private String userName;//用户姓名
+	private String password;//用户密码
 	private String userNickName;//用户昵称
 	private String sex;   //性别
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Date birthday;//出生日期
 	private Integer age;//年龄
 	private String nativePlace;//籍贯
@@ -33,12 +39,12 @@ public class User implements Serializable {
 	private String remark;//备注
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public String getUserId() {
-		return userId;
+	public Long getId() {
+		return id;
 	}
 	public String getUserNo() {
 		return userNo;
-	}
+	}	
 	public String getUserName() {
 		return userName;
 	}
@@ -48,6 +54,7 @@ public class User implements Serializable {
 	public String getSex() {
 		return sex;
 	}
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -93,8 +100,9 @@ public class User implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
@@ -152,6 +160,21 @@ public class User implements Serializable {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userNo=" + userNo + ", userName=" + userName + ", password=" + password
+				+ ", userNickName=" + userNickName + ", sex=" + sex + ", birthday=" + birthday + ", age=" + age
+				+ ", nativePlace=" + nativePlace + ", nation=" + nation + ", culture=" + culture + ", college="
+				+ college + ", body=" + body + ", marriage=" + marriage + ", idCord=" + idCord + ", phone=" + phone
+				+ ", familyPhone=" + familyPhone + ", email=" + email + ", userAccount=" + userAccount + ", deptId="
+				+ deptId + ", remark=" + remark + "]";
 	}
 	
 	

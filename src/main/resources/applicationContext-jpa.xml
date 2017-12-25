@@ -34,7 +34,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 	<!--3.配置JPA entityManagerFactory-->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan" value="com.ssh.demo.*.entity" />
+		<property name="packagesToScan" value="com.hrsys.*.entity" />
 		<!--用于指定持久化实方言
 		<property name="jpaDialect">    
 		    <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
@@ -87,5 +87,5 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 		entity-manager-factory-ref:默认获取id=entityManagerFactory Bean
 		transaction-manager-ref:默认获取id=transactionManager Bean
 	-->
-	<jpa:repositories base-package="com.ssh.demo.*.dao" />
+	<jpa:repositories base-package="com.hrsys.*.dao" />
 </beans>

@@ -13,18 +13,18 @@ http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/mvc
 http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<!-- <context:component-scan base-package="com.ssh.demo.*.web"/>
-	<context:component-scan base-package="com.ssh.demo.utils"/>
+	<context:component-scan base-package="com.hrsys.*.web"/>
+	<context:component-scan base-package="com.hrsys.common"/>
 	<mvc:annotation-driven enable-matrix-variables="true">
 		<mvc:message-converters register-defaults="true">
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<constructor-arg value="UTF-8" />
 			</bean>
 		</mvc:message-converters>
-	</mvc:annotation-driven> -->
+	</mvc:annotation-driven>
 	
 	<!-- 设置主页面：访问/自动跳转到home视图 -->
-	<mvc:view-controller path="/" view-name="index"/>
+	<mvc:view-controller path="/" view-name="redirect:/login.jsp"/>
 	<!-- springmvc 页面重定向设置： -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
@@ -34,5 +34,8 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<mvc:resources  mapping="/classic/**" location="/classic/" />
 	<mvc:resources  mapping="/resources/**" location="/resources/" />
 	<mvc:resources  mapping="/classic.json" location="/" />
+	<mvc:resources location="/WEB-INF/css" mapping="/css/**"/>
+	<mvc:resources location="/WEB-INF/js" mapping="/js/**"/>
+	<mvc:resources location="/WEB-INF/images" mapping="/images/**"/>
 	
 </beans>

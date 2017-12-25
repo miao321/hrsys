@@ -13,18 +13,22 @@ import com.hrsys.common.entity.BaseEntity;
 @Entity
 @Table(name="t_role")
 public class Role extends BaseEntity implements Serializable {
-	private String roleId;
+	private Long roleId;
 	private String roleName;//角色名称
 	private String remark; //备注
 	private Integer orderNo;//排序号	
 	private String createModule;//创建模块	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public String getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 	public String getRoleName() {
 		return roleName;
+	}
+	
+	public String getCreateModule() {
+		return createModule;
 	}
 	public String getRemark() {
 		return remark;
@@ -32,7 +36,7 @@ public class Role extends BaseEntity implements Serializable {
 	public Integer getOrderNo() {
 		return orderNo;
 	}	
-	public void setRoleId(String roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 	public void setRoleName(String roleName) {
@@ -43,6 +47,9 @@ public class Role extends BaseEntity implements Serializable {
 	}
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
+	}
+	public void setCreateModule(String createModule) {
+		this.createModule = createModule;
 	}
 	
 }
