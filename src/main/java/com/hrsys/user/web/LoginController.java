@@ -27,30 +27,32 @@ import com.hrsys.user.service.impl.UserServiceImpl;
 
 @Controller
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);	
 	@Autowired
 	private ILoginService loginService;
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
+
+	/*@Autowired
 	HttpServletRequest request;
 	@Autowired
-	HttpServletResponse response;
+	HttpServletResponse response;*/
 	//登录
 	@RequestMapping("/login")
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password) throws Exception, IOException {
 		logger.debug("login request: {userName={}, password={}}", userName, password);
-		ExtAjaxResponse result = null;
+		//ExtAjaxResponse result = null;
 		try {
 			System.out.println(userName);
-			//User user = userRepository.findUser(userName);
-			//if (user!=null&&user.getPassword().equals(password)) {
+			User user = loginService.login(userName, password);
+			if (user.getUserName() == null) {
+				return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
+			}
+			else if (!password.equals(user.getPassword())) {
+				return new ExtAjaxResponse(false, "密码不正确！");
+			}
+			else{
 				loginService.login(userName, password);
 				return new ExtAjaxResponse(true, "登录成功2");
-			//}else {
-				//return new ExtAjaxResponse(true, "登录失败");
-			//}
+			}
 			
 		} catch (Exception e) {
 			logger.error("{}", e);
