@@ -1,16 +1,16 @@
-package com.hrsys.personnel.dao;
+package com.hrsys.attendance.dao;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hrsys.personnel.entity.Employ;
+import com.hrsys.attendance.entity.Leave;
 
 /**
- * 人事模块-职工类数据访问层
+ * 考勤模块-请假记录数据访问层
  * @author Lofu
  */
 @Repository
-public interface IEmployDao extends PagingAndSortingRepository<Employ,Integer>,JpaSpecificationExecutor<Employ> {
+public interface ILeaveDao extends PagingAndSortingRepository<Leave,Integer>,JpaSpecificationExecutor<Leave> {
 
 }
