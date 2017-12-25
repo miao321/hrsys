@@ -23,9 +23,9 @@ public class Pa extends BaseEntity implements Serializable {
 	private String pastytle;  //考评类型
 	private String pavalues;  //分值
 	private String paassessment;  //考评评价
-	private String evaluaterId;   //考评编号
-	private String evaluaterName;  //考评姓名
-	private String evaluaterPosition;//考评职位
+	private String evaluaterId;   //考评人编号
+	private String evaluaterName;  //考评人姓名
+	private String evaluaterPosition;//考评人职位
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

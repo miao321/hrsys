@@ -20,7 +20,7 @@ public class Wage extends BaseEntity implements Serializable {
 	private String department;//部门
 	private String position;//职位
 	private String basicWage;//基本工资
-	private String finalWage;//实发工资
+	private String finalWage;//最终工资
 	private Date wageTime;//工资时间
 	private String insurance;//保险
 	private String subsidise;//补贴
