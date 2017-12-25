@@ -1,5 +1,5 @@
 package com.hrsys.user.service;
-/*package com.hrsys.user.service;
+
 
 import org.hibernate.boot.model.source.spi.PluralAttributeElementSourceBasic;
 
@@ -13,4 +13,3 @@ public interface ILoginService {
 	public boolean isLogined();
 
 }
-*/

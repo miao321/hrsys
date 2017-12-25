@@ -1,4 +1,4 @@
-/*package com.hrsys.user.web;
+package com.hrsys.user.web;
 
 
 
@@ -19,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.user.dao.UserRepository;
+import com.hrsys.user.entity.User;
 import com.hrsys.user.service.ILoginService;
+import com.hrsys.user.service.IUserService;
+import com.hrsys.user.service.impl.UserServiceImpl;
 
 @Controller
 public class LoginController {
@@ -27,6 +31,8 @@ public class LoginController {
 	
 	@Autowired
 	private ILoginService loginService;
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	HttpServletRequest request;
 	@Autowired
@@ -37,11 +43,18 @@ public class LoginController {
 		logger.debug("login request: {userName={}, password={}}", userName, password);
 		ExtAjaxResponse result = null;
 		try {
-			result = loginService.login(userName, password);
-			return new ExtAjaxResponse(true, "登录成功");
+			System.out.println(userName);
+			//User user = userRepository.findUser(userName);
+			//if (user!=null&&user.getPassword().equals(password)) {
+				loginService.login(userName, password);
+				return new ExtAjaxResponse(true, "登录成功2");
+			//}else {
+				//return new ExtAjaxResponse(true, "登录失败");
+			//}
+			
 		} catch (Exception e) {
 			logger.error("{}", e);
-			return new ExtAjaxResponse(true, "登录失败");
+			return new ExtAjaxResponse(false, "登录失败");
 			//request.getRequestDispatcher("login").forward(request, response);		
 		}
 	}
@@ -76,4 +89,3 @@ public class LoginController {
 		}
 	}
 }
-*/

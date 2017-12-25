@@ -9,7 +9,7 @@
 
     <title>人力资源管理系统</title>
 	<script type="text/javascript">
-			var loginUser = '<%=session.getAttribute("userName")%>';
+			var loginUser = '<%=session.getAttribute("LOGIN_KEY")%>';
 	</script>
     <script type="text/javascript">
         var Ext = Ext || {}; // Ext namespace won't be defined yet...
