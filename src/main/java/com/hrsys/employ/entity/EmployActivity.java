@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrsys.common.entity.BaseEntity;
 
@@ -38,6 +40,7 @@ public class EmployActivity extends BaseEntity implements Serializable {
 	public String getEmployActivityName() {
 		return employActivityName;
 	}
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
 	public Date getEmployActivityDate() {
 		return employActivityDate;
