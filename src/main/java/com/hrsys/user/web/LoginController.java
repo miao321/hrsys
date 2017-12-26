@@ -1,4 +1,4 @@
-/*package com.hrsys.user.web;
+package com.hrsys.user.web;
 
 
 
@@ -19,29 +19,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.user.dao.UserRepository;
+import com.hrsys.user.entity.User;
 import com.hrsys.user.service.ILoginService;
+import com.hrsys.user.service.IUserService;
+import com.hrsys.user.service.impl.UserServiceImpl;
 
 @Controller
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);	
 	@Autowired
 	private ILoginService loginService;
-	@Autowired
+
+	/*@Autowired
 	HttpServletRequest request;
 	@Autowired
-	HttpServletResponse response;
+	HttpServletResponse response;*/
 	//登录
 	@RequestMapping("/login")
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password) throws Exception, IOException {
 		logger.debug("login request: {userName={}, password={}}", userName, password);
-		ExtAjaxResponse result = null;
+		//ExtAjaxResponse result = null;
 		try {
-			result = loginService.login(userName, password);
-			return new ExtAjaxResponse(true, "登录成功");
+			System.out.println(userName);
+			User user = loginService.login(userName, password);
+			if (user.getUserName() == null) {
+				return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
+			}
+			else if (!password.equals(user.getPassword())) {
+				return new ExtAjaxResponse(false, "密码不正确！");
+			}
+			else{
+				loginService.login(userName, password);
+				return new ExtAjaxResponse(true, "登录成功2");
+			}
+			
 		} catch (Exception e) {
 			logger.error("{}", e);
-			return new ExtAjaxResponse(true, "登录失败");
+			return new ExtAjaxResponse(false, "登录失败");
 			//request.getRequestDispatcher("login").forward(request, response);		
 		}
 	}
@@ -76,4 +91,3 @@ public class LoginController {
 		}
 	}
 }
-*/

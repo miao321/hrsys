@@ -1,16 +1,16 @@
 package com.hrsys.user.service;
-/*package com.hrsys.user.service;
+
 
 import org.hibernate.boot.model.source.spi.PluralAttributeElementSourceBasic;
 
-import com.hrsys.common.ExtAjaxResponse;
+
+import com.hrsys.user.entity.User;
 
 public interface ILoginService {
 	//登录注销、修改密码
-	public ExtAjaxResponse login(String userName,String password);
-	public ExtAjaxResponse changePassword(Long id,String password,String comfirPassword);
-	public ExtAjaxResponse logout();
+	public User login(String userName,String password);
+	public User changePassword(Long id,String password,String comfirPassword);
+	public User logout();
 	public boolean isLogined();
 
 }
-*/
