@@ -98,8 +98,8 @@ public class ChangeController implements IChangeController {
 
 	@RequestMapping("/findByPage")
 	@ResponseBody
-	public Page<Change> findByPage(ChangeQueryDTO deptQueryDTO, ExtPageable pageable) {
-		Page<Change> changePage = changeService.findAll(deptQueryDTO.getSpecification(deptQueryDTO), pageable.getPageable());
-		return null;
+	public Page<Change> findByPage(ChangeQueryDTO changeQueryDTO, ExtPageable pageable) {
+		Page<Change> changePage = changeService.findAll(ChangeQueryDTO.getSpecification(changeQueryDTO), pageable.getPageable());
+		return changePage;
 	}
 }

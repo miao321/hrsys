@@ -33,5 +33,5 @@ public interface IChangeController {
 	public List<Change> findAll();
 	
 	/** 高级查询人事变动数据 */
-	public Page<Change> findByPage(ChangeQueryDTO deptQueryDTO, ExtPageable pageable);
+	public Page<Change> findByPage(ChangeQueryDTO changeQueryDTO, ExtPageable pageable);
 }
