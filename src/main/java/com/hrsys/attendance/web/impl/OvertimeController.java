@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.attendance.dao.DTO.OvertimeQueryDTO;
@@ -28,7 +27,7 @@ public class OvertimeController implements IOvertimeController {
 	@Autowired
 	private IOvertimeService overtimeService;
 
-	@RequestMapping(value = "/insertTestDate", method = RequestMethod.POST)
+	@RequestMapping(value = "/insertTestDate")
 	@ResponseBody
 	public String insertTestDate() {
 		try {
@@ -99,7 +98,6 @@ public class OvertimeController implements IOvertimeController {
 	@RequestMapping("/findByPage")
 	@ResponseBody
 	public Page<Overtime> findByPage(OvertimeQueryDTO overtimeQueryDTO, ExtPageable pageable) {
-		Page<Overtime> overtimePage = overtimeService.findAll(OvertimeQueryDTO.getSpecification(overtimeQueryDTO), pageable.getPageable());
-		return overtimePage;
+		return overtimeService.findAll(OvertimeQueryDTO.getSpecification(overtimeQueryDTO), pageable.getPageable());
 	}
 }

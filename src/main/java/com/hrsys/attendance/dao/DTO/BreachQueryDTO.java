@@ -12,18 +12,17 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-import com.hrsys.attendance.entity.Break;
-
+import com.hrsys.attendance.entity.Breach;
 
 /**
  * 违规记录类高级查询DTO
  * @author Lofu
  */
-public class BreakQueryDTO {
+public class BreachQueryDTO {
 	private String employNo;	//员工的id
 	private String employName;	//员工的姓名
 	private String content;		//违规内容（迟到、早退、旷工）
-	private Date breakTime;		//违规时间（年/月/日）
+	private Date breachTime;	//违规时间（年/月/日）
 	public String getEmployNo() {
 		return employNo;
 	}
@@ -42,41 +41,41 @@ public class BreakQueryDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getBreakTime() {
-		return breakTime;
+	public Date getBreachTime() {
+		return breachTime;
 	}
-	public void setBreakTime(Date breakTime) {
-		this.breakTime = breakTime;
+	public void setBreakTime(Date breachTime) {
+		this.breachTime = breachTime;
 	}
 	/** static的工具方法：根据当前 ClockQueryDTO 对象来组装动态查询条件 */
-	public static Specification<Break> getSpecification(BreakQueryDTO breakQueryDTO) {
-		Specification<Break> spec = new Specification<Break>() {
-			public Predicate toPredicate(Root<Break> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	public static Specification<Breach> getSpecification(BreachQueryDTO breachQueryDTO) {
+		Specification<Breach> spec = new Specification<Breach>() {
+			public Predicate toPredicate(Root<Breach> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				// 1.Predicate查询条件集合
 				List<Predicate> list = new ArrayList<Predicate>();
 
 				// 2.根据 QueryDTO数据字段的值进行判断以及条件的组装
-				if (breakQueryDTO != null && !StringUtils.isEmpty(breakQueryDTO.getEmployNo())) {
+				if (breachQueryDTO != null && !StringUtils.isEmpty(breachQueryDTO.getEmployNo())) {
 					Predicate p = cb.equal(root.get("employNo").as(String.class),
-							breakQueryDTO.getEmployNo());
+							breachQueryDTO.getEmployNo());
 					list.add(p);
 				}
 				
-				if (breakQueryDTO != null && !StringUtils.isEmpty(breakQueryDTO.getEmployName())) {
+				if (breachQueryDTO != null && !StringUtils.isEmpty(breachQueryDTO.getEmployName())) {
 					Predicate p = cb.like(root.get("employName").as(String.class),
-							"%" + breakQueryDTO.getEmployName() + "%");
+							"%" + breachQueryDTO.getEmployName() + "%");
 					list.add(p);
 				}
 				
-				if (breakQueryDTO != null && !StringUtils.isEmpty(breakQueryDTO.getContent())) {
+				if (breachQueryDTO != null && !StringUtils.isEmpty(breachQueryDTO.getContent())) {
 					Predicate p = cb.like(root.get("content").as(String.class),
-							"%" + breakQueryDTO.getContent() + "%");
+							"%" + breachQueryDTO.getContent() + "%");
 					list.add(p);
 				}
 				
-				if (breakQueryDTO != null && breakQueryDTO.getBreakTime() != null) {
+				if (breachQueryDTO != null && breachQueryDTO.getBreachTime() != null) {
 					Predicate p = cb.equal(root.get("breakTime").as(Date.class),
-							breakQueryDTO.getBreakTime());
+							breachQueryDTO.getBreachTime());
 					list.add(p);
 				}
 

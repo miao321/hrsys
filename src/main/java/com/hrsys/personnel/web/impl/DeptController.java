@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,7 +28,7 @@ public class DeptController implements IDeptController {
 	@Autowired
 	private IDeptService deptService;
 
-	@RequestMapping(value = "/insertTestDate", method = RequestMethod.POST)
+	@RequestMapping(value = "/insertTestDate")
 	@ResponseBody
 	public String insertTestDate() {
 		try {
@@ -99,7 +98,6 @@ public class DeptController implements IDeptController {
 	@RequestMapping("/findByPage")
 	@ResponseBody
 	public Page<Dept> findByPage(DeptQueryDTO deptQueryDTO, ExtPageable pageable) {
-		Page<Dept> deptPage = deptService.findAll(DeptQueryDTO.getSpecification(deptQueryDTO), pageable.getPageable());
-		return deptPage;
+		return deptService.findAll(DeptQueryDTO.getSpecification(deptQueryDTO), pageable.getPageable());
 	}
 }

@@ -18,6 +18,7 @@ import com.hrsys.personnel.service.IDeptService;
  * @author Lofu
  */
 @Service
+@Transactional
 public class DeptService implements IDeptService {
 
 	@Autowired
@@ -33,8 +34,8 @@ public class DeptService implements IDeptService {
 
 	public void delete(List<Integer> ids) {
 		List<Dept> deptList = (List<Dept>)deptDao.findAll();
-		for(Dept dept : deptList) {
-			deptDao.delete(dept);
+		if(deptList != null) {
+			deptDao.delete(deptList);
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.hrsys.attendance.service.IClockService;
  * @author Lofu
  */
 @Service
+@Transactional
 public class ClockServive implements IClockService {
 	
 	@Autowired
@@ -33,8 +34,8 @@ public class ClockServive implements IClockService {
 
 	public void delete(List<Integer> ids) {
 		List<Clock> clockList = (List<Clock>) clockDao.findAll();
-		for(Clock clock : clockList) {
-			clockDao.delete(clock);
+		if(clockList != null) {
+			clockDao.delete(clockList);
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.hrsys.attendance.service.IOvertimeService;
  * @author Lofu
  */
 @Service
+@Transactional
 public class OvertimeService implements IOvertimeService {
 	
 	@Autowired
@@ -33,8 +34,8 @@ public class OvertimeService implements IOvertimeService {
 
 	public void delete(List<Integer> ids) {
 		List<Overtime> overtimeList = (List<Overtime>) overtimeDao.findAll();
-		for(Overtime overtime : overtimeList) {
-			overtimeDao.delete(overtime);
+		if(overtimeList != null) {
+			overtimeDao.delete(overtimeList);
 		}
 	}
 
