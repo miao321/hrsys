@@ -12,5 +12,6 @@ public interface ILoginService {
 	public User changePassword(Long id,String password,String comfirPassword);
 	public User logout();
 	public boolean isLogined();
+	public User findUser(String userName); 
 
 }

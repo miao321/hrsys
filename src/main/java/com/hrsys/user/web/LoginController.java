@@ -3,12 +3,14 @@ package com.hrsys.user.web;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
+import org.hibernate.Session;
 import org.hibernate.loader.plan.exec.process.spi.ReturnReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,35 +27,40 @@ import com.hrsys.user.service.ILoginService;
 import com.hrsys.user.service.IUserService;
 import com.hrsys.user.service.impl.UserServiceImpl;
 
+
 @Controller
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);	
 	@Autowired
 	private ILoginService loginService;
-
+	@Autowired
+	private UserRepository userRepository;
+	/*private HttpSession session; //http会话
+	public void LoginServiceImpl(HttpSession session) throws SQLException{
+		this.session=session;
+		
+	}*/
 	/*@Autowired
 	HttpServletRequest request;
 	@Autowired
 	HttpServletResponse response;*/
 	//登录
 	@RequestMapping("/login")
-	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password) throws Exception, IOException {
-		logger.debug("login request: {userName={}, password={}}", userName, password);
-		//ExtAjaxResponse result = null;
+	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password,HttpSession session) throws Exception, IOException {
+		logger.debug("login request: {userName={}, password={}}", userName, password);		
+		User user = loginService.login(userName, password);
+		if (user == null) {
+			return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
+		}
+		if (!password.equals(user.getPassword())) {
+			return new ExtAjaxResponse(false, "密码不正确！");
+		}
+		session.setAttribute("userName", userName);
+		session.setAttribute("userId", user.getId());
 		try {
-			System.out.println(userName);
-			User user = loginService.login(userName, password);
-			if (user.getUserName() == null) {
-				return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
-			}
-			else if (!password.equals(user.getPassword())) {
-				return new ExtAjaxResponse(false, "密码不正确！");
-			}
-			else{
-				loginService.login(userName, password);
-				return new ExtAjaxResponse(true, "登录成功2");
-			}
-			
+							
+				User result = loginService.login(userName, password);
+				return new ExtAjaxResponse(true, "登录成功2");						
 		} catch (Exception e) {
 			logger.error("{}", e);
 			return new ExtAjaxResponse(false, "登录失败");
@@ -62,7 +69,9 @@ public class LoginController {
 	}
 	//修改密码
 	@RequestMapping("/changePassword")
-	public @ResponseBody ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String comfirPassword) {
+	public ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String comfirPassword,HttpSession session) {
+		System.out.println(id);
+		System.out.println(password);
 		try {
 			loginService.changePassword(id, password, comfirPassword);
 			return new ExtAjaxResponse(true, "密码修改成功");

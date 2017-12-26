@@ -90,35 +90,21 @@
 			                    		
 			                    		form.getForm().submit({       
 			                				url:'login',
-			                				//waitMsg: '正在上传，请耐心等待....',
+			                				//waitMsg: '正在跳转，请耐心等待....',
 			                				method : 'post', 
-			                				//params : { userName:userName,password:password}, 
-			                				// params:{  
-				                              //  userName:Ext.getCmp('userName').getValue(),  //获得filefield中的值  
-				                              //  password:Ext.getCmp('password').getValue()  
-				                            //},  
-				                            
+			                				
 			                				success: function(response, action) {		
-			                					var flag=action.result.success;
+			                					var flag=action.result.success;			                		
 			                					if(flag){
 			                						window.location="index.jsp";
 			                					}else{
-			                						window.location="login.jsp";
-			                						var json = Ext.util.JSON.decode(response.responseText);
-			                						Ext.Msg.alert('系统提示', json.msg);
-			                					}
-			                					//window.location="index.jsp";
-			                					 //var json = Ext.decode(response.responseText);
-			                	               // var json = Ext.util.JSON.decode(response.responseText);
-			                		            //if(json.success){			                		            	
-			                		           // 		window.location="index.jsp";	                		              			                		            
-			                			       // }else{
-			                			       //	 Ext.Msg.alert('系统提示', json.msg);
-			                			      //  }
+			                						window.location="login.jsp";			          						
+			                					}			                			
 			                	            },
 			                				failure: function(response, action){
-			                					var json = Ext.util.JSON.decode(response.responseText);
-			                					//Ext.Msg.alert('提示', json.msg);
+			                					 //var json = Ext.util.JSON.decode(response.responseText);
+			                					alert("msg:"+action.result.msg);
+			                					// alert("msg:"+response.msg);
 			                				}
 			                			});
 			                    		
@@ -152,28 +138,7 @@
 				});		
 			});
 			
-			function onLoginButton(btn) {
-      		var form = btn.up('form');
-			form.getForm().submit({       
-				url:'login',
-				//waitMsg: '正在上传，请耐心等待....',
-				method : 'post', 
-				params : { userName:userName,password:password}, 
-				success: function(response, options) {
-	                var json = Ext.util.JSON.decode(response.responseText);
-		            if(json.success){
-		            	Ext.Msg.alert('系统提示', json.msg, function() {
-		                    window.open('index.jsp','11','location=0,resizable=no,fullscreen=true,titlebar=no,status=no,toolbar=no,menubar=no,left=0,top=0');
-		                });
-			        }else{
-			        	 Ext.Msg.alert('系统提示', json.msg);
-			        }
-	            },
-				failure: function(form, action){
-					Ext.Msg.alert('提示', action.result.msg);
-				}
-			});
-		}
+			
 		</script>
 	</head>
 	<body>
