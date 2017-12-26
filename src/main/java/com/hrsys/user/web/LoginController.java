@@ -33,17 +33,6 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);	
 	@Autowired
 	private ILoginService loginService;
-	@Autowired
-	private UserRepository userRepository;
-	/*private HttpSession session; //http会话
-	public void LoginServiceImpl(HttpSession session) throws SQLException{
-		this.session=session;
-		
-	}*/
-	/*@Autowired
-	HttpServletRequest request;
-	@Autowired
-	HttpServletResponse response;*/
 	//登录
 	@RequestMapping("/login")
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password,HttpSession session) throws Exception, IOException {
@@ -57,6 +46,7 @@ public class LoginController {
 		}
 		session.setAttribute("userName", userName);
 		session.setAttribute("userId", user.getId());
+		session.setAttribute("password", user.getPassword());
 		try {
 							
 				User result = loginService.login(userName, password);
@@ -68,12 +58,12 @@ public class LoginController {
 		}
 	}
 	//修改密码
-	@RequestMapping("/changePassword")
-	public ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String comfirPassword,HttpSession session) {
-		System.out.println(id);
-		System.out.println(password);
+	@RequestMapping("/updatePassword")
+	public @ResponseBody ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String comfirPassword,HttpSession session) {
+		//System.out.println(id);
+		//System.out.println(password);
 		try {
-			loginService.changePassword(id, password, comfirPassword);
+			loginService.changePassword(id, password, comfirPassword);			
 			return new ExtAjaxResponse(true, "密码修改成功");
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "密码修改失败");			

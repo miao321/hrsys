@@ -11,6 +11,7 @@
 	<script type="text/javascript">
 			var loginUser = '<%=session.getAttribute("userName")%>';
 			var userId = '<%=session.getAttribute("userId")%>';
+			var password = '<%=session.getAttribute("password")%>';
 	</script>
     <script type="text/javascript">
         var Ext = Ext || {}; // Ext namespace won't be defined yet...
