@@ -1,6 +1,7 @@
 package com.hrsys.user.web;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hrsys.common.EncryptUtils;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.user.entity.User;
@@ -29,6 +31,7 @@ public class UserController {
 	@RequestMapping("/saveOrUpdate")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(User user) {
 		try {
+			user.setPassword(EncryptUtils.encript(user.getPassword()));
 			userService.saveOrUpdate(user);
 			return new ExtAjaxResponse(true, "操作成功");
 		} catch (Exception e) {

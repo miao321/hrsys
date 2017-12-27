@@ -83076,9 +83076,7 @@ Ext.define('Admin.view.user.ChangePassword', {
     autoShow: true,
     modal: true,
     layout: 'fit',
-    title:'修改密码',
-    
-    
+    title:'修改密码',   
     afterRender: function () {
         var me = this;
         me.callParent(arguments);
@@ -83106,7 +83104,33 @@ Ext.define('Admin.view.user.ChangePassword', {
 });
 
 Ext.define('Admin.model.Base', {extend:Ext.data.Model, schema:{namespace:'Admin.model'}});
-Ext.define('Admin.model.user.UserGridPanelModel', {extend:Admin.model.Base, fields:[{type:'int', name:'id'}, {type:'string', name:'userName'}, {type:'string', name:'password'}, {type:'date', name:'birthday'}]});
+Ext.define('Admin.model.user.UserGridPanelModel', {
+    extend: 'Admin.model.Base',
+    fields: [
+		{type: 'int'	,name: 'id'},
+		{type: 'string',name: 'userName'},
+		{type: 'string',name: 'password'},
+		{type: 'date',name: 'birthday'},
+		{type: 'int',name: 'age'},
+		{type: 'string',name: 'body'},
+		{type: 'string',name: 'college'},
+		{type: 'string',name: 'culture'},
+		{type: 'int',name: 'deptId'},
+		{type: 'string',name: 'email'},
+		{type: 'string',name: 'familyPhone'},
+		{type: 'string',name: 'idCord'},
+		{type: 'string',name: 'marriage'},
+		{type: 'string',name: 'nation'},
+		{type: 'string',name: 'nativePlace'},
+		{type: 'string',name: 'phone'},
+		{type: 'string',name: 'remark'},
+		{type: 'string',name: 'sex'},
+		{type: 'string',name: 'userAccount'},
+		{type: 'string',name: 'userNickName'},
+		{type: 'string',name: 'userNo'},
+	
+    ]
+});
 Ext.define('Admin.store.NavigationTree', {extend:Ext.data.TreeStore, storeId:'NavigationTree', fields:[{name:'text'}], root:{expanded:true, children:[{text:'系统管理', iconCls:'x-fa fa-desktop', viewType:'admindashboard', routeId:'dashboard', children:[{text:'角色管理', iconCls:'x-fa fa-user-plus', leaf:true}, {text:'模块管理', iconCls:'x-fa fa-clone', leaf:true}, {text:'用户权限分配', iconCls:'x-fa fa-user-plus', leaf:true}, {text:'组织机构管理', iconCls:'x-fa fa-users', leaf:true}, {text:'日志管理', iconCls:'x-fa fa-envelope-o', 
 leaf:true}]}, {text:'用户管理模块', iconCls:'x-fa fa-user', viewType:'userModelPanel', children:[{text:'修改密码', iconCls:'x-fa fa-exchange', viewType:'changePassword', leaf:true},{text:'修改个人信息', iconCls:'x-fa fa-user', viewType:'pageblank', leaf:true}, ]}, {text:'人事管理', iconCls:'x-fa fa-user-circle', viewType:'email', children:[{text:'职员信息', iconCls:'x-fa fa-user-circle', 
 viewType:'pageblank', leaf:true}, {text:'职员合同管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'人事变动', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'人事变动查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员安排', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}]}, {text:'薪资管理', iconCls:'x-fa fa-money', viewType:'profile', children:[{text:'账套管理', 
@@ -83248,21 +83272,20 @@ changePassword: function(button) {
                 	var form = button.up('form');
                 
 					form.getForm().submit({ 
-					url : 'changePassword', 
+					url : 'updatePassword', 
 					method : 'post', 
 					params : { id :userId}, 
-					success: function(response, action) {
-								alert(321);
+					success: function(response, action) {							
     					var flag=action.result.success;			                		
     					if(flag){
-    					//	window.location='index.jsp';
+    						window.location='index.jsp';
     					}else{
     						alert("msg:"+action.result.msg);			          						
     					}			                			
     	            },
     				failure: function(response, action){
     					 //var json = Ext.util.JSON.decode(response.responseText);
-    				//	alert("msg:"+action.result.msg);
+    				alert("msg:"+action.result.msg);
     					// alert("msg:"+response.msg);
     					}
 					});
@@ -83274,14 +83297,272 @@ changePassword: function(button) {
 
 });
 Ext.define('Admin.view.main.MainModel', {extend:Ext.app.ViewModel, alias:'viewmodel.main', data:{currentView:null}});
-Ext.define('Admin.view.user.UserAddForm', {extend:Ext.form.Panel, alias:'widget.userAddForm', viewModel:{type:'userViewModel'}, controller:'userViewController', layout:{type:'vbox', align:'stretch'}, bodyPadding:10, scrollable:true, defaults:{labelWidth:60, labelSeparator:''}, items:[{xtype:'hidden', fieldLabel:'id', name:'id', readOnly:true}, {xtype:'textfield', fieldLabel:'用户名', name:'userName'}, {xtype:'textfield', fieldLabel:'密码', name:'password'}, {xtype:'datefield', fieldLabel:'生日', name:'birthday', 
-format:'Y/m/d H:i:s'}], bbar:{overflowHandler:'menu', items:['-\x3e', {xtype:'button', ui:'soft-green', text:'提交', handler:'submitEditForm'}, {xtype:'button', ui:'soft-red', text:'取消', handler:function(bt) {
-  var win = bt.up('window');
-  if (win) {
-    win.close();
-  }
-}}, '-\x3e']}});
-Ext.define('Admin.view.user.UserAddWindow', {extend:Ext.window.Window, alias:'widget.userAddWindow',xtype:'userAddWindow',autoShow:true, modal:true, layout:'fit', afterRender:function() {
+var genderStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "男", Value: "男" },
+		{ Name: "女", Value: "女" }
+    ]
+});
+var bodyStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "良好", Value: "良好" },
+		{ Name: "患病", Value: "患病" }
+    ]
+});
+var cultureStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "小学", Value: "小学" },
+        { Name: "初中", Value: "初中" },
+        { Name: "高中", Value: "高中" },
+        { Name: "本科", Value: "本科" },
+        { Name: "研究生", Value: "研究生" },
+        { Name: "博士", Value: "博士" },
+		{ Name: "博士后", Value: "博士后" }
+    ]
+});
+var marriageStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "已婚", Value: "已婚" },
+		{ Name: "未婚", Value: "未婚" }
+    ]
+});
+Ext.define('Admin.view.user.UserAddForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.userAddForm',
+   
+    requires: [
+        'Ext.button.Button',
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Date',
+		'Ext.form.field.Time', 
+        'Ext.form.field.Number',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Picker',
+        'Ext.form.field.TextArea',
+        'Ext.form.field.File',
+        'Ext.form.field.HtmlEditor'
+    ],
+//因为Window是独立Create的并不属于UserModelPanel主视图
+//所以：必须绑定viewModel才可以刷新Grid数据
+//所以：必须绑定ViewController才可以绑定事件
+    viewModel: {type: 'userViewModel'},
+    controller: 'userViewController',
+    //cls: '',
+
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+	
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+
+    items: [/*{
+        xtype: 'textfield', //hidden
+        fieldLabel: 'id',
+        name:'id',
+       readOnly:true
+    },*/{
+        xtype: 'textfield',
+        fieldLabel: '用户名',
+        name:'userName',
+       	allowBlank:'用户名不能为空',  
+        minLength:3,  
+        minLengthText:'用户名长度为[3-6]',  
+        maxLength:6,  
+        maxLength:'用户名长度为[3-6]',
+        emptyText: '请输入用户名'
+    },{
+        xtype: 'textfield',
+        fieldLabel: '用户昵称',
+        name:'userNickName',
+       	allowBlank:'昵称不能为空',  
+        minLength:3,  
+        minLengthText:'昵称长度为[3-6]',  
+        maxLength:6,  
+        maxLength:'昵称长度为[3-6]',
+        emptyText: '请输入昵称'
+    }, {
+         xtype: 'textfield',
+       	cls: 'auth-textbox',
+        fieldLabel: '密码',
+        name:'password',
+       	allowBlank:'密码不能为空',  
+        minLength:6,  
+        minLengthText:'密码长度为[6-20]',  
+        maxLength:20,  
+        maxLength:'密码长度为[6-20]',
+        //inputType: 'password',
+        emptyText: '请输入密码(6-20位)'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '年龄',
+        name:'age',
+       	allowBlank:'年龄不能为空',  
+        minLength:2,  
+        minLengthText:'年龄长度为[2-3]',  
+        maxLength:3,  
+        maxLength:'年龄长度为[2-3]',
+        emptyText: '请输入年龄'
+    }, {
+        xtype: 'datefield',
+        fieldLabel: '生日',
+        name:'birthday',
+        format: 'Y/m/d H:i:s',
+        emptyText: '请输入生日'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '毕业学校',
+        name:'college',
+       	allowBlank:'毕业学校不能为空',  
+        minLength:3,  
+        minLengthText:'毕业学校长度为[3-20]',  
+        maxLength:20,  
+        maxLength:'毕业学校长度为[3-20]',
+        emptyText: '请输入毕业学校',
+       	regex: /^[\u4e00-\u9fa5]+$/i,
+		regexText : "请输入中文"
+    }, {
+    	xtype: "combobox",
+        name: "body",
+        fieldLabel: "身体状况",
+        store: bodyStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        emptyText: "--请选择--",
+        queryMode: "local"
+    }, {
+       	xtype: "combobox",
+        name: "culture",
+        fieldLabel: "文化程度",
+        store: cultureStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        emptyText: "--请选择--",
+        queryMode: "local"
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '部门号',
+        name:'deptId',
+        emptyText: '请输入部门号'
+	}, {
+        xtype: 'textfield',
+        fieldLabel: '邮箱地址',
+        name:'email',
+        emptyText: '请输入邮箱地址',
+        regex :/(\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)/,
+       	regexText:'请输入正确的邮箱地址'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '家庭电话',
+        name:'familyPhone',
+        emptyText: '请输入家庭电话',
+       	regex: /(\d{3}-\d{8}|\d{4}-\d{7})/,
+		regexText : "输入的家庭号码不符合要求！格式：0511-4405222 或 021-87888822"
+    },  {
+        xtype: 'textfield',
+        fieldLabel: '身份证号',
+        name:'idCord',
+        emptyText: '请输入身份证号',
+       	regex: /(^\d{17}([0-9]|X)$)/,
+		regexText : "输入的身份证号码不符合规定！18位号码末位可以为数字或X"
+    }, {
+       	xtype: "combobox",
+        name: "marriage",
+        fieldLabel: "婚姻情况",
+        store: marriageStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        emptyText: "--请选择--",
+        queryMode: "local"
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '民族',
+        name:'nation',
+        emptyText: '请输入民族',
+       	regex: /^[\u4e00-\u9fa5]+$/i,
+		regexText : "请输入中文"
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '籍贯',
+        name:'nativePlace',
+        emptyText: '请输入籍贯',
+       	regex: /^[\u4e00-\u9fa5]+$/i,
+		regexText : "请输入中文"
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '手机号码',
+        name:'phone',
+        emptyText: '请输入手机号码',
+        minLength : 11,  
+        minLengthText : '联系人手机长度不得小于11个字符长度',  
+        regex : /^1(3|5|8)[0-9]{9}$/,  
+        regexText:'请输入正确的电话格式' 
+    }, {
+         	xtype: "combobox",
+            name: "sex",
+            fieldLabel: "性别",
+            store: genderStore,
+            editable: false,
+            displayField: "Name",
+            valueField: "Value",
+            emptyText: "--请选择--",
+            queryMode: "local"
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '职工账号',
+        name:'userAccount',
+        emptyText: '请输入职工账号',
+       	regex: /(^\d{16}$)|(^\d{17}$)|(^\d{18}$)|(^\d{19}([0-9])$)/,
+		regexText : "输入的职工账号不符合规定！16-19位数字"
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '职工编号',
+        name:'userNo',
+        emptyText: '请输入职工编号'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '备注',
+        name:'remark',
+        emptyText: '请输入备注'
+    }],
+
+    bbar: {
+        overflowHandler: 'menu',
+        items: ['->',{
+            xtype: 'button',
+            ui: 'soft-green',
+            text: '提交',
+            handler : 'submitEditForm'
+        },{
+            xtype: 'button',
+            ui: 'soft-red',
+            text: '取消',
+	        handler :function(bt){
+	        	var win = bt.up('window');
+		        if (win) {
+		            win.close();
+		        }
+	        }
+        },'->']
+    }
+});
+
+Ext.define('Admin.view.user.UserAddWindow', {extend:Ext.window.Window, alias:'widget.userAddWindow',xtype:'userAddWindow',	title:'添加用户',autoShow:true, modal:true, layout:'fit', afterRender:function() {
   var me = this;
   me.callParent(arguments);
   me.syncSize();
@@ -83296,13 +83577,144 @@ Ext.define('Admin.view.user.UserAddWindow', {extend:Ext.window.Window, alias:'wi
   this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
   this.setXY([Math.floor(width * 0.05), Math.floor(height * 0.05)]);
 }});
-Ext.define('Admin.view.user.UserEditForm', {extend:Ext.form.Panel, alias:'widget.userEditForm', viewModel:{type:'userViewModel'}, controller:'userViewController', layout:{type:'vbox', align:'stretch'}, bodyPadding:10, scrollable:true, defaults:{labelWidth:60, labelSeparator:''}, items:[{xtype:'textfield', fieldLabel:'id', name:'id', readOnly:true}, {xtype:'textfield', fieldLabel:'用户名', name:'userName'}, {xtype:'textfield', fieldLabel:'密码', name:'password'}, {xtype:'datefield', fieldLabel:'生日', name:'birthday', 
-format:'Y/m/d H:i:s'}], bbar:{overflowHandler:'menu', items:['-\x3e', {xtype:'button', ui:'soft-green', text:'提交', handler:'submitEditForm'}, {xtype:'button', ui:'soft-red', text:'取消', handler:function(bt) {
-  var win = bt.up('window');
-  if (win) {
-    win.close();
-  }
-}}, '-\x3e']}});
+Ext.define('Admin.view.user.UserEditForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.userEditForm',
+    requires: [
+        'Ext.button.Button',
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Date',
+		'Ext.form.field.Time', 
+        'Ext.form.field.Number',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Picker',
+        'Ext.form.field.TextArea',
+        'Ext.form.field.File',
+        'Ext.form.field.HtmlEditor'
+    ],
+//因为Window是独立Create的并不属于UserModelPanel主视图
+//所以：必须绑定viewModel才可以刷新Grid数据
+//所以：必须绑定ViewController才可以绑定事件
+    viewModel: {type: 'userViewModel'},
+    controller: 'userViewController',
+    //cls: '',
+
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+	
+	 items: [{
+        xtype: 'textfield', //hidden
+        fieldLabel: 'id',
+        name:'id',
+        readOnly:true
+    },{
+        xtype: 'textfield',
+        fieldLabel: '用户名',
+        name:'userName'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '密码',
+        name:'password'
+    }, {
+        xtype: 'datefield',
+        fieldLabel: '生日',
+        name:'birthday',
+        format: 'Y/m/d H:i:s'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '毕业学校',
+        name:'college'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '身体状况',
+        name:'body'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '文化程度',
+        name:'culture'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '邮箱地址',
+        name:'email'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '家庭电话',
+        name:'familyPhone'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '身份证号',
+        name:'idCord'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '婚姻情况',
+        name:'marriage'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '民族',
+        name:'nation'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '籍贯',
+        name:'nativePlace'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '手机号码',
+        name:'phone'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '备注',
+        name:'remark'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '性别',
+        name:'sex'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '职工账号',
+        name:'userAccount'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '职工编号',
+        name:'userNo'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '备注',
+        name:'remark'
+    }],
+
+    bbar: {
+        overflowHandler: 'menu',
+        items: ['->',{
+            xtype: 'button',
+            ui: 'soft-green',
+            text: '提交',
+            handler : 'submitEditForm'
+        },{
+            xtype: 'button',
+            ui: 'soft-red',
+            text: '取消',
+	        handler :function(bt){
+	        	var win = bt.up('window');
+		        if (win) {
+		            win.close();
+		        }
+	        }
+        },'->']
+    }
+});
+
 Ext.define('Admin.view.user.UserEditWindow', {extend:Ext.window.Window, alias:'widget.userEditWindow', autoShow:true, modal:true, layout:'fit', afterRender:function() {
   var me = this;
   me.callParent(arguments);
@@ -83350,10 +83762,11 @@ Ext.define('Admin.view.user.UserViewController', {extend:Ext.app.ViewController,
   form.getForm().submit({url:'user/saveOrUpdate', success:function(form, action) {
     Ext.Msg.alert('提示', action.result.msg, function() {
       btn.up('window').close();
-      form.getViewModel().getStore('userDataList').reload();
+      Ext.getCmp('userGridPanel').getStore().reload();
+     // form.getViewModel().getStore('userDataList').reload();
     });
   }, failure:function(form, action) {
-    Ext.Msg.alert('提示', action.result.msg);
+    //Ext.Msg.alert('提示', action.result.msg);
   }});
 }, deleteUser:function(view, recIndex, cellIndex, item, e, record) {
   Ext.MessageBox.confirm('提示', '确定要进行删除操作吗？数据将无法还原！', function(btn, text) {

@@ -21,7 +21,7 @@ public class User implements Serializable {
 	private String password;//用户密码
 	private String userNickName;//用户昵称
 	private String sex;   //性别
-	@DateTimeFormat(pattern="yyyy/MM/dd")
+	@DateTimeFormat(pattern="yyyy/MM/dd HH:mm:ss")
 	private Date birthday;//出生日期
 	private Integer age;//年龄
 	private String nativePlace;//籍贯
@@ -54,7 +54,7 @@ public class User implements Serializable {
 	public String getSex() {
 		return sex;
 	}
-	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
 	public Date getBirthday() {
 		return birthday;
 	}

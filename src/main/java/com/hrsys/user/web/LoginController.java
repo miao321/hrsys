@@ -3,6 +3,7 @@ package com.hrsys.user.web;
 
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hrsys.common.EncryptUtils;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.user.dao.UserRepository;
 import com.hrsys.user.entity.User;
@@ -37,16 +39,16 @@ public class LoginController {
 	@RequestMapping("/login")
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password,HttpSession session) throws Exception, IOException {
 		logger.debug("login request: {userName={}, password={}}", userName, password);		
-		User user = loginService.login(userName, password);
+		User user = loginService.login(userName,EncryptUtils.encript(password) );
 		if (user == null) {
 			return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
 		}
-		if (!password.equals(user.getPassword())) {
+		if (!EncryptUtils.encript(password).equals(user.getPassword())) {
 			return new ExtAjaxResponse(false, "密码不正确！");
 		}
 		session.setAttribute("userName", userName);
 		session.setAttribute("userId", user.getId());
-		session.setAttribute("password", user.getPassword());
+		session.setAttribute("password", user.getPassword());		
 		try {
 							
 				User result = loginService.login(userName, password);
@@ -59,11 +61,15 @@ public class LoginController {
 	}
 	//修改密码
 	@RequestMapping("/updatePassword")
-	public @ResponseBody ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String comfirPassword,HttpSession session) {
-		//System.out.println(id);
-		//System.out.println(password);
+	public @ResponseBody ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String  comfirPassword,HttpSession session) throws NoSuchAlgorithmException {		
+		System.out.println(password);
+		System.out.println("pass:"+session.getAttribute("password"));
+		String comPassword = EncryptUtils.encript(comfirPassword);
+		if (!EncryptUtils.encript(password).equals(session.getAttribute("password"))) {
+			return new ExtAjaxResponse(false, "密码错误，请重新输入");
+		}
 		try {
-			loginService.changePassword(id, password, comfirPassword);			
+			loginService.changePassword(id, EncryptUtils.encript(password), comPassword);			
 			return new ExtAjaxResponse(true, "密码修改成功");
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "密码修改失败");			
