@@ -28,13 +28,17 @@ public class DeptController implements IDeptController {
 	@Autowired
 	private IDeptService deptService;
 
-	@RequestMapping(value = "/insertTestDate")
+	@RequestMapping(value = "/insertTestData")
 	@ResponseBody
-	public String insertTestDate() {
+	public String insertTestData() {
 		try {
-			for(int i=0; i<100; i++) {
+			for(int i=0; i<10; i++) {
 				Dept dept = new Dept();
-				dept.setDeptName("部门00"+i);
+				dept.setDeptNo("D00"+i);
+				dept.setDeptName("测试部");
+				dept.setLocation("东莞");
+				dept.setDeptPhone("138-2222-5555");
+				dept.setLeaderNo("E001");
 				
 				deptService.saveOrUpdate(dept);
 			}
@@ -44,7 +48,7 @@ public class DeptController implements IDeptController {
 		}
 	}
 
-	@RequestMapping("/saveOrUpdate")
+	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
 	public ExtAjaxResponse saveOrUpdate(Dept dept) {
 		try {
@@ -55,7 +59,7 @@ public class DeptController implements IDeptController {
 		}
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public ExtAjaxResponse delete(@RequestParam Integer id) {
 		try {
@@ -69,7 +73,7 @@ public class DeptController implements IDeptController {
 		}
 	}
 
-	@RequestMapping("/deleteDepts")
+	@RequestMapping(value = "/deleteDepts")
 	@ResponseBody
 	public ExtAjaxResponse deleteDepts(@RequestParam Integer[] ids) {
 		try {
@@ -83,21 +87,22 @@ public class DeptController implements IDeptController {
 		}
 	}
 
-	@RequestMapping("/findOne")
+	@RequestMapping(value = "/findOne")
 	@ResponseBody
 	public Dept findOne(@RequestParam Integer id) {
 		return deptService.findOne(id);
 	}
 
-	@RequestMapping("/findAll")
+	@RequestMapping(value = "/findAll")
 	@ResponseBody
 	public List<Dept> findAll() {
 		return deptService.findAll();
 	}
 
-	@RequestMapping("/findByPage")
+	@RequestMapping(value = "/findByPage")
 	@ResponseBody
 	public Page<Dept> findByPage(DeptQueryDTO deptQueryDTO, ExtPageable pageable) {
+//		pageable.setPage(1);
 		return deptService.findAll(DeptQueryDTO.getSpecification(deptQueryDTO), pageable.getPageable());
 	}
 }

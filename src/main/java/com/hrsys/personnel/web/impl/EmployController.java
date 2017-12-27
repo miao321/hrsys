@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
+import com.hrsys.common.util.DateUtil;
 import com.hrsys.personnel.dao.DTO.EmployQueryDTO;
 import com.hrsys.personnel.entity.Employ;
 import com.hrsys.personnel.service.IEmployService;
@@ -28,15 +30,25 @@ public class EmployController implements IEmployController{
 	
 	@Autowired
 	private IEmployService employService;
-
-	@RequestMapping(value = "/insertTestDate", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/insertTestData")
 	@ResponseBody
-	public String insertTestDate() {
+	public String insertTestData() {
 		try {
 			for(int i=0; i<100; i++) {
 				Employ employ = new Employ();
 				employ.setEmployNo("E000"+i);
 				employ.setEmployName("职工"+i);
+				employ.setEmploySex("男");
+				employ.setDeptNo("D001");
+				employ.setLeaderNo("E0000");
+				employ.setBeginTime(DateUtil.stringToDay("2005-12-01"));
+				employ.setEndTime(DateUtil.stringToDay("2025-12-01"));
+				employ.setBirthday(DateUtil.stringToDay("1995-12-05"));
+				employ.setHiredate(DateUtil.stringToDay("2005-12-05"));
+				employ.setEducation("大学本科");
+				employ.setEmail("123456@qq.com");
+				employ.setPhone("138-1111-2222");
 				
 				employService.saveOrUpdate(employ);
 			}
@@ -46,7 +58,7 @@ public class EmployController implements IEmployController{
 		}
 	}
 
-	@RequestMapping("/saveOrUpdate")
+	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
 	public ExtAjaxResponse saveOrUpdate(Employ employ) {
 		try {
@@ -57,7 +69,7 @@ public class EmployController implements IEmployController{
 		}
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public ExtAjaxResponse delete(@RequestParam Integer id) {
 		try {
@@ -71,10 +83,11 @@ public class EmployController implements IEmployController{
 		}
 	}
 
-	@RequestMapping("/deleteEmploys")
+	@RequestMapping(value = "/deleteEmploys")
 	@ResponseBody
 	public ExtAjaxResponse deleteEmploys(@RequestParam Integer[] ids) {
 		try {
+			System.out.println(ids);
 			List<Integer> idLists = Arrays.asList(ids);
 			if (null != idLists) {
 				employService.delete(idLists);
@@ -85,21 +98,22 @@ public class EmployController implements IEmployController{
 		}
 	}
 
-	@RequestMapping("/findOne")
+	@RequestMapping(value = "/findOne")
 	@ResponseBody
 	public Employ findOne(@RequestParam Integer id) {
 		return employService.findOne(id);
 	}
 
-	@RequestMapping("/findAll")
+	@RequestMapping(value = "/findAll")
 	@ResponseBody
 	public List<Employ> findAll() {
 		return employService.findAll();
 	}
 
-	@RequestMapping("/findByPage")
+	@RequestMapping(value = "/findByPage")
 	@ResponseBody
 	public Page<Employ> findByPage(EmployQueryDTO employQueryDTO, ExtPageable pageable) {
+//		pageable.setPage(1);
 		return employService.findAll(EmployQueryDTO.getSpecification(employQueryDTO), pageable.getPageable());
 	}
 }

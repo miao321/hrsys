@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
+import com.hrsys.common.util.DateUtil;
 import com.hrsys.personnel.dao.DTO.ChangeQueryDTO;
 import com.hrsys.personnel.entity.Change;
 import com.hrsys.personnel.service.IChangeService;
@@ -27,14 +29,20 @@ public class ChangeController implements IChangeController {
 	@Autowired
 	private IChangeService changeService;
 
-	@RequestMapping(value = "/insertTestDate")
+	@RequestMapping(value = "/insertTestData")
 	@ResponseBody
-	public String insertTestDate() {
+	public String insertTestData() {
 		try {
 			for(int i=0; i<100; i++) {
 				Change change = new Change();
 				change.setEmployNo("E000"+i);
 				change.setEmployName("职工"+i);
+				change.setFromDeptNo("D001");
+				change.setToDeptNo("D002");
+				change.setLastLeaderNo("E001");
+				change.setNowLeaderId("E002");
+				change.setApplyTime(DateUtil.stringToDay("2017-05-01"));
+				change.setAgreeTime(DateUtil.stringToDay("2017-12-01"));
 				
 				changeService.saveOrUpdate(change);
 			}
@@ -44,7 +52,7 @@ public class ChangeController implements IChangeController {
 		}
 	}
 
-	@RequestMapping("/saveOrUpdate")
+	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
 	public ExtAjaxResponse saveOrUpdate(Change change) {
 		try {
@@ -55,9 +63,9 @@ public class ChangeController implements IChangeController {
 		}
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public ExtAjaxResponse delete(Integer id) {
+	public ExtAjaxResponse delete(@RequestParam Integer id) {
 		try {
 			Change change = changeService.findOne(id);
 			if (change != null) {
@@ -69,9 +77,9 @@ public class ChangeController implements IChangeController {
 		}
 	}
 
-	@RequestMapping("/deleteChanges")
+	@RequestMapping(value = "/deleteChanges")
 	@ResponseBody
-	public ExtAjaxResponse deleteChanges(Integer[] ids) {
+	public ExtAjaxResponse deleteChanges(@RequestParam Integer[] ids) {
 		try {
 			List<Integer> idLists = Arrays.asList(ids);
 			if (null != idLists) {
@@ -83,21 +91,22 @@ public class ChangeController implements IChangeController {
 		}
 	}
 
-	@RequestMapping("/findOne")
+	@RequestMapping(value = "/findOne")
 	@ResponseBody
-	public Change findOne(Integer id) {
+	public Change findOne(@RequestParam Integer id) {
 		return changeService.findOne(id);
 	}
 
-	@RequestMapping("/findAll")
+	@RequestMapping(value = "/findAll")
 	@ResponseBody
 	public List<Change> findAll() {
 		return changeService.findAll();
 	}
 
-	@RequestMapping("/findByPage")
+	@RequestMapping(value = "/findByPage")
 	@ResponseBody
 	public Page<Change> findByPage(ChangeQueryDTO changeQueryDTO, ExtPageable pageable) {
+//		pageable.setPage(1);
 		return changeService.findAll(ChangeQueryDTO.getSpecification(changeQueryDTO), pageable.getPageable());
 	}
 }

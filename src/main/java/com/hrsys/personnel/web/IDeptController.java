@@ -15,7 +15,7 @@ import com.hrsys.personnel.entity.Dept;
  */
 public interface IDeptController {
 	/** 插入一些测试数据 */
-	public String insertTestDate();
+	public String insertTestData();
 	
 	/** 插入或更改部门数据 */
 	public ExtAjaxResponse saveOrUpdate(Dept dept);

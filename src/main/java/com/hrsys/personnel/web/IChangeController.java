@@ -15,7 +15,7 @@ import com.hrsys.personnel.entity.Change;
  */
 public interface IChangeController {
 	/** 插入一些测试数据 */
-	public String insertTestDate();
+	public String insertTestData();
 	
 	/** 插入或更改人事变动数据 */
 	public ExtAjaxResponse saveOrUpdate(Change change);

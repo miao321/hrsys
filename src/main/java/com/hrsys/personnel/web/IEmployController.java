@@ -16,7 +16,7 @@ import com.hrsys.personnel.entity.Employ;
 public interface IEmployController {
 	
 	/** 插入一些测试数据 */
-	public String insertTestDate();
+	public String insertTestData();
 	
 	/** 插入或更改职员数据 */
 	public ExtAjaxResponse saveOrUpdate(Employ employ);

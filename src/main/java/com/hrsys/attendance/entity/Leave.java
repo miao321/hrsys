@@ -24,12 +24,12 @@ public class Leave {
 	private String employNo;	//员工的id
 	private String employName;	//员工的姓名
 	
-	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
 	private Date leaveBeginTime;//请假开始时间
 	
-	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
 	private Date leaveEndTime;	//请假结束时间
 	private String agreeMan;	//批准人姓名
 	

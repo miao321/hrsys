@@ -20,14 +20,12 @@ import com.hrsys.personnel.entity.Employ;
  */
 public class EmployQueryDTO {
 	private String employName; // 员工姓名
-	private Short employSex; // 员工性别
+	private String employSex; // 员工性别
 	private String deptNo; // 所在部门
 	private Date beginTime; // 合同开始时间
 	private Date endTime; // 合同到期时间
 	private Date hiredate; // 入职时间
 	private Date birthday; // 员工生日
-	private Short isMerry; // 是否结婚
-	private Short isWorking; // 是否在职
 	private String education; // 文化水平
 	public String getEmployName() {
 		return employName;
@@ -35,10 +33,10 @@ public class EmployQueryDTO {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public Short getEmploySex() {
+	public String getEmploySex() {
 		return employSex;
 	}
-	public void setEmploySex(Short employSex) {
+	public void setEmploySex(String employSex) {
 		this.employSex = employSex;
 	}
 	public String getDeptNo() {
@@ -72,18 +70,6 @@ public class EmployQueryDTO {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	public Short getIsMerry() {
-		return isMerry;
-	}
-	public void setIsMerry(Short isMerry) {
-		this.isMerry = isMerry;
-	}
-	public Short getIsWorking() {
-		return isWorking;
-	}
-	public void setIsWorking(Short isWorking) {
-		this.isWorking = isWorking;
-	}
 	public String getEducation() {
 		return education;
 	}
@@ -105,8 +91,8 @@ public class EmployQueryDTO {
 					list.add(p);
 				}
 				
-				if (employQueryDTO != null && employQueryDTO.getEmploySex() != null) {
-					Predicate p = cb.equal(root.get("employSex").as(Short.class),
+				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmploySex())) {
+					Predicate p = cb.equal(root.get("employSex").as(String.class),
 							employQueryDTO.getEmploySex());
 					list.add(p);
 				}

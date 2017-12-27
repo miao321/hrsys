@@ -24,28 +24,26 @@ public class Employ {
 	private int id;					//职员表的id
 	private String employNo;		//员工的id号
 	private String employName;		//员工姓名
-	private Short employSex;		//员工性别
+	private String employSex;		//员工性别
 	private String deptNo;			//所在部门
 	private Integer salary;			//员工工资
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date beginTime;			//合同开始时间
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date endTime;			//合同到期时间
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date hiredate;			//入职时间
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date birthday;			//员工生日
 	private String leaderNo;		//直属领导
-	private Short isMerry;			//是否结婚
-	private Short isWorking;		//是否在职
 	private String education;		//文化水平
 	private String email;			//员工邮箱
 	private String phone;			//手机号码
@@ -67,10 +65,10 @@ public class Employ {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public Short getEmploySex() {
+	public String getEmploySex() {
 		return employSex;
 	}
-	public void setEmploySex(Short employSex) {
+	public void setEmploySex(String employSex) {
 		this.employSex = employSex;
 	}
 	public String getDeptNo() {
@@ -114,18 +112,6 @@ public class Employ {
 	}
 	public void setLeaderNo(String leaderNo) {
 		this.leaderNo = leaderNo;
-	}
-	public Short getIsMerry() {
-		return isMerry;
-	}
-	public void setIsMerry(Short isMerry) {
-		this.isMerry = isMerry;
-	}
-	public Short getIsWorking() {
-		return isWorking;
-	}
-	public void setIsWorking(Short isWorking) {
-		this.isWorking = isWorking;
 	}
 	public String getEducation() {
 		return education;
