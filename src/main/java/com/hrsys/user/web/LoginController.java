@@ -40,6 +40,7 @@ public class LoginController {
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password,HttpSession session) throws Exception, IOException {
 		logger.debug("login request: {userName={}, password={}}", userName, password);		
 		User user = loginService.login(userName,EncryptUtils.encript(password) );
+		
 		if (user == null) {
 			return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
 		}

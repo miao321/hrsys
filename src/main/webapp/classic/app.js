@@ -83625,6 +83625,10 @@ Ext.define('Admin.view.user.UserEditForm', {
         name:'userName'
     }, {
         xtype: 'textfield',
+        fieldLabel: '昵称',
+        name:'userNickName'
+    },{
+        xtype: 'textfield',
         fieldLabel: '密码',
         name:'password'
     }, {
@@ -83648,6 +83652,14 @@ Ext.define('Admin.view.user.UserEditForm', {
         xtype: 'textfield',
         fieldLabel: '邮箱地址',
         name:'email'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '年龄',
+        name:'age'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '部门号',
+        name:'deptId'
     }, {
         xtype: 'textfield',
         fieldLabel: '家庭电话',
@@ -83688,10 +83700,6 @@ Ext.define('Admin.view.user.UserEditForm', {
         xtype: 'textfield',
         fieldLabel: '职工编号',
         name:'userNo'
-    }, {
-        xtype: 'textfield',
-        fieldLabel: '备注',
-        name:'remark'
     }],
 
     bbar: {

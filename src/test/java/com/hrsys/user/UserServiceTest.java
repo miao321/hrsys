@@ -1,5 +1,6 @@
 package com.hrsys.user;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hrsys.common.EncryptUtils;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.service.IUserService;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,15 +29,15 @@ public class UserServiceTest {
 	private IUserService userService;
 	@Test
 	@Rollback(value = false)
-	public void save() {
-		for(int i=0;i<100;i++) {
+	public void save() throws NoSuchAlgorithmException {
+		
 			User user = new User();
-			user.setUserName("张三");
-			user.setPassword("123");
-			user.setBirthday(new Date());
+			user.setUserName("sss");
+			user.setPassword(EncryptUtils.encript("123"));
+			//user.setBirthday(new Date());
 			userService.saveOrUpdate(user);
 			System.out.println(user);
-		}
+		
 		
 	}
 	
