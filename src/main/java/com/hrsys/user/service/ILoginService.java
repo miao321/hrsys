@@ -9,8 +9,9 @@ import com.hrsys.user.entity.User;
 public interface ILoginService {
 	//登录注销、修改密码
 	public User login(String userName,String password);
-	public User changePassword(Long id,String password,String comfirPassword);
+	public void changePassword(Long id,String password,String comfirPassword);
 	public User logout();
 	public boolean isLogined();
+	public User findUser(String userName); 
 
 }
