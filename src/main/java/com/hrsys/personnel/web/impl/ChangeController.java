@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
@@ -28,7 +27,7 @@ public class ChangeController implements IChangeController {
 	@Autowired
 	private IChangeService changeService;
 
-	@RequestMapping(value = "/insertTestDate", method = RequestMethod.POST)
+	@RequestMapping(value = "/insertTestDate")
 	@ResponseBody
 	public String insertTestDate() {
 		try {
@@ -98,8 +97,7 @@ public class ChangeController implements IChangeController {
 
 	@RequestMapping("/findByPage")
 	@ResponseBody
-	public Page<Change> findByPage(ChangeQueryDTO deptQueryDTO, ExtPageable pageable) {
-		Page<Change> changePage = changeService.findAll(deptQueryDTO.getSpecification(deptQueryDTO), pageable.getPageable());
-		return null;
+	public Page<Change> findByPage(ChangeQueryDTO changeQueryDTO, ExtPageable pageable) {
+		return changeService.findAll(ChangeQueryDTO.getSpecification(changeQueryDTO), pageable.getPageable());
 	}
 }

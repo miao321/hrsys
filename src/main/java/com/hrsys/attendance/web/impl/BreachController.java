@@ -9,34 +9,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hrsys.attendance.dao.DTO.ClockQueryDTO;
-import com.hrsys.attendance.entity.Clock;
-import com.hrsys.attendance.service.IClockService;
-import com.hrsys.attendance.web.IClockController;
+import com.hrsys.attendance.dao.DTO.BreachQueryDTO;
+import com.hrsys.attendance.entity.Breach;
+import com.hrsys.attendance.service.IBreachService;
+import com.hrsys.attendance.web.IBreachController;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
 
 /**
- * 考勤模块-打卡记录类控制器实现类
+ * 考勤模块-违规记录类控制器实现类
  * @author Lofu
  */
 @Controller
-@RequestMapping(value = "/attendance/clock")
-public class ClockController implements IClockController {
+@RequestMapping(value = "/attendance/breach")
+public class BreachController implements IBreachController {
 	
 	@Autowired
-	private IClockService clockService;
+	private IBreachService breachService;
 
 	@RequestMapping(value = "/insertTestDate")
 	@ResponseBody
 	public String insertTestDate() {
 		try {
 			for(int i=0; i<100; i++) {
-				Clock clock = new Clock();
-				clock.setEmployNo("E000"+i);
-				clock.setEmployName("职工"+i);
+				Breach breach = new Breach();
+				breach.setEmployNo("E000"+i);
+				breach.setEmployName("职工"+i);
 				
-				clockService.saveOrUpdate(clock);
+				breachService.saveOrUpdate(breach);
 			}
 			return "success";
 		} catch (Exception e) {
@@ -46,9 +46,9 @@ public class ClockController implements IClockController {
 
 	@RequestMapping("/saveOrUpdate")
 	@ResponseBody
-	public ExtAjaxResponse saveOrUpdate(Clock clock) {
+	public ExtAjaxResponse saveOrUpdate(Breach breach) {
 		try {
-			clockService.saveOrUpdate(clock);
+			breachService.saveOrUpdate(breach);
 			return new ExtAjaxResponse(true, "操作成功！");
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "操作失败！");
@@ -59,9 +59,9 @@ public class ClockController implements IClockController {
 	@ResponseBody
 	public ExtAjaxResponse delete(Integer id) {
 		try {
-			Clock clock = clockService.findOne(id);
-			if (clock != null) {
-				clockService.delete(clock);
+			Breach breach = breachService.findOne(id);
+			if (breach != null) {
+				breachService.delete(breach);
 			}
 			return new ExtAjaxResponse(true, "操作成功！");
 		} catch (Exception e) {
@@ -69,13 +69,13 @@ public class ClockController implements IClockController {
 		}
 	}
 
-	@RequestMapping("/deleteClocks")
+	@RequestMapping("/deleteBreachs")
 	@ResponseBody
-	public ExtAjaxResponse deleteClocks(Integer[] ids) {
+	public ExtAjaxResponse deleteBreachs(Integer[] ids) {
 		try {
 			List<Integer> idLists = Arrays.asList(ids);
 			if (null != idLists) {
-				clockService.delete(idLists);
+				breachService.delete(idLists);
 			}
 			return new ExtAjaxResponse(true, "操作成功！");
 		} catch (Exception e) {
@@ -85,19 +85,19 @@ public class ClockController implements IClockController {
 
 	@RequestMapping("/findOne")
 	@ResponseBody
-	public Clock findOne(Integer id) {
-		return clockService.findOne(id);
+	public Breach findOne(Integer id) {
+		return breachService.findOne(id);
 	}
 
 	@RequestMapping("/findAll")
 	@ResponseBody
-	public List<Clock> findAll() {
-		return clockService.findAll();
+	public List<Breach> findAll() {
+		return breachService.findAll();
 	}
 
 	@RequestMapping("/findByPage")
 	@ResponseBody
-	public Page<Clock> findByPage(ClockQueryDTO clockQueryDTO, ExtPageable pageable) {
-		return clockService.findAll(ClockQueryDTO.getSpecification(clockQueryDTO), pageable.getPageable());
+	public Page<Breach> findByPage(BreachQueryDTO breachQueryDTO, ExtPageable pageable) {
+		return breachService.findAll(BreachQueryDTO.getSpecification(breachQueryDTO), pageable.getPageable());
 	}
 }

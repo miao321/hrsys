@@ -100,7 +100,6 @@ public class EmployController implements IEmployController{
 	@RequestMapping("/findByPage")
 	@ResponseBody
 	public Page<Employ> findByPage(EmployQueryDTO employQueryDTO, ExtPageable pageable) {
-		Page<Employ> employPage = employService.findAll(EmployQueryDTO.getSpecification(employQueryDTO), pageable.getPageable());
-		return employPage;
+		return employService.findAll(EmployQueryDTO.getSpecification(employQueryDTO), pageable.getPageable());
 	}
 }

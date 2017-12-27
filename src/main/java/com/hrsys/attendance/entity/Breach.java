@@ -17,8 +17,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @author Lofu
  */
 @Entity
-@Table(name = "t_break")
-public class Break {
+@Table(name = "t_breach")
+public class Breach {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;			//违规表的id
@@ -29,7 +29,7 @@ public class Break {
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
-	private Date breakTime;		//违规时间（年/月/日）
+	private Date breachTime;	//违规时间（年/月/日）
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
@@ -64,11 +64,11 @@ public class Break {
 	public void setRecordMan(String recordMan) {
 		this.recordMan = recordMan;
 	}
-	public Date getBreakTime() {
-		return breakTime;
+	public Date getBreachTime() {
+		return breachTime;
 	}
-	public void setBreakTime(Date breakTime) {
-		this.breakTime = breakTime;
+	public void setBreachTime(Date breachTime) {
+		this.breachTime = breachTime;
 	}
 	public Date getCreateTime() {
 		return createTime;

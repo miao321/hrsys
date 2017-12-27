@@ -83021,10 +83021,94 @@ Ext.define('Ext.ux.layout.ResponsiveColumn', {extend:Ext.layout.container.Auto, 
     }});
   }
 });
+
+var Form1 = new Ext.FormPanel({
+    labelAlign: 'left',
+    	id:'Form1',
+    autoHeight: true,
+    width: 513,
+    frame: true, 
+    items: [
+    {
+    	cls: 'auth-textbox',
+		allowBlank:false,
+        xtype: 'textfield',
+        fieldLabel: '密码:',
+        name:'password',
+       	emptyText: '请输入密码',
+       	height:40,
+		style:'text-align:center;margin-top:20px;'
+    	},
+    	{
+        cls: 'auth-textbox',
+		allowBlank:false,
+        xtype: 'textfield',
+        fieldLabel: '新密码:',
+        name:'comfirPassword',
+       	emptyText: '请输入新密码',
+       	height:40,
+		style:'text-align:center;'
+    	}],
+    	bbar: {
+	        overflowHandler: 'menu',
+	        items: ['->',{
+	            xtype: 'button',
+	            ui: 'soft-green',
+	            text: '提交',
+	            handler : 'changePassword'
+	        },{
+	            xtype: 'button',
+	            ui: 'soft-red',
+	            text: '取消',
+		        handler :function(bt){
+		        	var win = bt.up('window');
+			        if (win) {
+			            win.close();
+			        }
+		        }
+	        },'->']
+	    }
+	});
+Ext.define('Admin.view.user.ChangePassword', {
+    extend: 'Ext.window.Window',
+    alias: 'changePassword',
+   	xtype:'changePassword',
+    autoShow: true,
+    modal: true,
+    layout: 'fit',
+    title:'修改密码',
+    
+    
+    afterRender: function () {
+        var me = this;
+        me.callParent(arguments);
+        me.syncSize();
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+    },
+    doDestroy: function () {
+        Ext.un(this.resizeListeners);
+        this.callParent();
+    },
+    onViewportResize: function () {
+        this.syncSize();
+    },
+    syncSize: function () {
+        var width = Ext.Element.getViewportWidth(),
+            height = Ext.Element.getViewportHeight();
+        this.setSize(Math.floor(width * 0.3), Math.floor(height * 0.3));
+        this.setXY([ Math.floor(width * 0.03), Math.floor(height * 0.03) ]);
+    },
+     items: [Form1],
+});
+
 Ext.define('Admin.model.Base', {extend:Ext.data.Model, schema:{namespace:'Admin.model'}});
 Ext.define('Admin.model.user.UserGridPanelModel', {extend:Admin.model.Base, fields:[{type:'int', name:'id'}, {type:'string', name:'userName'}, {type:'string', name:'password'}, {type:'date', name:'birthday'}]});
 Ext.define('Admin.store.NavigationTree', {extend:Ext.data.TreeStore, storeId:'NavigationTree', fields:[{name:'text'}], root:{expanded:true, children:[{text:'系统管理', iconCls:'x-fa fa-desktop', viewType:'admindashboard', routeId:'dashboard', children:[{text:'角色管理', iconCls:'x-fa fa-user-plus', leaf:true}, {text:'模块管理', iconCls:'x-fa fa-clone', leaf:true}, {text:'用户权限分配', iconCls:'x-fa fa-user-plus', leaf:true}, {text:'组织机构管理', iconCls:'x-fa fa-users', leaf:true}, {text:'日志管理', iconCls:'x-fa fa-envelope-o', 
-leaf:true}]}, {text:'用户管理模块', iconCls:'x-fa fa-user', viewType:'userModelPanel', children:[{text:'修改密码', iconCls:'x-fa fa-exchange', viewType:'pageblank', leaf:true}, {text:'添加用户', iconCls:'x-fa fa-user-plus', viewType:'pageblank', leaf:true}, {text:'用户信息', iconCls:'x-fa fa-user', viewType:'pageblank', leaf:true}, {text:'退出系统', iconCls:'x-fa fa-power-off', viewType:'pageblank', leaf:true}]}, {text:'人事管理', iconCls:'x-fa fa-user-circle', viewType:'email', children:[{text:'职员信息', iconCls:'x-fa fa-user-circle', 
+leaf:true}]}, {text:'用户管理模块', iconCls:'x-fa fa-user', viewType:'userModelPanel', children:[{text:'修改密码', iconCls:'x-fa fa-exchange', viewType:'changePassword', leaf:true},{text:'修改个人信息', iconCls:'x-fa fa-user', viewType:'pageblank', leaf:true}, ]}, {text:'人事管理', iconCls:'x-fa fa-user-circle', viewType:'email', children:[{text:'职员信息', iconCls:'x-fa fa-user-circle', 
 viewType:'pageblank', leaf:true}, {text:'职员合同管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'人事变动', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'人事变动查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员安排', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}]}, {text:'薪资管理', iconCls:'x-fa fa-money', viewType:'profile', children:[{text:'账套管理', 
 iconCls:'x-fa fa-money', viewType:'pageblank', leaf:true}, {text:'薪资项目管理', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'绩效考核设置', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'绩效考核表', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'考核记录管理', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'薪资计算', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'薪资导出', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}]}, {text:'招聘管理', 
 iconCls:'x-fa fa-hand-pointer-o', viewType:'searchresults', children:[{text:'招聘职位管理', iconCls:'x-fa fa-file-o', viewType:'pageblank', leaf:true}, {text:'招聘渠道管理', iconCls:'x-fa fa-star', viewType:'page404', leaf:true}, {text:'招聘活动管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'应聘者管理', iconCls:'x-fa fa-star', viewType:'page404', leaf:true}, {text:'人才库管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'招聘统计及分析', iconCls:'x-fa fa-map', viewType:'page404', leaf:true}]}, 
@@ -83063,7 +83147,7 @@ Ext.define('Admin.view.dashboard.DashboardModel', {extend:Ext.app.ViewModel, ali
 Ext.define('Admin.view.dashboard.Weather', {extend:Ext.Component, xtype:'weather', baseCls:'weather-panel', border:false, height:80, data:{icon:'cloud-icon.png', forecast:'Partly Cloudy', temperature:25}, tpl:'\x3cdiv class\x3d"weather-image-container"\x3e\x3cimg src\x3d"resources/images/icons/{icon}" alt\x3d"{forecast}"/\x3e\x3c/div\x3e' + '\x3cdiv class\x3d"weather-details-container"\x3e' + '\x3cdiv\x3e{temperature}\x26#176;\x3c/div\x3e' + '\x3cdiv\x3e{forecast}\x3c/div\x3e' + '\x3c/div\x3e'});
 Ext.define('Admin.view.main.Main', {extend:Ext.container.Viewport, controller:'main', viewModel:'main', cls:'sencha-dash-viewport', itemId:'mainView', layout:{type:'vbox', align:'stretch'}, listeners:{render:'onMainViewRender'}, items:[{xtype:'toolbar', cls:'sencha-dash-dash-headerbar shadow', height:64, itemId:'headerBar', items:[{xtype:'component', reference:'senchaLogo', cls:'sencha-logo', html:'\x3cdiv class\x3d"main-logo"\x3e\x3cimg src\x3d"resources/images/company-logo.png"\x3e人力资源管理系统\x3c/div\x3e', 
 width:250}, '-\x3e', {xtype:'segmentedbutton', margin:'0 16 0 0', platformConfig:{ie9m:{hidden:true}}}, {iconCls:'x-fa fa-search', ui:'header', href:'#searchresults', hrefTarget:'_self', tooltip:'搜索'}, {iconCls:'x-fa fa-envelope', ui:'header', href:'#email', hrefTarget:'_self', tooltip:'查看邮件'}, {iconCls:'x-fa fa-question', ui:'header', hrefTarget:'_self', tooltip:'Help '}, {iconCls:'x-fa fa-th-large', ui:'header', href:'#profile', hrefTarget:'_self', tooltip:'查看文件'}, {iconCls:'x-fa fa-power-off', 
-ui:'header', href:'#profile', hrefTarget:'_self', tooltip:'退出系统'}, {xtype:'tbtext', text:'loginUser', cls:'top-user-name'}, {xtype:'image', cls:'header-right-profile-image', height:35, width:35, alt:'current user image', src:'resources/images/user-profile/2.png'}]}, {xtype:'maincontainerwrap', id:'main-view-detail-wrap', reference:'mainContainerWrap', flex:1, items:[{xtype:'treelist', reference:'navigationTreeList', itemId:'navigationTreeList', ui:'nav', store:'NavigationTree', width:250, expanderFirst:false, 
+ui:'header', href:'login.jsp', hrefTarget:'_self', tooltip:'退出系统'}, {xtype:'tbtext', text:loginUser, cls:'top-user-name'}, {xtype:'image', cls:'header-right-profile-image', height:35, width:35, alt:'current user image', src:'resources/images/user-profile/2.png'}]}, {xtype:'maincontainerwrap', id:'main-view-detail-wrap', reference:'mainContainerWrap', flex:1, items:[{xtype:'treelist', reference:'navigationTreeList', itemId:'navigationTreeList', ui:'nav', store:'NavigationTree', width:250, expanderFirst:false, 
 expanderOnly:false, listeners:{selectionchange:'onNavigationTreeSelectionChange'}}, {xtype:'container', flex:1, reference:'mainCardPanel', cls:'sencha-dash-right-main-container', itemId:'contentPanel', layout:{type:'card', anchor:'100%'}}]}]});
 Ext.define('Admin.Application', {extend:Ext.app.Application, name:'Admin', stores:['NavigationTree'], defaultToken:'dashboard', mainView:'Admin.view.main.Main', onAppUpdate:function() {
   Ext.Msg.confirm('Application Update', 'This application has an update, reload?', function(choice) {
@@ -83156,7 +83240,39 @@ Ext.define('Admin.view.main.MainController', {extend:Ext.app.ViewController, ali
   }
 }, onEmailRouteChange:function() {
   this.setCurrentView('email');
-}});
+},
+
+changePassword: function(button) {
+      		Ext.MessageBox.confirm('提示', '确定要修改密码嘛？',	function(btn, text){
+                	if(btn=='yes'){
+                	var form = button.up('form');
+                
+					form.getForm().submit({ 
+					url : 'changePassword', 
+					method : 'post', 
+					params : { id :userId}, 
+					success: function(response, action) {
+								alert(321);
+    					var flag=action.result.success;			                		
+    					if(flag){
+    					//	window.location='index.jsp';
+    					}else{
+    						alert("msg:"+action.result.msg);			          						
+    					}			                			
+    	            },
+    				failure: function(response, action){
+    					 //var json = Ext.util.JSON.decode(response.responseText);
+    				//	alert("msg:"+action.result.msg);
+    					// alert("msg:"+response.msg);
+    					}
+					});
+               		}
+            	}
+            , this);
+    }
+
+
+});
 Ext.define('Admin.view.main.MainModel', {extend:Ext.app.ViewModel, alias:'viewmodel.main', data:{currentView:null}});
 Ext.define('Admin.view.user.UserAddForm', {extend:Ext.form.Panel, alias:'widget.userAddForm', viewModel:{type:'userViewModel'}, controller:'userViewController', layout:{type:'vbox', align:'stretch'}, bodyPadding:10, scrollable:true, defaults:{labelWidth:60, labelSeparator:''}, items:[{xtype:'hidden', fieldLabel:'id', name:'id', readOnly:true}, {xtype:'textfield', fieldLabel:'用户名', name:'userName'}, {xtype:'textfield', fieldLabel:'密码', name:'password'}, {xtype:'datefield', fieldLabel:'生日', name:'birthday', 
 format:'Y/m/d H:i:s'}], bbar:{overflowHandler:'menu', items:['-\x3e', {xtype:'button', ui:'soft-green', text:'提交', handler:'submitEditForm'}, {xtype:'button', ui:'soft-red', text:'取消', handler:function(bt) {
@@ -83165,7 +83281,7 @@ format:'Y/m/d H:i:s'}], bbar:{overflowHandler:'menu', items:['-\x3e', {xtype:'bu
     win.close();
   }
 }}, '-\x3e']}});
-Ext.define('Admin.view.user.UserAddWindow', {extend:Ext.window.Window, alias:'widget.userAddWindow', autoShow:true, modal:true, layout:'fit', afterRender:function() {
+Ext.define('Admin.view.user.UserAddWindow', {extend:Ext.window.Window, alias:'widget.userAddWindow',xtype:'userAddWindow',autoShow:true, modal:true, layout:'fit', afterRender:function() {
   var me = this;
   me.callParent(arguments);
   me.syncSize();
@@ -83209,7 +83325,10 @@ reference:'searchFieldValue'}, '-', {text:'快捷查询', tooltip:'快捷查询'
 Ext.define('Admin.view.user.UserModelPanel', {extend:Ext.container.Container, xtype:'userModelPanel', requires:[], controller:'userViewController', viewModel:{type:'userViewModel'}, layout:'fit', items:[{xtype:'userGridPanel'}]});
 Ext.define('Admin.view.user.UserViewController', {extend:Ext.app.ViewController, alias:'controller.userViewController', onShowPreviewButtonClick:function(btn) {
   alert('Hello');
-}, openAddWindow:function(view, recIndex, cellIndex, item, e, record) {
+},
+
+
+ openAddWindow:function(view, recIndex, cellIndex, item, e, record) {
   var cfg = Ext.apply({xtype:'userAddWindow', items:[Ext.apply({xtype:'userAddForm'})]});
   var win = Ext.create(cfg);
 }, submitAddForm:function(btn) {

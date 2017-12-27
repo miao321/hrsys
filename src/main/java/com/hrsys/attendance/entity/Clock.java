@@ -24,7 +24,7 @@ public class Clock {
 	private Integer id;			//登记表的id
 	private String employNo;	//员工的id
 	private String employName;	//员工姓名
-	private String deptNo;		//所属部门id
+	private String deptName;	//所属部门
 	private Short clockType;	//打卡类型
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
@@ -49,11 +49,11 @@ public class Clock {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public String getDeptNo() {
-		return deptNo;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setDeptNo(String deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public Short getClockType() {
 		return clockType;

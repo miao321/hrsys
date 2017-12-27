@@ -18,6 +18,7 @@ import com.hrsys.personnel.service.IChangeService;
  * @author Lofu
  */
 @Service
+@Transactional
 public class ChangeService implements IChangeService {
 	
 	@Autowired
@@ -33,8 +34,8 @@ public class ChangeService implements IChangeService {
 
 	public void delete(List<Integer> ids) {
 		List<Change> changeList = (List<Change>) changeDao.findAll();
-		for(Change change : changeList) {
-			changeDao.delete(change);
+		if(changeList != null) {
+			changeDao.delete(changeList);
 		}
 	}
 

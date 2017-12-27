@@ -18,6 +18,7 @@ import com.hrsys.personnel.service.IEmployService;
  * @author Lofu
  */
 @Service
+@Transactional
 public class EmployService implements IEmployService {
 	
 	@Autowired
@@ -33,8 +34,8 @@ public class EmployService implements IEmployService {
 
 	public void delete(List<Integer> ids) {
 		List<Employ> employList = (List<Employ>) employDao.findAll(ids);
-		for(Employ employ : employList) {
-			employDao.delete(employ);
+		if(employList != null) {
+			employDao.delete(employList);
 		}
 	}
 

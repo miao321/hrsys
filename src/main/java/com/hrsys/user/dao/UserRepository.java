@@ -19,5 +19,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>,J
 	public User findUser(String userName,String password);
 	@Modifying
 	@Query("update User user set user.password = ?2 where user.id = ?1")
-	public User updateUser(Long id,String password);
+	public void updateUser(Long id,String comfirPassword);
 }
