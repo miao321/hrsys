@@ -1,9 +1,11 @@
 package com.hrsys.user.web;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,5 +97,5 @@ public class UserController {
 		Page<User> page = userService.findAll(userQueryDTO.getSpecification(userQueryDTO), extPageable.getPageable());
 		return page;	
 	}
-
+	
 }

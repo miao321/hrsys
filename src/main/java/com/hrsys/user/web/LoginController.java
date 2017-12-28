@@ -76,6 +76,22 @@ public class LoginController {
 			return new ExtAjaxResponse(false, "密码修改失败");			
 		}
 	}
+	
+	//修改个人信息
+		/*@RequestMapping("/updateMessage")
+		public @ResponseBody ExtAjaxResponse updateMessage(User user,HttpSession session) throws NoSuchAlgorithmException {					
+			user = (User) session.getAttribute("userName");
+			System.out.println(user);
+			String result = (loginService.findUser(session.getAttribute("userName"));
+			return new ExtAjaxResponse(true, result);
+			User user2 = loginService.findUser(user.getUserName());
+			if (result != null) {
+				return new ExtAjaxResponse(true, result);
+			}else {
+				return new ExtAjaxResponse(false, "没有此人，怎么可能？！");
+			}				
+		}*/
+	
 	//退出系统
 	@RequestMapping("/logout")
 	public @ResponseBody ExtAjaxResponse logout() {

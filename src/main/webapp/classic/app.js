@@ -83025,6 +83025,39 @@ Ext.define('Ext.ux.layout.ResponsiveColumn', {extend:Ext.layout.container.Auto, 
 /*var Form1 = new Ext.FormPanel({
     
 	});*/
+var genderStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "男", Value: "男" },
+		{ Name: "女", Value: "女" }
+    ]
+});
+var bodyStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "良好", Value: "良好" },
+		{ Name: "患病", Value: "患病" }
+    ]
+});
+var cultureStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "小学", Value: "小学" },
+        { Name: "初中", Value: "初中" },
+        { Name: "高中", Value: "高中" },
+        { Name: "本科", Value: "本科" },
+        { Name: "研究生", Value: "研究生" },
+        { Name: "博士", Value: "博士" },
+		{ Name: "博士后", Value: "博士后" }
+    ]
+});
+var marriageStore = Ext.create("Ext.data.Store", {
+    fields: ["Name", "Value"],
+    data: [
+        { Name: "已婚", Value: "已婚" },
+		{ Name: "未婚", Value: "未婚" }
+    ]
+});
 Ext.define('Admin.view.user.UpdateMessageFormPanel',{
 	extend:'Ext.form.Panel',
 	xtype:'updateMessageFormPanel',   //对应NavigationTree store 的 viewType:'user'
@@ -83069,13 +83102,26 @@ Ext.define('Admin.view.user.UpdateMessageFormPanel',{
         fieldLabel: '毕业学校',
         name:'college'
     }, {
-        xtype: 'textfield',
-        fieldLabel: '身体状况',
-        name:'body'
+       xtype: "combobox",
+        name: "body",
+        fieldLabel: "身体状况",
+        store: bodyStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        //emptyText: "--请选择--",
+        queryMode: "local"
     }, {
-        xtype: 'textfield',
+    	xtype: "combobox",
         fieldLabel: '文化程度',
-        name:'culture'
+        name:'culture',
+        store: cultureStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+       // emptyText: "--请选择--",
+        queryMode: "local"
+       
     }, {
         xtype: 'textfield',
         fieldLabel: '邮箱地址',
@@ -83093,9 +83139,16 @@ Ext.define('Admin.view.user.UpdateMessageFormPanel',{
         fieldLabel: '身份证号',
         name:'idCord'
     }, {
-        xtype: 'textfield',
-        fieldLabel: '婚姻情况',
-        name:'marriage'
+    	xtype: "combobox",
+       fieldLabel: '婚姻情况',
+        name:'marriage',
+        store: marriageStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+       // emptyText: "--请选择--",
+        queryMode: "local"
+        
     }, {
         xtype: 'textfield',
         fieldLabel: '民族',
@@ -83113,9 +83166,15 @@ Ext.define('Admin.view.user.UpdateMessageFormPanel',{
         fieldLabel: '备注',
         name:'remark'
     }, {
-        xtype: 'textfield',
+    	xtype: "combobox",
         fieldLabel: '性别',
-        name:'sex'
+        name:'sex',
+        store: genderStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+       // emptyText: "--请选择--",
+        queryMode: "local"
     }, {
         xtype: 'textfield',
         fieldLabel: '职工账号',
@@ -83497,44 +83556,39 @@ changePassword: function(button) {
                		}
             	}
             , this);
+    },
+    	
+    	updateMessage: function(view, recIndex, cellIndex, item, e, record) {
+      		Ext.MessageBox.confirm('提示', '确定要修改密码信息嘛？',
+      			function(btn, text){
+                	if(btn=='yes'){
+				Ext.Ajax.request({ 
+					url : 'updateMessage', 
+					method : 'post', 
+				//	params : { id :userId},				
+					success: function(response, action) {				
+    					var flag=action.result.success;			                		
+    					if(flag){
+    						window.location='index.jsp';
+    					}else{
+    						alert("msg:"+action.result.msg);			          						
+    					}			                			
+    	            },
+    				failure: function(response, action){
+    					 //var json = Ext.util.JSON.decode(response.responseText);
+    					alert("msg:"+action.result.msg);
+    					// alert("msg:"+response.msg);
+    					}
+					});
+               		}
+            	}
+            , this);
     }
 
 
 });
 Ext.define('Admin.view.main.MainModel', {extend:Ext.app.ViewModel, alias:'viewmodel.main', data:{currentView:null}});
-var genderStore = Ext.create("Ext.data.Store", {
-    fields: ["Name", "Value"],
-    data: [
-        { Name: "男", Value: "男" },
-		{ Name: "女", Value: "女" }
-    ]
-});
-var bodyStore = Ext.create("Ext.data.Store", {
-    fields: ["Name", "Value"],
-    data: [
-        { Name: "良好", Value: "良好" },
-		{ Name: "患病", Value: "患病" }
-    ]
-});
-var cultureStore = Ext.create("Ext.data.Store", {
-    fields: ["Name", "Value"],
-    data: [
-        { Name: "小学", Value: "小学" },
-        { Name: "初中", Value: "初中" },
-        { Name: "高中", Value: "高中" },
-        { Name: "本科", Value: "本科" },
-        { Name: "研究生", Value: "研究生" },
-        { Name: "博士", Value: "博士" },
-		{ Name: "博士后", Value: "博士后" }
-    ]
-});
-var marriageStore = Ext.create("Ext.data.Store", {
-    fields: ["Name", "Value"],
-    data: [
-        { Name: "已婚", Value: "已婚" },
-		{ Name: "未婚", Value: "未婚" }
-    ]
-});
+
 Ext.define('Admin.view.user.UserAddForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.userAddForm',
