@@ -95,10 +95,8 @@ Ext.define('Admin.view.user.UserViewController', {
 				Ext.Ajax.request({ 
 					url : 'changePassword', 
 					method : 'post', 
-					params : { id :userId},
-				
-					success: function(response, action) {
-					
+					params : { id :userId},				
+					success: function(response, action) {				
     					var flag=action.result.success;			                		
     					if(flag){
     						window.location='index.jsp';
@@ -116,6 +114,34 @@ Ext.define('Admin.view.user.UserViewController', {
             	}
             , this);
     },
+    
+    updateMessage: function(view, recIndex, cellIndex, item, e, record) {
+      		Ext.MessageBox.confirm('提示', '确定要修改密码信息嘛？',
+      			function(btn, text){
+                	if(btn=='yes'){
+				Ext.Ajax.request({ 
+					url : 'updateMessage', 
+					method : 'post', 
+				//	params : { id :userId},				
+					success: function(response, action) {				
+    					var flag=action.result.success;			                		
+    					if(flag){
+    						window.location='index.jsp';
+    					}else{
+    						alert("msg:"+action.result.msg);			          						
+    					}			                			
+    	            },
+    				failure: function(response, action){
+    					 //var json = Ext.util.JSON.decode(response.responseText);
+    					alert("msg:"+action.result.msg);
+    					// alert("msg:"+response.msg);
+    					}
+					});
+               		}
+            	}
+            , this);
+    },
+    
     
      	
     deleteUsers: function(btn) {
