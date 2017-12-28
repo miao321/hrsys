@@ -19,14 +19,21 @@ import com.hrsys.personnel.entity.Employ;
  * @author Lofu
  */
 public class EmployQueryDTO {
-	private String employName; // 员工姓名
-	private String employSex; // 员工性别
-	private String deptNo; // 所在部门
-	private Date beginTime; // 合同开始时间
-	private Date endTime; // 合同到期时间
-	private Date hiredate; // 入职时间
-	private Date birthday; // 员工生日
-	private String education; // 文化水平
+	private String employId;	// 员工ID
+	private String employName;	// 员工姓名
+	private String employSex;	// 员工性别
+	private String deptName;	// 所在部门
+	private String education;	// 教育程度
+	private Date beginTime;		// 合同开始时间
+	private Date endTime;		// 合同到期时间
+	private Date hiredate;		// 入职时间
+	private Date birthday;		// 员工生日
+	public String getEmployId() {
+		return employId;
+	}
+	public void setEmployId(String employId) {
+		this.employId = employId;
+	}
 	public String getEmployName() {
 		return employName;
 	}
@@ -39,13 +46,12 @@ public class EmployQueryDTO {
 	public void setEmploySex(String employSex) {
 		this.employSex = employSex;
 	}
-	public String getDeptNo() {
-		return deptNo;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setDeptNo(String deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
-
 	public Date getBeginTime() {
 		return beginTime;
 	}
@@ -85,24 +91,36 @@ public class EmployQueryDTO {
 				List<Predicate> list = new ArrayList<Predicate>();
 
 				// 2.根据 QueryDTO数据字段的值进行判断以及条件的组装
+				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmployId())) {
+					Predicate p = cb.equal(root.get("employId").as(String.class),
+							employQueryDTO.getEmployId());
+					list.add(p);
+				}
 				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmployName())) {
 					Predicate p = cb.like(root.get("employName").as(String.class),
 							"%" + employQueryDTO.getEmployName() + "%");
 					list.add(p);
 				}
-				
 				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmploySex())) {
 					Predicate p = cb.equal(root.get("employSex").as(String.class),
 							employQueryDTO.getEmploySex());
 					list.add(p);
 				}
-				
+				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEducation())) {
+					Predicate p = cb.like(root.get("education").as(String.class),
+							"%" + employQueryDTO.getEducation() + "%");
+					list.add(p);
+				}
+				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getDeptName())) {
+					Predicate p = cb.like(root.get("deptName").as(String.class),
+							"%" + employQueryDTO.getDeptName() + "%");
+					list.add(p);
+				}
 				if (employQueryDTO != null && employQueryDTO.getBeginTime() != null) {
 					Predicate p = cb.greaterThanOrEqualTo(root.get("beginTime").as(Date.class),
 							employQueryDTO.getBeginTime());
 					list.add(p);
 				}
-				
 				if (employQueryDTO != null && employQueryDTO.getEndTime() != null) {
 					Predicate p = cb.lessThanOrEqualTo(root.get("endTime").as(Date.class),
 							employQueryDTO.getEndTime());

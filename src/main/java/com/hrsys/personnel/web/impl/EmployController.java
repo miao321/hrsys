@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,18 +33,18 @@ public class EmployController implements IEmployController{
 	@ResponseBody
 	public String insertTestData() {
 		try {
-			for(int i=0; i<100; i++) {
+			for(int i=0; i<20; i++) {
 				Employ employ = new Employ();
-				employ.setEmployNo("E000"+i);
-				employ.setEmployName("职工"+i);
-				employ.setEmploySex("男");
-				employ.setDeptNo("D001");
-				employ.setLeaderNo("E0000");
+				employ.setEmployNo("E00"+i);
+				employ.setEmployName("周七"+i);
+				employ.setEmploySex("女");
+				employ.setDeptName("研发部");
+				employ.setLeaderNo("E000");
 				employ.setBeginTime(DateUtil.stringToDay("2005-12-01"));
 				employ.setEndTime(DateUtil.stringToDay("2025-12-01"));
 				employ.setBirthday(DateUtil.stringToDay("1995-12-05"));
 				employ.setHiredate(DateUtil.stringToDay("2005-12-05"));
-				employ.setEducation("大学本科");
+				employ.setEducation("大学研究生");
 				employ.setEmail("123456@qq.com");
 				employ.setPhone("138-1111-2222");
 				

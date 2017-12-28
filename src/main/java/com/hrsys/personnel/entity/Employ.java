@@ -25,7 +25,7 @@ public class Employ {
 	private String employNo;		//员工的id号
 	private String employName;		//员工姓名
 	private String employSex;		//员工性别
-	private String deptNo;			//所在部门
+	private String deptName;		//所在部门
 	private Integer salary;			//员工工资
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
@@ -44,7 +44,7 @@ public class Employ {
 	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date birthday;			//员工生日
 	private String leaderNo;		//直属领导
-	private String education;		//文化水平
+	private String education;		//教育程度
 	private String email;			//员工邮箱
 	private String phone;			//手机号码
 	public int getId() {
@@ -71,11 +71,11 @@ public class Employ {
 	public void setEmploySex(String employSex) {
 		this.employSex = employSex;
 	}
-	public String getDeptNo() {
-		return deptNo;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setDeptNo(String deptNo) {
-		this.deptNo = deptNo;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public Integer getSalary() {
 		return salary;

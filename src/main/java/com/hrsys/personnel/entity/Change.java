@@ -24,10 +24,10 @@ public class Change {
 	private Integer id;			//调动记录表的id
 	private String employNo;	//员工id
 	private String employName;	//员工姓名
-	private String fromDeptNo;	//调动前的部门id
-	private String toDeptNo;	//调动后的部门id
+	private String fromDeptName;//调动前的部门
+	private String toDeptName;	//调动后的部门
 	private String lastLeaderNo;//调动前的领导id
-	private String nowLeaderId;	//调动后的领导id
+	private String nowLeaderNo;	//调动后的领导id
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
@@ -54,17 +54,17 @@ public class Change {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public String getFromDeptNo() {
-		return fromDeptNo;
+	public String getFromDeptName() {
+		return fromDeptName;
 	}
-	public void setFromDeptNo(String fromDeptNo) {
-		this.fromDeptNo = fromDeptNo;
+	public void setFromDeptName(String fromDeptName) {
+		this.fromDeptName = fromDeptName;
 	}
-	public String getToDeptNo() {
-		return toDeptNo;
+	public String getToDeptName() {
+		return toDeptName;
 	}
-	public void setToDeptNo(String toDeptNo) {
-		this.toDeptNo = toDeptNo;
+	public void setToDeptName(String toDeptName) {
+		this.toDeptName = toDeptName;
 	}
 	public String getLastLeaderNo() {
 		return lastLeaderNo;
@@ -72,11 +72,11 @@ public class Change {
 	public void setLastLeaderNo(String lastLeaderNo) {
 		this.lastLeaderNo = lastLeaderNo;
 	}
-	public String getNowLeaderId() {
-		return nowLeaderId;
+	public String getNowLeaderNo() {
+		return nowLeaderNo;
 	}
-	public void setNowLeaderId(String nowLeaderId) {
-		this.nowLeaderId = nowLeaderId;
+	public void setNowLeaderNo(String nowLeaderNo) {
+		this.nowLeaderNo = nowLeaderNo;
 	}
 	public Date getApplyTime() {
 		return applyTime;

@@ -35,12 +35,12 @@ public class ChangeController implements IChangeController {
 		try {
 			for(int i=0; i<100; i++) {
 				Change change = new Change();
-				change.setEmployNo("E000"+i);
+				change.setEmployNo("E00"+i);
 				change.setEmployName("职工"+i);
-				change.setFromDeptNo("D001");
-				change.setToDeptNo("D002");
+				change.setFromDeptName("人事部");
+				change.setToDeptName("招聘部");
 				change.setLastLeaderNo("E001");
-				change.setNowLeaderId("E002");
+				change.setNowLeaderNo("E002");
 				change.setApplyTime(DateUtil.stringToDay("2017-05-01"));
 				change.setAgreeTime(DateUtil.stringToDay("2017-12-01"));
 				
