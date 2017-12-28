@@ -19,7 +19,9 @@ import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.dto.UserQueryDTO;
+import com.hrsys.user.service.ILoginService;
 import com.hrsys.user.service.IUserService;
+import com.hrsys.user.service.impl.LoginServiceImpl;
 
 
 @Controller
@@ -28,8 +30,24 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private ILoginService loginServiceImpl;
 	@RequestMapping("/saveOrUpdate")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(User user) {
+		User user2 = loginServiceImpl.findUser(user.getUserName());
+		if (user2 != null) {
+			return new ExtAjaxResponse(false, "用户名已经存在");
+		}
+		try {
+			user.setPassword(EncryptUtils.encript(user.getPassword()));
+			userService.saveOrUpdate(user);
+			return new ExtAjaxResponse(true, "操作成功");
+		} catch (Exception e) {
+			return new ExtAjaxResponse(false, "操作失败");
+		}	
+	}
+	@RequestMapping("/save")
+	public @ResponseBody ExtAjaxResponse save(User user) {
 		try {
 			user.setPassword(EncryptUtils.encript(user.getPassword()));
 			userService.saveOrUpdate(user);

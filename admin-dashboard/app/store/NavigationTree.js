@@ -20,7 +20,7 @@ Ext.define('Admin.store.NavigationTree', {
                     {
                         text: '角色管理',
                         iconCls: 'x-fa fa-user-plus',
-                        //viewType: 'pageblank',
+                        viewType: 'userModelPanel',
                         leaf: true
                     },
 

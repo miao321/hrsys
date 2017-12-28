@@ -15,6 +15,16 @@ import com.hrsys.system.entity.Role;
 
 
 public class RoleQueryDTO {
+	private String roleName;
+	
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
 	//提供static的工具方法： 根据当前userQueryDTO对象来组装动态查询条件
 	public static Specification<Role> getSpecification(RoleQueryDTO roleQueryDTO){
 		Specification<Role> spec = new Specification<Role>() {

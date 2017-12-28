@@ -3,6 +3,9 @@ package com.hrsys.common.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 public class BaseEntity implements Serializable{
 	private String createBy;//创建人
 	private	Date createTime;//创建时间
