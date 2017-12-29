@@ -32,7 +32,7 @@ public class UserServiceTest {
 	public void save() throws NoSuchAlgorithmException {
 		
 			User user = new User();
-			user.setUserName("sss");
+			user.setUserName("aaa");
 			user.setPassword(EncryptUtils.encript("123"));
 			//user.setBirthday(new Date());
 			userService.saveOrUpdate(user);

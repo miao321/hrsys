@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.EncryptUtils;
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.common.ExtResponse;
 import com.hrsys.user.dao.UserRepository;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.service.ILoginService;
@@ -47,6 +48,7 @@ public class LoginController {
 		if (!EncryptUtils.encript(password).equals(user.getPassword())) {
 			return new ExtAjaxResponse(false, "密码不正确！");
 		}
+		session.setAttribute("user", user);
 		session.setAttribute("userName", userName);
 		session.setAttribute("userId", user.getId());
 		session.setAttribute("password", user.getPassword());		
@@ -78,19 +80,15 @@ public class LoginController {
 	}
 	
 	//修改个人信息
-		/*@RequestMapping("/updateMessage")
-		public @ResponseBody ExtAjaxResponse updateMessage(User user,HttpSession session) throws NoSuchAlgorithmException {					
-			user = (User) session.getAttribute("userName");
-			System.out.println(user);
-			String result = (loginService.findUser(session.getAttribute("userName"));
-			return new ExtAjaxResponse(true, result);
-			User user2 = loginService.findUser(user.getUserName());
-			if (result != null) {
-				return new ExtAjaxResponse(true, result);
-			}else {
-				return new ExtAjaxResponse(false, "没有此人，怎么可能？！");
-			}				
-		}*/
+		@RequestMapping("/updateMessage")
+		public @ResponseBody ExtResponse updateMessage(HttpSession session) throws NoSuchAlgorithmException {					
+			User user = (User) session.getAttribute("user");
+			if (user != null) {
+				return new ExtResponse(true, "操作成功", user.getId(), user.getUserNo(), user.getUserName(), user.getPassword(), user.getUserNickName(), user.getSex(), user.getBirthday(), user.getAge(), user.getNativePlace(), user.getNation(),
+						user.getCulture(), user.getCollege(), user.getBody(), user.getMarriage(), user.getIdCord(), user.getPhone(), user.getFamilyPhone(), user.getEmail(), user.getUserAccount(), user.getDeptId(), user.getRemark());
+			}
+			return new ExtResponse(false, "操作不成功");
+		}
 	
 	//退出系统
 	@RequestMapping("/logout")

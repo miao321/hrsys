@@ -1,7 +1,6 @@
-Ext.define('Admin.view.user.UpdateMessage', {
+Ext.define('Admin.view.user.ModuleEditWindow', {
     extend: 'Ext.window.Window',
-    alias: 'updateMessage',
-   	xtype:'updateMessage',
+    alias: 'widget.moduleEditWindow',
     autoShow: true,
     modal: true,
     layout: 'fit',
@@ -29,7 +28,4 @@ Ext.define('Admin.view.user.UpdateMessage', {
         this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
         this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
     }
-	listeners:{
-		click:'updateMessage'
-	}
 });

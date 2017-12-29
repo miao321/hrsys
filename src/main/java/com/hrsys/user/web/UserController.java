@@ -51,7 +51,7 @@ public class UserController {
 	@RequestMapping("/save")
 	public @ResponseBody ExtAjaxResponse save(User user) {
 		try {
-			user.setPassword(EncryptUtils.encript(user.getPassword()));
+			//user.setPassword(EncryptUtils.encript(user.getPassword()));
 			userService.saveOrUpdate(user);
 			return new ExtAjaxResponse(true, "操作成功");
 		} catch (Exception e) {

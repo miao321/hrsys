@@ -2,8 +2,8 @@ Ext.define('Admin.view.user.ModuleModelPanel',{
 	extend:'Ext.container.Container',
 	xtype:'moduleModelPanel',   //对应NavigationTree store 的 viewType:'user'
 		requires:[],
-//	controller:'userViewController',
-//	viewModel:{type:'userViewModel'},
+//	controller:'moduleViewController',
+//	viewModel:{type:'moduleViewModel'},
 //	listeners:{hide:'onHideView'},
 	layout:'fit',
 //	items:[{xtype:'userGridPanel'}]

@@ -14,7 +14,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Entity
 @Table(name="t_module")
 public class Module extends BaseEntity implements Serializable {
-	private Long moduleId;
+	private Long id;
 	private String parentId;
 	private String parentName;//父节点名字
 	private String moduleName;//模块名
@@ -25,15 +25,19 @@ public class Module extends BaseEntity implements Serializable {
 	private String belong;//从属
 	private String remark;//备注
 	private Integer orderNo;//排序号
+	private String createBy;//创建人
+	private	Date createTime;//创建时间
+	private String updateBy;//修改人
+	private Date updateTime;//修改时间
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Long getModuleId() {
-		return moduleId;
+	public Long getId() {
+		return id;
 	}
 	public String getParentId() {
 		return parentId;
-	}
+	}	
 	public String getParentName() {
 		return parentName;
 	}
@@ -61,8 +65,9 @@ public class Module extends BaseEntity implements Serializable {
 	public Integer getOrderNo() {
 		return orderNo;
 	}
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
@@ -93,6 +98,30 @@ public class Module extends BaseEntity implements Serializable {
 	}
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
+	}
+	public String getCreateBy() {
+		return createBy;
+	}
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public String getUpdateBy() {
+		return updateBy;
+	}
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 	

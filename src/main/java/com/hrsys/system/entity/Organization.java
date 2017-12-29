@@ -13,7 +13,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Entity
 @Table(name="t_organization")
 public class Organization extends BaseEntity implements Serializable {
-	private Long organizationId;
+	private Long id;
 	private Integer deptId;//部门编号
 	private String deptName;//部门名字
 	private Integer deptPhone;//部门联系电话
@@ -22,14 +22,19 @@ public class Organization extends BaseEntity implements Serializable {
 	private String deptOlder;//部门负责人
 	private String deptSign;//部门标记
 	private String remark;//备注
+	private String createBy;//创建人
+	private	Date createTime;//创建时间
+	private String updateBy;//修改人
+	private Date updateTime;//修改时间
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Long getOrganizationId() {
-		return organizationId;
+	public Long getId() {
+		return id;
 	}
 	public Integer getDeptId() {
 		return deptId;
 	}
+	
 	public String getDeptName() {
 		return deptName;
 	}
@@ -52,8 +57,9 @@ public class Organization extends BaseEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
-	public void setOrganizationId(Long organizationId) {
-		this.organizationId = organizationId;
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
@@ -78,6 +84,30 @@ public class Organization extends BaseEntity implements Serializable {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getCreateBy() {
+		return createBy;
+	}
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public String getUpdateBy() {
+		return updateBy;
+	}
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 

@@ -6,7 +6,7 @@ public class ExtAjaxResponse
 {
 	private boolean success= true;
 	private String msg= "";
-	private User us;
+	
 	public ExtAjaxResponse() {}
 	
 	public ExtAjaxResponse(boolean success) {
@@ -17,10 +17,7 @@ public class ExtAjaxResponse
 		this.success = success;
 		this.msg = msg;
 	}
-	public ExtAjaxResponse(boolean success,User us) {
-		this.success = success;
-		this.us = us;
-	}
+
 	
 	public boolean isSuccess() {
 		return success;
@@ -29,8 +26,6 @@ public class ExtAjaxResponse
 		return msg;
 	}
 
-	public User getUs() {
-		return us;
-	}
+	
 	
 }

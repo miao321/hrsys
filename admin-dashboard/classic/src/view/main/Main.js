@@ -84,7 +84,9 @@ Ext.define('Admin.view.main.Main', {
                 {
                     xtype: 'tbtext',
                     text: 'loginUser',
-                    cls: 'top-user-name'
+                    cls: 'top-user-name',
+                    tooltip: '修改个人信息',
+                    handler: 'updateMessage'
                 },
                 //获取登录者头像
                 {
@@ -93,7 +95,9 @@ Ext.define('Admin.view.main.Main', {
                     height: 35,
                     width: 35,
                     alt:'current user image',
-                    src: 'resources/images/user-profile/2.png'
+                    src: 'resources/images/user-profile/2.png',
+                    tooltip: '修改个人信息',
+                    handler: 'updateMessage'
 	                },{
                     iconCls:'x-fa fa-sign-out',
                     ui: 'header',
