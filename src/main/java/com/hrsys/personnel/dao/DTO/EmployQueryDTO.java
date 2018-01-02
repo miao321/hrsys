@@ -10,6 +10,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
 import com.hrsys.personnel.entity.Employ;
@@ -19,20 +20,23 @@ import com.hrsys.personnel.entity.Employ;
  * @author Lofu
  */
 public class EmployQueryDTO {
-	private String employId;	// 员工ID
+	private String employNo;	// 员工ID
 	private String employName;	// 员工姓名
 	private String employSex;	// 员工性别
 	private String deptName;	// 所在部门
 	private String education;	// 教育程度
-	private Date beginTime;		// 合同开始时间
-	private Date endTime;		// 合同到期时间
-	private Date hiredate;		// 入职时间
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date beginTime;		// 开始时间
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date endTime;		// 结束时间
+	
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	private Date birthday;		// 员工生日
-	public String getEmployId() {
-		return employId;
+	public String getEmployNo() {
+		return employNo;
 	}
-	public void setEmployId(String employId) {
-		this.employId = employId;
+	public void setEmployNo(String employNo) {
+		this.employNo = employNo;
 	}
 	public String getEmployName() {
 		return employName;
@@ -64,12 +68,6 @@ public class EmployQueryDTO {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public Date getHiredate() {
-		return hiredate;
-	}
-	public void setHiredate(Date hiredate) {
-		this.hiredate = hiredate;
-	}
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -91,9 +89,9 @@ public class EmployQueryDTO {
 				List<Predicate> list = new ArrayList<Predicate>();
 
 				// 2.根据 QueryDTO数据字段的值进行判断以及条件的组装
-				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmployId())) {
-					Predicate p = cb.equal(root.get("employId").as(String.class),
-							employQueryDTO.getEmployId());
+				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmployNo())) {
+					Predicate p = cb.equal(root.get("employNo").as(String.class),
+							employQueryDTO.getEmployNo());
 					list.add(p);
 				}
 				if (employQueryDTO != null && !StringUtils.isEmpty(employQueryDTO.getEmployName())) {
@@ -116,14 +114,15 @@ public class EmployQueryDTO {
 							"%" + employQueryDTO.getDeptName() + "%");
 					list.add(p);
 				}
-				if (employQueryDTO != null && employQueryDTO.getBeginTime() != null) {
-					Predicate p = cb.greaterThanOrEqualTo(root.get("beginTime").as(Date.class),
-							employQueryDTO.getBeginTime());
+				if (employQueryDTO != null && employQueryDTO.getBeginTime() != null && employQueryDTO.getEndTime() != null ) {
+					Predicate p = cb.between(root.get("hiredate").as(Date.class), 
+							employQueryDTO.getBeginTime(), employQueryDTO.getEndTime());
 					list.add(p);
 				}
-				if (employQueryDTO != null && employQueryDTO.getEndTime() != null) {
-					Predicate p = cb.lessThanOrEqualTo(root.get("endTime").as(Date.class),
-							employQueryDTO.getEndTime());
+				
+				if (employQueryDTO != null && employQueryDTO.getBirthday() != null) {
+					Predicate p = cb.equal(root.get("birthday").as(Date.class),
+							employQueryDTO.getBirthday());
 					list.add(p);
 				}
 

@@ -30,11 +30,11 @@ public class Change {
 	private String nowLeaderNo;	//调动后的领导id
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date applyTime;		//申请时间
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy/MM/dd")
 	private Date agreeTime;		//通过时间
 	public Integer getId() {
 		return id;
