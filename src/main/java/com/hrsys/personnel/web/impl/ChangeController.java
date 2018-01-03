@@ -82,7 +82,7 @@ public class ChangeController implements IChangeController {
 	public ExtAjaxResponse deleteChanges(@RequestParam Integer[] ids) {
 		try {
 			List<Integer> idLists = Arrays.asList(ids);
-			if (null != idLists) {
+			if (idLists != null) {
 				changeService.delete(idLists);
 			}
 			return new ExtAjaxResponse(true, "操作成功！");

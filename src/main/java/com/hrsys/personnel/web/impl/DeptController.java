@@ -38,7 +38,7 @@ public class DeptController implements IDeptController {
 				dept.setDeptName("测试部");
 				dept.setLocation("东莞");
 				dept.setDeptPhone("138-2222-5555");
-				dept.setLeaderNo("E001");
+				dept.setLeader("张三丰");
 				
 				deptService.saveOrUpdate(dept);
 			}
@@ -78,7 +78,7 @@ public class DeptController implements IDeptController {
 	public ExtAjaxResponse deleteDepts(@RequestParam Integer[] ids) {
 		try {
 			List<Integer> idLists = Arrays.asList(ids);
-			if (null != idLists) {
+			if (idLists != null) {
 				deptService.delete(idLists);
 			}
 			return new ExtAjaxResponse(true, "操作成功！");

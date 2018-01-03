@@ -33,7 +33,7 @@ public class DeptService implements IDeptService {
 	}
 
 	public void delete(List<Integer> ids) {
-		List<Dept> deptList = (List<Dept>)deptDao.findAll();
+		List<Dept> deptList = (List<Dept>)deptDao.findAll(ids);
 		if(deptList != null) {
 			deptDao.delete(deptList);
 		}

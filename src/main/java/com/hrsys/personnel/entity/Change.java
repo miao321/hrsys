@@ -22,7 +22,7 @@ public class Change {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;			//调动记录表的id
-	private String employNo;	//员工id
+	private String employNo;	//员工号
 	private String employName;	//员工姓名
 	private String fromDeptName;//调动前的部门
 	private String toDeptName;	//调动后的部门

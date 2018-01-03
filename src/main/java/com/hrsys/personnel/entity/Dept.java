@@ -19,7 +19,7 @@ public class Dept {
 	private String deptNo;		//部门的id
 	private String deptName;	//部门名称
 	private String location;	//部门所在地
-	private String leaderNo;	//该部门领导的职工id
+	private String leader;		//该部门领导
 	private String deptPhone;	//部门联系电话
 	public Integer getId() {
 		return id;
@@ -45,11 +45,11 @@ public class Dept {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getLeaderNo() {
-		return leaderNo;
+	public String getLeader() {
+		return leader;
 	}
-	public void setLeaderNo(String leaderNo) {
-		this.leaderNo = leaderNo;
+	public void setLeader(String leader) {
+		this.leader = leader;
 	}
 	public String getDeptPhone() {
 		return deptPhone;

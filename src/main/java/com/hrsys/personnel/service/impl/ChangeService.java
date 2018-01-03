@@ -33,7 +33,7 @@ public class ChangeService implements IChangeService {
 	}
 
 	public void delete(List<Integer> ids) {
-		List<Change> changeList = (List<Change>) changeDao.findAll();
+		List<Change> changeList = (List<Change>) changeDao.findAll(ids);
 		if(changeList != null) {
 			changeDao.delete(changeList);
 		}
