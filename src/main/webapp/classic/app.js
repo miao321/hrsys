@@ -83128,6 +83128,75 @@ Ext.define('Admin.view.user.AddRoleFormPanel',{
 	        },'->']
 	    }
 });
+
+Ext.define('Admin.view.user.AddPermissionFormPanel',{
+	extend:'Ext.form.Panel',
+	xtype:'addPermissionFormPanel',   //对应NavigationTree store 的 viewType:'user'
+	labelAlign: 'left',
+    //	id:'Form1',
+    autoHeight: true,
+    width: 513,
+    frame: true, 
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+    items: [
+     {
+       xtype: "combobox",
+       name: "id",
+       model:'local',
+       fieldLabel: "权限",
+       store: {
+       	   autoLoad:true,
+       	   fields:[{name:'id',type:'int'},{name:'url',type:'string'}],
+	       	proxy: {
+				type: 'ajax',
+				url:'permission/findAll.json',
+				reader: {
+					type: 'json',
+					rootProperty: 'lists',
+					totalProperty:'totalElements'
+				  }
+			}
+		},
+        editable: false,
+        valueField: "id",
+        displayField: "url",
+       
+        emptyText: "--请选择--",
+        queryMode: "local",
+        height:40,
+		style:'text-align:center;margin-top:20px;'
+    }],
+    	bbar: {
+	        overflowHandler: 'menu',
+	        items: ['->',{
+	            xtype: 'button',
+	            ui: 'soft-green',
+	            text: '提交',
+	            handler : 'addRole'
+	        },{
+	            xtype: 'button',
+	            ui: 'soft-red',
+	            text: '取消',
+		        handler :function(bt){
+		        	var win = bt.up('window');
+			        if (win) {
+			            win.close();
+			        }
+		        }
+	        },'->']
+	    }
+});
 	
 Ext.define('Admin.view.user.UpdateMessageFormPanel',{
 	extend:'Ext.form.Panel',
@@ -83373,6 +83442,43 @@ Ext.define('Admin.view.user.AddRole', {
 	}*/
 });
 
+Ext.define('Admin.view.user.AddPermissionWindow', {
+    extend: 'Ext.window.Window',
+    alias: 'addPermissionWindow',
+   	xtype:'addPermissionWindow',
+    autoShow: true,
+    modal: true,
+    layout: 'fit',
+   	id:'addPermissionWindow',
+    //items:[],
+    afterRender: function () {
+        var me = this;
+        me.callParent(arguments);
+        me.syncSize();
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+    },
+    doDestroy: function () {
+        Ext.un(this.resizeListeners);
+        this.callParent();
+    },
+    onViewportResize: function () {
+        this.syncSize();
+    },
+    syncSize: function () {
+        var width = Ext.Element.getViewportWidth(),
+            height = Ext.Element.getViewportHeight();
+        this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
+        this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
+    }
+/*	listeners:{
+		click:'updateMessage'
+	}*/
+});
+
 Ext.define('Admin.view.user.UpdateMessage', {
     extend: 'Ext.window.Window',
     alias: 'updateMessage',
@@ -83509,7 +83615,7 @@ Ext.define('Admin.model.user.ModuleGridPanelModel', {
     ]
 });
 
-Ext.define('Admin.model.user.OrganizationGridPanelModel', {
+Ext.define('Admin.model.user.DeptGridPanelModel', {
     extend: 'Admin.model.Base',
     fields: [
 		{type: 'int'	,name: 'id'},
@@ -83528,7 +83634,7 @@ Ext.define('Admin.model.user.OrganizationGridPanelModel', {
     ]
 });
 
-Ext.define('Admin.store.NavigationTree', {extend:Ext.data.TreeStore, storeId:'NavigationTree', fields:[{name:'text'}], root:{expanded:true, children:[{text:'系统管理', iconCls:'x-fa fa-desktop', viewType:'admindashboard', routeId:'dashboard', children:[{text:'角色管理', iconCls:'x-fa fa-user-plus', viewType:'roleModelPanel', leaf:true}, {text:'模块管理', iconCls:'x-fa fa-clone',viewType:'moduleModelPanel', leaf:true}, {text:'用户权限分配', iconCls:'x-fa fa-user-plus',viewType:'userPermissionModelPanel', leaf:true}, {text:'部门管理', iconCls:'x-fa fa-users',viewType:'organizationModelPanel', leaf:true}, {text:'日志管理', iconCls:'x-fa fa-envelope-o',viewType:'logModelPanel', 
+Ext.define('Admin.store.NavigationTree', {extend:Ext.data.TreeStore, storeId:'NavigationTree', fields:[{name:'text'}], root:{expanded:true, children:[{text:'系统管理', iconCls:'x-fa fa-desktop', viewType:'admindashboard', routeId:'dashboard', children:[{text:'角色管理', iconCls:'x-fa fa-user-plus', viewType:'roleModelPanel', leaf:true}, {text:'模块管理', iconCls:'x-fa fa-clone',viewType:'moduleModelPanel', leaf:true}, {text:'用户权限分配', iconCls:'x-fa fa-user-plus',viewType:'userPermissionModelPanel', leaf:true}, {text:'部门管理', iconCls:'x-fa fa-users',viewType:'deptModelPanel', leaf:true}, {text:'日志管理', iconCls:'x-fa fa-envelope-o',viewType:'logModelPanel', 
 leaf:true}]}, {text:'用户管理模块', iconCls:'x-fa fa-user', viewType:'userModelPanel', children:[{text:'修改密码', iconCls:'x-fa fa-exchange', viewType:'changePassword', leaf:true}, ]}, {text:'人事管理', iconCls:'x-fa fa-user-circle', viewType:'email', children:[{text:'职员信息', iconCls:'x-fa fa-user-circle', 
 viewType:'pageblank', leaf:true}, {text:'职员合同管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'人事变动', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'人事变动查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员安排', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}]}, {text:'薪资管理', iconCls:'x-fa fa-money', viewType:'profile', children:[{text:'账套管理', 
 iconCls:'x-fa fa-money', viewType:'pageblank', leaf:true}, {text:'薪资项目管理', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'绩效考核设置', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'绩效考核表', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'考核记录管理', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'薪资计算', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'薪资导出', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}]}, {text:'招聘管理', 
@@ -83585,15 +83691,15 @@ Ext.define('Admin.store.user.ModuleGridPanelStore', {
 		property: 'id'
 	}
 });
-Ext.define('Admin.store.user.OrganizationGridPanelStore', {
+Ext.define('Admin.store.user.DeptGridPanelStore', {
 	extend: 'Ext.data.Store',
-	alias: 'store.organizationGridPanelStore', // ViewModel中stores type
-	model: 'Admin.model.user.OrganizationGridPanelModel',
+	alias: 'store.deptGridPanelStore', // ViewModel中stores type
+	model: 'Admin.model.user.DeptGridPanelModel',
 	//autoLoad:true,
 	pageSize:25,
 	proxy: {
 		type: 'ajax',
-		url:'organization/findPage.json',
+		url:'dept/findPage.json',
 		reader: {
 			type: 'json',
 			rootProperty: 'content',
@@ -84310,9 +84416,9 @@ Ext.define('Admin.view.user.ModuleAddForm', {
     }
 });
 
-Ext.define('Admin.view.user.OrganizationAddForm', {
+Ext.define('Admin.view.user.DeptAddForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.organizationAddForm',
+    alias: 'widget.deptAddForm',
     requires: [
         'Ext.button.Button',
         'Ext.form.field.Text',
@@ -84330,8 +84436,8 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
 //因为Window是独立Create的并不属于UserModelPanel主视图
 //所以：必须绑定viewModel才可以刷新Grid数据
 //所以：必须绑定ViewController才可以绑定事件
-    viewModel: {type: 'organizationViewModel'},
-    controller: 'organizationViewController',
+    viewModel: {type: 'deptViewModel'},
+    controller: 'deptViewController',
     //cls: '',
 
     layout: {
@@ -84348,7 +84454,7 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
     },
 
     items: [{
-        xtype: 'textfield', //hidden
+        xtype: 'hidden', //hidden
         fieldLabel: 'id',
         name:'id',
         readOnly:true
@@ -84356,7 +84462,7 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
         xtype: 'textfield', //hidden
         fieldLabel: '部门编号',
         name:'deptId',
-        readOnly:true
+        //readOnly:true
     }, {
         xtype: 'textfield',
         fieldLabel: '部门名字',
@@ -84508,10 +84614,10 @@ Ext.define('Admin.view.user.ModuleAddWindow', {
     }
 });
 
-Ext.define('Admin.view.user.OrganizationAddWindow', {
+Ext.define('Admin.view.user.DeptAddWindow', {
     extend: 'Ext.window.Window',
-    alias: 'widget.organizationAddWindow',
-   	xtype:'organizationAddWindow',
+    alias: 'widget.deptAddWindow',
+   	xtype:'deptAddWindow',
     autoShow: true,
     modal: true,
     layout: 'fit',
@@ -84932,9 +85038,9 @@ Ext.define('Admin.view.user.ModuleEditForm', {
         },'->']
     }
 });
-Ext.define('Admin.view.user.OrganizationEditForm', {
+Ext.define('Admin.view.user.DeptEditForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.organizationEditForm',
+    alias: 'widget.deptEditForm',
     requires: [
         'Ext.button.Button',
         'Ext.form.field.Text',
@@ -85128,9 +85234,9 @@ Ext.define('Admin.view.user.ModuleEditWindow', {
         this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
     }
 });
-Ext.define('Admin.view.user.OrganizationEditWindow', {
+Ext.define('Admin.view.user.DeptEditWindow', {
     extend: 'Ext.window.Window',
-    alias: 'widget.organizationEditWindow',
+    alias: 'widget.deptEditWindow',
     autoShow: true,
     modal: true,
     layout: 'fit',
@@ -85184,7 +85290,7 @@ Ext.define('Admin.view.user.RoleGridPanel',{
             xtype: 'button',
             text:'权限',
             iconCls: 'x-fa fa-plus',
-            handler : 'openAddWindow'
+            handler : 'addPermissionWindow'
         }]
 	}],
 	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
@@ -85330,11 +85436,11 @@ Ext.define('Admin.view.user.ModuleGridPanel',{
         	}
 });
 
-Ext.define('Admin.view.user.OrganizationGridPanel',{
+Ext.define('Admin.view.user.DeptGridPanel',{
 	extend:'Ext.grid.Panel',
-	xtype:'organizationGridPanel',
-	title:'组织机构管理列表',
-	id:'organizationGridPanel',
+	xtype:'deptGridPanel',
+	title:'部门管理列表',
+	id:'deptGridPanel',
 	requires: [
     	'Ext.grid.column.RowNumberer',
     	'Ext.selection.CheckboxModel'
@@ -85352,7 +85458,7 @@ Ext.define('Admin.view.user.OrganizationGridPanel',{
 	selModel: {
                 selType: 'checkboxmodel'
  	},
-	bind:'{organizationlists}',
+	bind:'{deptlists}',
 	layout:'fit',
 	columns:[
 		{header:'ID',dataIndex:'id',flex:1},
@@ -85365,11 +85471,23 @@ Ext.define('Admin.view.user.OrganizationGridPanel',{
             items: [{
         		xtype: 'button',
                 iconCls: 'x-fa fa-pencil',
+                	tooltip:'编辑',
                 handler : 'openEditWindow'
             },{
                 xtype: 'button',
                 iconCls: 'x-fa fa-trash',
-                handler : 'deleteOrganization'
+                	tooltip:'删除',
+                handler : 'deleteDept'
+	        },{
+                xtype: 'button',
+                iconCls: 'x-fa fa-ban',
+                tooltip:'禁用',
+              //  handler : 'deleteUser'
+	        },{
+                xtype: 'button',
+                iconCls: 'x-fa fa-unlock',
+                tooltip:'启用',
+              //  handler : 'deleteUser'
 	        }],
             cls: 'content-column',
             width: 120,
@@ -85382,7 +85500,7 @@ Ext.define('Admin.view.user.OrganizationGridPanel',{
 	bbar: {
 		    xtype: 'pagingtoolbar',//注意以后MVVM中使用新写法,不要使用Ext.create()
             //store: Ext.data.StoreManager.lookup('simpsonsStore'),
-            bind:'{organizationlists}',
+            bind:'{deptlists}',
             displayInfo: true,
             displayMsg: 'Displaying topics {0} - {1} of {2}',
             emptyMsg: "No topics to display",
@@ -85391,7 +85509,7 @@ Ext.define('Admin.view.user.OrganizationGridPanel',{
                 xtype:'button',
                 text: '批量删除',
 					listeners:{
-			        click:'deleteOrganizations'
+			        click:'deleteDepts'
         		}
             }]
             
@@ -85420,15 +85538,15 @@ Ext.define('Admin.view.user.ModuleModelPanel',{
 	items:[{xtype:'moduleGridPanel'}]
 //	html:'模块管理'
 });
-Ext.define('Admin.view.user.OrganizationModelPanel',{
+Ext.define('Admin.view.user.DeptModelPanel',{
 	extend:'Ext.container.Container',
-	xtype:'organizationModelPanel',   //对应NavigationTree store 的 viewType:'user'
+	xtype:'deptModelPanel',   //对应NavigationTree store 的 viewType:'user'
 		requires:[],
-	controller:'organizationViewController',
-	viewModel:{type:'organizationViewModel'},
+	controller:'deptViewController',
+	viewModel:{type:'deptViewModel'},
 //	listeners:{hide:'onHideView'},
 	layout:'fit',
-	items:[{xtype:'organizationGridPanel'}]
+	items:[{xtype:'deptGridPanel'}]
 //	html:'组织机构管理'
 });
 Ext.define('Admin.view.user.UserPermissionModelPanel',{
@@ -85731,6 +85849,11 @@ Ext.define('Admin.view.user.RoleViewController', {
         }
     },
 
+addPermissionWindow:function(view, recIndex, cellIndex, item, e, record) {
+  var cfg = Ext.apply({xtype:'addPermissionWindow', items:[Ext.apply({xtype:'addPermissionFormPanel'})]});
+  var win = Ext.create(cfg);
+},
+
 });
 
 Ext.define('Admin.view.user.ModuleViewController', {
@@ -85859,30 +85982,30 @@ Ext.define('Admin.view.user.ModuleViewController', {
 
 });
 
-Ext.define('Admin.view.user.OrganizationViewController', {
+Ext.define('Admin.view.user.DeptViewController', {
 	extend: 'Ext.app.ViewController',
-	alias: 'controller.organizationViewController',
+	alias: 'controller.deptViewController',
 	requires: [
     	'Ext.grid.column.RowNumberer',
     	'Ext.selection.CheckboxModel'
     ]
     ,openAddWindow: function(view, recIndex, cellIndex, item, e, record) {
       		var cfg = Ext.apply({
-                xtype: 'organizationAddWindow',
-                items: [Ext.apply({xtype: 'organizationAddForm'})]
+                xtype: 'deptAddWindow',
+                items: [Ext.apply({xtype: 'deptAddForm'})]
 		});
 		var win = Ext.create(cfg);
     }
     ,submitAddForm: function(btn) {
       		var form = btn.up('form');
 			form.getForm().submit({       
-				url:'organization/saveOrUpdate',
+				url:'dept/saveOrUpdate',
 				//waitMsg: '正在上传，请耐心等待....',
 				success: function(form, action){    
 					Ext.Msg.alert('提示', action.result.msg,function(){
 						btn.up('window').close();
 					//	form.getViewModel().getStore('userDataList').reload();
-	                   Ext.getCmp('organizationGridPanel').getStore().reload();
+	                   Ext.getCmp('deptGridPanel').getStore().reload();
 						
 					});       
 				},       
@@ -85893,8 +86016,8 @@ Ext.define('Admin.view.user.OrganizationViewController', {
     }
     ,openEditWindow: function(view, recIndex, cellIndex, item, e, record) {
     	var cfg = Ext.apply({
-                xtype: 'organizationEditWindow',
-                items: [Ext.apply({xtype: 'organizationEditForm'})]
+                xtype: 'deptEditWindow',
+                items: [Ext.apply({xtype: 'deptEditForm'})]
 		});
 		var win = Ext.create(cfg);
 		
@@ -85904,13 +86027,13 @@ Ext.define('Admin.view.user.OrganizationViewController', {
      ,submitEditForm: function(btn) {
       		var form = btn.up('form');
 			form.getForm().submit({       
-				url:'organization/saveOrUpdate',
+				url:'dept/saveOrUpdate',
 				//waitMsg: '正在上传，请耐心等待....',
 				success: function(form, action){    
 					Ext.Msg.alert('提示', action.result.msg,function(){
 						btn.up('window').close();
 						//form.getViewModel().getStore('roleDataList').reload();
-	                   			Ext.getCmp('organizationGridPanel').getStore().reload();
+	                   			Ext.getCmp('deptGridPanel').getStore().reload();
 						
 					});       
 				},       
@@ -85920,12 +86043,12 @@ Ext.define('Admin.view.user.OrganizationViewController', {
 			});
 	}
 
-     ,deleteOrganization: function(view, recIndex, cellIndex, item, e, record) {
+     ,deleteDept: function(view, recIndex, cellIndex, item, e, record) {
       		Ext.MessageBox.confirm('提示', '确定要进行删除操作吗？数据将无法还原！',
       			function(btn, text){
                 	if(btn=='yes'){
 				Ext.Ajax.request({ 
-					url : 'organization/delete', 
+					url : 'dept/delete', 
 					method : 'post', 
 					params : { id :record.get('id')}, 
 					success: function(response, options) {
@@ -85945,7 +86068,7 @@ Ext.define('Admin.view.user.OrganizationViewController', {
    
     },
      	
-    deleteOrganizations: function(btn) {
+    deleteDepts: function(btn) {
       	var grid = btn.up('gridpanel');
 		var selModel = grid.getSelectionModel();
         if (selModel.hasSelection()) {
@@ -85957,7 +86080,7 @@ Ext.define('Admin.view.user.OrganizationViewController', {
                         selectIds.push(item.data.id);
                     })
                   	Ext.Ajax.request({ 
-						url : 'organization/deleteOrganizations', 
+						url : 'dept/deleteDepts', 
 						method : 'post', 
 						params : { 
 							//ids[] :selectIds
@@ -86018,9 +86141,9 @@ Ext.define('Admin.view.user.ModuleViewModel', {
 	modulelists: {type: 'moduleGridPanelStore',autoLoad:true}
     }
 });
-Ext.define('Admin.view.user.OrganizationViewModel', {
+Ext.define('Admin.view.user.DeptViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.organizationViewModel',//配置到主视图的ViewModel名
+    alias: 'viewmodel.deptViewModel',//配置到主视图的ViewModel名
     requires: [
         'Ext.data.Store',
         'Ext.data.proxy.Memory',
@@ -86031,7 +86154,7 @@ Ext.define('Admin.view.user.OrganizationViewModel', {
         'Ext.data.reader.Json'
     ],
     stores: {
-	organizationlists: {type: 'organizationGridPanelStore',autoLoad:true}
+	deptlists: {type: 'deptGridPanelStore',autoLoad:true}
     }
 });
 Ext.application({extend:Admin.Application, name:'Admin', mainView:'Admin.view.main.Main'});
