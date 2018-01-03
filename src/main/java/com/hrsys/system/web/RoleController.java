@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.system.entity.Role;
 import com.hrsys.system.entity.dto.RoleQueryDTO;
@@ -62,11 +63,16 @@ public class RoleController {
 		Role role = roleService.findOne(id);
 		return role;
 	}	
-	@RequestMapping("/findAll")
+	/*@RequestMapping("/findAll")
 	public @ResponseBody List<Role> findAll(){
 		List<Role> roleLists = roleService.findAll();
 		return roleLists;		
-	}	
+	}*/
+	@RequestMapping("/findAll")
+	public @ResponseBody ExtJsonResult<Role> findAll(){
+		List<Role> roleLists = roleService.findAll();
+		return new ExtJsonResult<Role>(roleLists);
+	}
 	@RequestMapping("/findPage")
 	public @ResponseBody Page<Role> findPage(RoleQueryDTO roleQueryDTO,ExtPageable extPageable){
 		Page<Role> page = roleService.findAll(roleQueryDTO.getSpecification(roleQueryDTO), extPageable.getPageable());

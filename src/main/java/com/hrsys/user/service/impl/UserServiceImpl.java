@@ -1,6 +1,7 @@
 package com.hrsys.user.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,4 +48,16 @@ public class UserServiceImpl implements IUserService {
 	public Page<User> findAll(Specification<User> spec, Pageable pageable) {
 		return userRepository.findAll(spec, pageable);
 	}
+	/*@Override
+	public Set<String> getRoles(String userName) {
+		return userRepository.getRoles(userName);
+	}
+	@Override
+	public Set<String> getPermissions(String userName) {
+		return userRepository.getPermissions(userName);
+	}
+	@Override
+	public User getByUserName(String userName) {
+		return userRepository.getByUserName(userName);
+	}*/
 }

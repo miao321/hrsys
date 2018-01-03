@@ -1,14 +1,22 @@
 package com.hrsys.system.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrsys.common.entity.BaseEntity;
 
 @Entity
@@ -26,15 +34,29 @@ public class Module extends BaseEntity implements Serializable {
 	private String remark;//备注
 	private Integer orderNo;//排序号
 	private String createBy;//创建人
+	@DateTimeFormat(pattern="yyyy/MM/dd HH:mm:ss")
 	private	Date createTime;//创建时间
 	private String updateBy;//修改人
+	@DateTimeFormat(pattern="yyyy/MM/dd HH:mm:ss")
 	private Date updateTime;//修改时间
+	
+	private Module parentNode;//父节点
+	private List<Module> childNodes = new ArrayList<Module>();  //子节点
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
+	@ManyToOne(cascade=CascadeType.ALL)
+	public Module getParentNode() {
+		return parentNode;
+	}
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="parentNode")
+	public List<Module> getChildNodes() {
+		return childNodes;
+	}
+
 	public String getParentId() {
 		return parentId;
 	}	
@@ -65,7 +87,14 @@ public class Module extends BaseEntity implements Serializable {
 	public Integer getOrderNo() {
 		return orderNo;
 	}
-	
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	public Date getCreateTime() {
+		return createTime;
+	}
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -105,9 +134,7 @@ public class Module extends BaseEntity implements Serializable {
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
-	public Date getCreateTime() {
-		return createTime;
-	}
+	
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
@@ -117,11 +144,15 @@ public class Module extends BaseEntity implements Serializable {
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
+	
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	public void setParentNode(Module parentNode) {
+		this.parentNode = parentNode;
+	}
+	public void setChildNodes(List<Module> childNodes) {
+		this.childNodes = childNodes;
 	}
 	
 	

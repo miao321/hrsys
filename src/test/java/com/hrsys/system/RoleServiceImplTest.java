@@ -25,14 +25,14 @@ public class RoleServiceImplTest {
 	@Rollback(false)
 	public void save() {
 		
-		for(int i=1;i<=100;i++) {
-			Role role = new Role();
+		
+		Role role = new Role();
 		role.setRoleName("Java开发工程师");
 		role.setCreateTime(new Date());
 		role.setCreateModule("Java开发");
 		role.setOrderNo(13);
 		roleService.saveOrUpdate(role);
-		}
+		
 	}
 
 }
