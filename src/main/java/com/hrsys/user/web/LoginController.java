@@ -92,13 +92,9 @@ public class LoginController {
 	
 	//退出系统
 	@RequestMapping("/logout")
-	public @ResponseBody ExtAjaxResponse logout() {
-		try {
-			loginService.logout();
-			return new ExtAjaxResponse(true, "退出成功");
-		} catch (Exception e) {
-			return new ExtAjaxResponse(false, "退出失败");
-		}
+	public String logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "login";
 	}
 	//判断是否已经登录   ??有点问题
 	@RequestMapping("/isLogined")

@@ -10,6 +10,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
 import com.hrsys.personnel.entity.Change;
@@ -21,7 +22,14 @@ import com.hrsys.personnel.entity.Change;
 public class ChangeQueryDTO {
 	private String employNo;	//员工id
 	private String employName;	//员工姓名
-	private Date applyTime;		//申请时间
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date applyBegin;	//申请开始
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date applyEnd;		//申请结束
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date agreeBegin;	//通过开始
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date agreeEnd;		//通过结束
 	public String getEmployNo() {
 		return employNo;
 	}
@@ -34,13 +42,30 @@ public class ChangeQueryDTO {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public Date getApplyTime() {
-		return applyTime;
+	public Date getApplyBegin() {
+		return applyBegin;
 	}
-	public void setApplyTime(Date applyTime) {
-		this.applyTime = applyTime;
+	public void setApplyBegin(Date applyBegin) {
+		this.applyBegin = applyBegin;
 	}
-	
+	public Date getApplyEnd() {
+		return applyEnd;
+	}
+	public void setApplyEnd(Date applyEnd) {
+		this.applyEnd = applyEnd;
+	}
+	public Date getAgreeBegin() {
+		return agreeBegin;
+	}
+	public void setAgreeBegin(Date agreeBegin) {
+		this.agreeBegin = agreeBegin;
+	}
+	public Date getAgreeEnd() {
+		return agreeEnd;
+	}
+	public void setAgreeEnd(Date agreeEnd) {
+		this.agreeEnd = agreeEnd;
+	}
 	/** static的工具方法：根据当前 ChangeQueryDTO 对象来组装动态查询条件 */
 	public static Specification<Change> getSpecification(ChangeQueryDTO changeQueryDTO) {
 		Specification<Change> spec = new Specification<Change>() {
@@ -54,16 +79,19 @@ public class ChangeQueryDTO {
 							"%" + changeQueryDTO.getEmployName() + "%");
 					list.add(p);
 				}
-				
 				if (changeQueryDTO != null && !StringUtils.isEmpty(changeQueryDTO.getEmployNo())) {
 					Predicate p = cb.equal(root.get("employNo").as(String.class),
 							changeQueryDTO.getEmployNo());
 					list.add(p);
 				}
-				
-				if (changeQueryDTO != null && changeQueryDTO.getApplyTime() != null) {
-					Predicate p = cb.equal(root.get("applyTime").as(Date.class),
-							changeQueryDTO.getApplyTime());
+				if (changeQueryDTO != null && changeQueryDTO.getApplyBegin() != null && changeQueryDTO.getApplyEnd() != null) {
+					Predicate p = cb.between(root.get("applyTime").as(Date.class),
+							changeQueryDTO.getApplyBegin(), changeQueryDTO.getApplyEnd());
+					list.add(p);
+				}
+				if (changeQueryDTO != null && changeQueryDTO.getAgreeBegin() != null && changeQueryDTO.getAgreeEnd() != null) {
+					Predicate p = cb.between(root.get("agreeTime").as(Date.class),
+							changeQueryDTO.getAgreeBegin(), changeQueryDTO.getAgreeEnd());
 					list.add(p);
 				}
 

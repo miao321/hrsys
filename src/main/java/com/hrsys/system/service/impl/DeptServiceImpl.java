@@ -10,46 +10,46 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.hrsys.system.dao.OrganizationRepository;
-import com.hrsys.system.entity.Organization;
-import com.hrsys.system.service.IOrganizationService;
+import com.hrsys.system.dao.DeptRepository;
+import com.hrsys.system.entity.Dept;
+import com.hrsys.system.service.IDeptService;
 
 
 @Service
-public class OrganizationServiceImpl implements IOrganizationService {
-	private static final Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
+public class DeptServiceImpl implements IDeptService {
+	private static final Logger logger = LoggerFactory.getLogger(DeptServiceImpl.class);
 	@Autowired
-	private OrganizationRepository organizationRepository;
+	private DeptRepository organizationRepository;
 	@Override
-	public void saveOrUpdate(Organization organization) {
+	public void saveOrUpdate(Dept organization) {
 		organizationRepository.save(organization);
 	}
 
 	@Override
-	public void delete(Organization organization) {
+	public void delete(Dept organization) {
 		organizationRepository.delete(organization);
 	}
 
 	@Override
 	public void delete(List<Long> ids) {
-		List<Organization> organizationLists = (List<Organization>) organizationRepository.findAll(ids);
+		List<Dept> organizationLists = (List<Dept>) organizationRepository.findAll(ids);
 		if (organizationLists != null) {
 			organizationRepository.delete(organizationLists);
 		}			
 	}
 
 	@Override
-	public Organization findOne(Long id) {
+	public Dept findOne(Long id) {
 		return organizationRepository.findOne(id);
 	}
 
 	@Override
-	public List<Organization> findAll() {
-		return (List<Organization>) organizationRepository.findAll();
+	public List<Dept> findAll() {
+		return (List<Dept>) organizationRepository.findAll();
 	}
 
 	@Override
-	public Page<Organization> findAll(Specification<Organization> spec, Pageable pageable) {
+	public Page<Dept> findAll(Specification<Dept> spec, Pageable pageable) {
 		return organizationRepository.findAll(spec, pageable);
 	}
 

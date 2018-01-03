@@ -1,17 +1,30 @@
 package com.hrsys.user.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hrsys.system.entity.Dept;
+import com.hrsys.system.entity.Permission;
+import com.hrsys.system.entity.Role;
 @Entity
 @Table(name="t_user")
 public class User implements Serializable {
@@ -36,12 +49,34 @@ public class User implements Serializable {
 	private String email;//电子邮箱地址
 	private String userAccount;//职工账号
 	private Integer deptId;//部门编号
+	private String roleName;  //角色名
 	private String remark;//备注
+	
+	private List<UserRole> userRoles = new ArrayList<UserRole>();
+	private List<Permission> permissions = new ArrayList<Permission>();
+	private Dept dept;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@JsonIgnore
+	public List<UserRole> getUserRoles() {
+		return userRoles;
+	}
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonIgnore
+	public Dept getDept() {
+		return dept;
+	}
+	@ManyToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@JsonIgnore
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+	
 	public String getUserNo() {
 		return userNo;
 	}	
@@ -166,6 +201,17 @@ public class User implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void setUserRoles(List<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	public void setDept(Dept dept) {
+		this.dept = dept;
+	}
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 	@Override
 	public String toString() {

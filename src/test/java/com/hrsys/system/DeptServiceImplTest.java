@@ -7,26 +7,32 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hrsys.system.entity.Organization;
-import com.hrsys.system.service.IOrganizationService;
+import com.hrsys.system.entity.Dept;
+import com.hrsys.system.service.IDeptService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
 		"classpath*:applicationContext-core.xml"
 		,"classpath*:applicationContext-jpa.xml"
 })
-public class OrganizationServiceImplTest {
+public class DeptServiceImplTest {
 	@Autowired
-	private IOrganizationService organizationService;
+	private IDeptService DeptService;
 	@Test
 	@Rollback(false)
 	public void save() {
 		for(int i=0;i<=100;i++) {
-			Organization organization = new Organization();
-			organization.setDeptName("Java开发");
-			organization.setDeptOlder("老大");
-			organization.setDeptGrade("abc");
-			organizationService.saveOrUpdate(organization);
+			Dept Dept = new Dept();
+			Dept.setDeptName("开发");
+			
+			Dept Dept1 = new Dept();
+			Dept1.setDeptName("Java开发");
+			
+			Dept.getChildDept().add(Dept1);
+			
+			Dept1.setParentName(Dept);
+			
+			DeptService.saveOrUpdate(Dept);
 			
 		}
 	}

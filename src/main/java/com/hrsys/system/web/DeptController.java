@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
-import com.hrsys.system.entity.Organization;
-import com.hrsys.system.entity.dto.OrganizationQueryDTO;
-import com.hrsys.system.service.IOrganizationService;
+import com.hrsys.system.entity.Dept;
+import com.hrsys.system.entity.dto.DeptQueryDTO;
+import com.hrsys.system.service.IDeptService;
 
 @Controller
-@RequestMapping("/organization")
-public class OrganizationController {
-	private static final Logger logger = LoggerFactory.getLogger(OrganizationController.class);
+@RequestMapping("/dept")
+public class DeptController {
+	private static final Logger logger = LoggerFactory.getLogger(DeptController.class);
 	@Autowired
-	private IOrganizationService organizationService;
+	private IDeptService deptService;
 	@RequestMapping("/saveOrUpdate")
-	public @ResponseBody ExtAjaxResponse saveOrUpdate(Organization organization) {
+	public @ResponseBody ExtAjaxResponse saveOrUpdate(Dept dept) {
 		try {
-			organizationService.saveOrUpdate(organization);
+			deptService.saveOrUpdate(dept);
 			return new ExtAjaxResponse(true, "操作成功");
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "操作失败");
@@ -36,21 +36,21 @@ public class OrganizationController {
 	@RequestMapping("/delete")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
 		try {
-			Organization organization = organizationService.findOne(id);
-			if (organization != null) {
-				organizationService.delete(organization);
+			Dept dept = deptService.findOne(id);
+			if (dept != null) {
+				deptService.delete(dept);
 			}
 			return new ExtAjaxResponse(true, "操作成功");
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "操作失败");
 		}		
 	}
-	@RequestMapping("/deleteOrganizations")
+	@RequestMapping("/deletedepts")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);
 			if (idsLists != null) {
-				organizationService.delete(idsLists);
+				deptService.delete(idsLists);
 			}
 			return new ExtAjaxResponse(true, "操作成功");
 		} catch (Exception e) {
@@ -58,18 +58,18 @@ public class OrganizationController {
 		}
 	}	
 	@RequestMapping("/findOne")
-	public @ResponseBody Organization findOne(@RequestParam Long id) {
-		Organization organization = organizationService.findOne(id);
-		return organization;
+	public @ResponseBody Dept findOne(@RequestParam Long id) {
+		Dept dept = deptService.findOne(id);
+		return dept;
 	}	
 	@RequestMapping("/findAll")
-	public @ResponseBody List<Organization> findAll(){
-		List<Organization> organizationLists = organizationService.findAll();
-		return organizationLists;		
+	public @ResponseBody List<Dept> findAll(){
+		List<Dept> deptLists = deptService.findAll();
+		return deptLists;		
 	}	
 	@RequestMapping("/findPage")
-	public @ResponseBody Page<Organization> findPage(OrganizationQueryDTO organizationQueryDTO,ExtPageable extPageable){
-		Page<Organization> page = organizationService.findAll(organizationQueryDTO.getSpecification(organizationQueryDTO), extPageable.getPageable());
+	public @ResponseBody Page<Dept> findPage(DeptQueryDTO deptQueryDTO,ExtPageable extPageable){
+		Page<Dept> page = deptService.findAll(deptQueryDTO.getSpecification(deptQueryDTO), extPageable.getPageable());
 		return page;	
 	}
 

@@ -10,15 +10,15 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.hrsys.system.entity.Organization;
+import com.hrsys.system.entity.Dept;
 
 
 
-public class OrganizationQueryDTO {
+public class DeptQueryDTO {
 	//提供static的工具方法： 根据当前userQueryDTO对象来组装动态查询条件
-	public static Specification<Organization> getSpecification(OrganizationQueryDTO organizationQueryDTO){
-		Specification<Organization> spec = new Specification<Organization>() {
-			public Predicate toPredicate(Root<Organization> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	public static Specification<Dept> getSpecification(DeptQueryDTO organizationQueryDTO){
+		Specification<Dept> spec = new Specification<Dept>() {
+			public Predicate toPredicate(Root<Dept> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				//1.Predicate查询条件集合
 				List<Predicate> list = new ArrayList<Predicate>();
 				

@@ -49,7 +49,7 @@ public class DeptQueryDTO {
 
 				// 2.根据 QueryDTO数据字段的值进行判断以及条件的组装
 				if (deptQueryDTO != null && !StringUtils.isEmpty(deptQueryDTO.getDeptName())) {
-					Predicate p = cb.like(root.get("employName").as(String.class),
+					Predicate p = cb.like(root.get("deptName").as(String.class),
 							"%" + deptQueryDTO.getDeptName() + "%");
 					list.add(p);
 				}

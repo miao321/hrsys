@@ -49,7 +49,7 @@ public class UserController {
 		}	
 	}
 	@RequestMapping("/save")
-	public @ResponseBody ExtAjaxResponse save(User user) {
+	public @ResponseBody ExtAjaxResponse save(User user,@RequestParam Long id) {
 		try {
 			//user.setPassword(EncryptUtils.encript(user.getPassword()));
 			userService.saveOrUpdate(user);

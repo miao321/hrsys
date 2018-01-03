@@ -52,8 +52,8 @@ Ext.define('Admin.view.user.UserViewController', {
 				success: function(form, action){    
 					Ext.Msg.alert('提示', action.result.msg,function(){
 						btn.up('window').close();
-						form.getViewModel().getStore('userDataList').reload();
-	                   // Ext.getCmp('userGridPanel').getStore().reload();
+					//	form.getViewModel().getStore('userDataList').reload();
+	                    Ext.getCmp('userGridPanel').getStore().reload();
 						
 					});       
 				},       
