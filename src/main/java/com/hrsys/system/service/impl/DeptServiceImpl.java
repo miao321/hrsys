@@ -19,38 +19,38 @@ import com.hrsys.system.service.IDeptService;
 public class DeptServiceImpl implements IDeptService {
 	private static final Logger logger = LoggerFactory.getLogger(DeptServiceImpl.class);
 	@Autowired
-	private DeptRepository organizationRepository;
+	private DeptRepository deptRepository;
 	@Override
-	public void saveOrUpdate(Dept organization) {
-		organizationRepository.save(organization);
+	public void saveOrUpdate(Dept dept) {
+		deptRepository.save(dept);
 	}
 
 	@Override
-	public void delete(Dept organization) {
-		organizationRepository.delete(organization);
+	public void delete(Dept dept) {
+		deptRepository.delete(dept);
 	}
 
 	@Override
 	public void delete(List<Long> ids) {
-		List<Dept> organizationLists = (List<Dept>) organizationRepository.findAll(ids);
-		if (organizationLists != null) {
-			organizationRepository.delete(organizationLists);
+		List<Dept> deptLists = (List<Dept>) deptRepository.findAll(ids);
+		if (deptLists != null) {
+			deptRepository.delete(deptLists);
 		}			
 	}
 
 	@Override
 	public Dept findOne(Long id) {
-		return organizationRepository.findOne(id);
+		return deptRepository.findOne(id);
 	}
 
 	@Override
 	public List<Dept> findAll() {
-		return (List<Dept>) organizationRepository.findAll();
+		return (List<Dept>) deptRepository.findAll();
 	}
 
 	@Override
 	public Page<Dept> findAll(Specification<Dept> spec, Pageable pageable) {
-		return organizationRepository.findAll(spec, pageable);
+		return deptRepository.findAll(spec, pageable);
 	}
 
 }

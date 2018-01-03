@@ -24,22 +24,9 @@ public class UserRoleServiceImpl implements IUserRoleService {
 	private static final Logger logger = LoggerFactory.getLogger(UserRoleServiceImpl.class);
 	@Autowired
 	private UserRoleRepository userRoleRepository;
-	@Autowired
-	private RoleRepository roleRepository;
-	@Autowired
-	private UserRepository userRepository;
+	
 	@Override
-	public void saveOrUpdate(UserRoleQueryDTO userRoleQueryDTO) {
-		User user = userRepository.findOne(userRoleQueryDTO.getUserId());
-		Role role = roleRepository.findOne(userRoleQueryDTO.getRoleId());
-		System.out.println("user:"+user);
-		System.out.println("role:"+role);
-		UserRole userRole = new UserRole();
-		if (userRoleQueryDTO.getId() != null) {
-			userRole.setId(userRoleQueryDTO.getId());
-		}
-		userRole.setUser(user);
-		userRole.setRole(role);
+	public void saveOrUpdate(UserRole userRole) {		
 		userRoleRepository.save(userRole);		
 	}
 	@Override

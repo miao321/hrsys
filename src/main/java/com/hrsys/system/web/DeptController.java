@@ -45,7 +45,7 @@ public class DeptController {
 			return new ExtAjaxResponse(false, "操作失败");
 		}		
 	}
-	@RequestMapping("/deletedepts")
+	@RequestMapping("/deleteDepts")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);

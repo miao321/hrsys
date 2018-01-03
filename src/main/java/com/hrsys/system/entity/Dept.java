@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrsys.common.entity.BaseEntity;
 import com.hrsys.user.entity.User;
 @Entity
@@ -41,7 +42,7 @@ public class Dept extends BaseEntity implements Serializable {
 	
 	private Dept parentName;//父部门
 	private List<Dept> childDept = new ArrayList<Dept>();
-	private List<User> userList = new ArrayList<User>();
+	//private List<User> userList = new ArrayList<User>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -49,19 +50,22 @@ public class Dept extends BaseEntity implements Serializable {
 		return id;
 	}
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonIgnore
 	public Dept getParentName() {
 		return parentName;
 	}
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="parentName",fetch=FetchType.EAGER)
+	@JsonIgnore
 	public List<Dept> getChildDept() {
 		return childDept;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="dept")
-	public List<User> getUserList() {
-		return userList;
-	}
-	
+//	@OneToMany(cascade=CascadeType.ALL,mappedBy="dept")
+//	@JsonIgnore
+//	public List<User> getUserList() {
+//		return userList;
+//	}
+//	
 	public Integer getDeptId() {
 		return deptId;
 	}
@@ -150,10 +154,10 @@ public class Dept extends BaseEntity implements Serializable {
 	public void setChildDept(List<Dept> childDept) {
 		this.childDept = childDept;
 	}
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
-	
+//	public void setUserList(List<User> userList) {
+//		this.userList = userList;
+//	}
+//	
 	
 
 }

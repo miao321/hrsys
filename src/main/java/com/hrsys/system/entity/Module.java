@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hrsys.common.entity.BaseEntity;
 
 @Entity
@@ -49,10 +50,12 @@ public class Module extends BaseEntity implements Serializable {
 		return id;
 	}
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonIgnore
 	public Module getParentNode() {
 		return parentNode;
 	}
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="parentNode")
+	@JsonIgnore
 	public List<Module> getChildNodes() {
 		return childNodes;
 	}

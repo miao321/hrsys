@@ -21,7 +21,7 @@ public class DeptServiceImplTest {
 	@Test
 	@Rollback(false)
 	public void save() {
-		for(int i=0;i<=100;i++) {
+		for(int i=0;i<=50;i++) {
 			Dept Dept = new Dept();
 			Dept.setDeptName("开发");
 			

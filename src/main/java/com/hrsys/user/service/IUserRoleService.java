@@ -10,7 +10,7 @@ import com.hrsys.user.entity.UserRole;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 
 public interface IUserRoleService {
-	public void saveOrUpdate(UserRoleQueryDTO userRoleQueryDTO);
+	public void saveOrUpdate(UserRole userRole);
 	public void delete(UserRole userRole);
 	public void delete(List<Long> ids);
 	public UserRole findOne(Long id);

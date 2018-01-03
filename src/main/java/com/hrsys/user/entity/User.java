@@ -54,23 +54,23 @@ public class User implements Serializable {
 	
 	private List<UserRole> userRoles = new ArrayList<UserRole>();
 	private List<Permission> permissions = new ArrayList<Permission>();
-	private Dept dept;
+	//private Dept dept;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JsonIgnore
 	public List<UserRole> getUserRoles() {
 		return userRoles;
 	}
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JsonIgnore
-	public Dept getDept() {
-		return dept;
-	}
+//	@ManyToOne(cascade=CascadeType.ALL)
+//	@JsonIgnore
+//	public Dept getDept() {
+//		return dept;
+//	}
 	@ManyToMany(cascade=CascadeType.ALL,mappedBy="user")
 	@JsonIgnore
 	public List<Permission> getPermissions() {
@@ -207,9 +207,9 @@ public class User implements Serializable {
 		this.userRoles = userRoles;
 	}
 	
-	public void setDept(Dept dept) {
-		this.dept = dept;
-	}
+//	public void setDept(Dept dept) {
+//		this.dept = dept;
+//	}
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}

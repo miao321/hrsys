@@ -16,7 +16,7 @@ import com.hrsys.system.entity.Dept;
 
 public class DeptQueryDTO {
 	//提供static的工具方法： 根据当前userQueryDTO对象来组装动态查询条件
-	public static Specification<Dept> getSpecification(DeptQueryDTO organizationQueryDTO){
+	public static Specification<Dept> getSpecification(DeptQueryDTO deptQueryDTO){
 		Specification<Dept> spec = new Specification<Dept>() {
 			public Predicate toPredicate(Root<Dept> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				//1.Predicate查询条件集合

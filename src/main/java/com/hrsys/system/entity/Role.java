@@ -47,7 +47,7 @@ public class Role extends BaseEntity implements Serializable {
 	public Long getId() {
 		return id;
 	}	
-	@OneToMany(mappedBy="role",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="role",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JsonIgnore
 	public List<UserRole> getUserRoles() {
 		return userRoles;

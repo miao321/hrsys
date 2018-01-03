@@ -2,6 +2,7 @@ package com.hrsys.user.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,17 +22,17 @@ public class UserRole {
      private User user;     
      private Role role;
      @Id
-     @GeneratedValue(strategy = GenerationType.AUTO)
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
      public Long getId() {
  		return id;
  	 }
-     @ManyToOne(cascade = CascadeType.ALL)
+     @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
      @JoinColumn(name = "userId")
      public User getUser() {
 		return user;
      }
     
-	 @ManyToOne(cascade = CascadeType.ALL)
+	 @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
      @JoinColumn(name = "roleId")
      public Role getRole() {
 		return role;
