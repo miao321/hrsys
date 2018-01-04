@@ -18,6 +18,8 @@ import com.hrsys.employ.entity.EmployChannel;
 public interface IEmployChannelService {
 	public void saveOrUpdate(EmployChannel employChannel);
 	public void delete(EmployChannel employChannel);
+	//批量删除
+	public void delete(List<Long> ids);
 	public EmployChannel findOne(Long id);
 	public List<EmployChannel> findAll();
 	//动态条件查询

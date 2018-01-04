@@ -34,7 +34,14 @@ public class EmployApplyService implements IEmployApplyService {
 		employApplyDao.delete(employApply);
 		
 	}
-	
+	//批量删除
+	public void delete(List<Long> ids) {
+		List<EmployApply> employApplys =  (List<EmployApply>)employApplyDao.findAll(ids);
+		if(employApplys!=null) {
+			employApplyDao.delete(employApplys);
+		}
+
+	}
 	@Transactional(readOnly = true)
 	public EmployApply findOne(Long id) {
 		return employApplyDao.findOne(id);

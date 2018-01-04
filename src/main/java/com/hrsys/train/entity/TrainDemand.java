@@ -24,7 +24,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_trainDemand")
 public class TrainDemand extends BaseEntity implements Serializable {
 	
-	private Integer trainDemandId;			//培训需求id
+	private Long trainDemandId;			//培训需求id
 	private String trainDemandNo;			//培训需求编号
 	private String trainDemandName;			//培训课程需求
 	private String trainDemandContent;		//培训需求内容
@@ -35,7 +35,7 @@ public class TrainDemand extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getTrainDemandId() {
+	public Long getTrainDemandId() {
 		return trainDemandId;
 	}
 	public String getTrainDemandNo() {
@@ -51,8 +51,8 @@ public class TrainDemand extends BaseEntity implements Serializable {
 		return trainDemandTarget;
 	}
 	
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getTrainDemandTime() {
 		return trainDemandTime;
 	}
@@ -62,7 +62,7 @@ public class TrainDemand extends BaseEntity implements Serializable {
 	public String getTrainDemandReviewer() {
 		return trainDemandReviewer;
 	}
-	public void setTrainDemandId(Integer trainDemandId) {
+	public void setTrainDemandId(Long trainDemandId) {
 		this.trainDemandId = trainDemandId;
 	}
 	public void setTrainDemandNo(String trainDemandNo) {

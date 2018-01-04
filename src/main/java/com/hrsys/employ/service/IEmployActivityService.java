@@ -18,6 +18,8 @@ import com.hrsys.employ.entity.EmployActivity;
 public interface IEmployActivityService {
 	public void saveOrUpdate(EmployActivity employActivity);
 	public void delete(EmployActivity employActivity);
+	//批量删除
+	public void delete(List<Long> ids);
 	public EmployActivity findOne(Long id);
 	public List<EmployActivity> findAll();
 	//动态条件查询

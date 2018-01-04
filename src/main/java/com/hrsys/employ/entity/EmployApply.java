@@ -24,12 +24,12 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_employApply")
 public class EmployApply extends BaseEntity implements Serializable {
 	
-	private Integer employApplyId;		//应聘者id
+	private Long employApplyId;		//应聘者id
 	private String employApplyNo;		//应聘者编号
 	private String employApplyName;		//应聘者名字
 	private String employJobNo;			//招聘职位编号
 	private String employJobName;		//招聘职位名称
-	private Short employApplySex;		//性别
+	private String employApplySex;		//性别
 	private String employApplyPlace;	//籍贯
 	private Date employApplyBirth;		//出生日期
 	private String employApplySchool;	//毕业院校
@@ -38,11 +38,11 @@ public class EmployApply extends BaseEntity implements Serializable {
 	private String employApplyPhone;	//联系电话
 	private String employApplyEmail;	//电子邮箱
 	private String employApplyProfile;	//简历
-	private Short employApplySituation;//录用情况
+	private String employApplySituation;//录用情况
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getEmployApplyId() {
+	public Long getEmployApplyId() {
 		return employApplyId;
 	}
 	public String getEmployApplyNo() {
@@ -57,15 +57,15 @@ public class EmployApply extends BaseEntity implements Serializable {
 	public String getEmployJobName() {
 		return employJobName;
 	}
-	public Short getEmployApplySex() {
+	public String getEmployApplySex() {
 		return employApplySex;
 	}
 	public String getEmployApplyPlace() {
 		return employApplyPlace;
 	}
 	
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getEmployApplyBirth() {
 		return employApplyBirth;
 	}
@@ -87,10 +87,10 @@ public class EmployApply extends BaseEntity implements Serializable {
 	public String getEmployApplyProfile() {
 		return employApplyProfile;
 	}
-	public Short getEmployApplySituation() {
+	public String getEmployApplySituation() {
 		return employApplySituation;
 	}
-	public void setEmployApplyId(Integer employApplyId) {
+	public void setEmployApplyId(Long employApplyId) {
 		this.employApplyId = employApplyId;
 	}
 	public void setEmployApplyNo(String employApplyNo) {
@@ -105,7 +105,7 @@ public class EmployApply extends BaseEntity implements Serializable {
 	public void setEmployJobName(String employJobName) {
 		this.employJobName = employJobName;
 	}
-	public void setEmployApplySex(Short employApplySex) {
+	public void setEmployApplySex(String employApplySex) {
 		this.employApplySex = employApplySex;
 	}
 	public void setEmployApplyPlace(String employApplyPlace) {
@@ -132,7 +132,7 @@ public class EmployApply extends BaseEntity implements Serializable {
 	public void setEmployApplyProfile(String employApplyProfile) {
 		this.employApplyProfile = employApplyProfile;
 	}
-	public void setEmployApplySituation(Short employApplySituation) {
+	public void setEmployApplySituation(String employApplySituation) {
 		this.employApplySituation = employApplySituation;
 	}
 	

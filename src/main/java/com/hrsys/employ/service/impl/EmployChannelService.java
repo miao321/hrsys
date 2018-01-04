@@ -36,6 +36,15 @@ public class EmployChannelService implements IEmployChannelService {
 		employChannelDao.delete(employChannel);
 	}
 
+	//批量删除
+	public void delete(List<Long> ids) {
+		List<EmployChannel> employChannels =  (List<EmployChannel>) employChannelDao.findAll(ids);
+		if(employChannels!=null) {
+			employChannelDao.delete(employChannels);
+		}
+
+	}
+		
 	@Transactional(readOnly = true)
 	public EmployChannel findOne(Long id) {
 		return employChannelDao.findOne(id);
@@ -50,5 +59,8 @@ public class EmployChannelService implements IEmployChannelService {
 	public Page<EmployChannel> findAll(Specification<EmployChannel> spec, Pageable pageable) {
 		return employChannelDao.findAll(spec,pageable);
 	}
+
+
+	
 
 }

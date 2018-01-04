@@ -1,5 +1,6 @@
 package com.hrsys.employ.web.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,22 @@ public class EmployJobController implements IEmployJobController {
 		}
 		
 	}
+	
+	//批量删除
+	@RequestMapping("/deletes")
+	public@ResponseBody ExtAjaxResponse deletes(@RequestParam Long[] ids) 
+	{
+		try {
+			List<Long>idLists = Arrays.asList(ids);
+			if(null!=idLists) {
+				employJobService.delete(idLists);
+			}
+			return new ExtAjaxResponse(true,"操作成功！");
+		} catch (Exception e) {
+			return new ExtAjaxResponse(false,"操作失败！");
+		}
+}
+	
 	@RequestMapping("/delete")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) 
 	{

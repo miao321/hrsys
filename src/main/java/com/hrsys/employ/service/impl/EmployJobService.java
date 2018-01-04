@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hrsys.employ.dao.IEmployJobDao;
+
 import com.hrsys.employ.entity.EmployJob;
 import com.hrsys.employ.service.IEmployJobService;
 
@@ -35,7 +36,14 @@ public class EmployJobService implements IEmployJobService{
 		employJobDao.delete(employJob);
 		
 	}
-	
+	//批量删除
+	public void delete(List<Long> ids) {
+		List<EmployJob> employJobs =  (List<EmployJob>) employJobDao.findAll(ids);
+		if(employJobs!=null) {
+			employJobDao.delete(employJobs);
+		}
+
+	}
 	@Transactional(readOnly = true)
 	public EmployJob findOne(Long id) {
 		return employJobDao.findOne(id);
@@ -51,6 +59,8 @@ public class EmployJobService implements IEmployJobService{
 		
 		return employJobDao.findAll(spec,pageable);
 	}
+
+
 	
 
 

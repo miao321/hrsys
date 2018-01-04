@@ -17,6 +17,8 @@ import com.hrsys.employ.entity.EmployJob;
 public interface IEmployJobService {
 	public void saveOrUpdate(EmployJob employJob);
 	public void delete(EmployJob employJob);
+	//批量删除
+	public void delete(List<Long> ids);
 	public EmployJob findOne(Long id);
 	public List<EmployJob> findAll();
 	//动态条件查询

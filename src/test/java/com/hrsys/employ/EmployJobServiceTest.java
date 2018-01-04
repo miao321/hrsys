@@ -1,7 +1,10 @@
 package com.hrsys.employ;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +17,8 @@ import com.hrsys.employ.entity.EmployJob;
 import com.hrsys.employ.service.IEmployJobService;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.service.IUserService;
+import com.hrsys.util.DateUtils;
+import com.hrsys.util.RandomNum;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
@@ -25,10 +30,14 @@ public class EmployJobServiceTest {
 	@Autowired
 	private IEmployJobService employJobService;
 	
-	//@Test
+	@Test
 	@Rollback(value = false)
 	public void save() {
-		for(int i=0;i<100;i++) {
+
+	    DateUtils dateUtils=new DateUtils();
+	    RandomNum randomNum=new RandomNum();
+	    
+	    for(int i=0;i<100;i++) {
 			
 //			User user = new User();
 //			user.setUserName("张三");
@@ -38,8 +47,20 @@ public class EmployJobServiceTest {
 //			System.out.println(user);
 			
 			EmployJob employJob = new EmployJob();
-			employJob.setEmployJobId(i);
+
 			employJob.setEmployJobNo("No"+i);
+			employJob.setEmployJobName("Job00"+i);
+			employJob.setEmployJobStartTime(dateUtils.getNowDateShort());
+			employJob.setEmployJobEndTime(dateUtils.getNowDateShort());
+			
+			employJob.setEmployJobDescription("职位描述"+i);
+			employJob.setEmployJobDemand("职位要求"+i);
+			employJob.setEmployJobSalary("待遇"+i);
+			employJob.setEmployJobPlace("工作地点"+i);
+			employJob.setEmployJobDate(dateUtils.getNowDateShort());
+			employJob.setEmployJobNum(randomNum.getRandomNum(20, 1));
+			employJob.setEmployJobResponsible("负责人"+i);
+			
 			employJobService.saveOrUpdate(employJob);
 			System.out.println(employJob);
 			

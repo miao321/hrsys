@@ -23,7 +23,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_employJob")
 public class EmployJob extends BaseEntity implements Serializable {
 	
-	private Integer employJobId;         //招聘职位id
+	private Long employJobId;         //招聘职位id
 	private String employJobNo;			 //招聘职位编号
 	private String employJobName;		 //招聘职位名称
 	private Date employJobStartTime;	 //发布时间
@@ -38,7 +38,7 @@ public class EmployJob extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getEmployJobId() {
+	public Long getEmployJobId() {
 		return employJobId;
 	}
 	public String getEmployJobNo() {
@@ -69,8 +69,8 @@ public class EmployJob extends BaseEntity implements Serializable {
 	public String getEmployJobPlace() {
 		return employJobPlace;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getEmployJobDate() {
 		return employJobDate;
 	}
@@ -80,7 +80,7 @@ public class EmployJob extends BaseEntity implements Serializable {
 	public String getEmployJobResponsible() {
 		return employJobResponsible;
 	}
-	public void setEmployJobId(Integer employJobId) {
+	public void setEmployJobId(Long employJobId) {
 		this.employJobId = employJobId;
 	}
 	public void setEmployJobNo(String employJobNo) {

@@ -20,7 +20,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_trainCourse")
 public class TrainCourse extends BaseEntity implements Serializable {
 	
-	private Integer trainCourseId;			//培训课程id
+	private Long trainCourseId;			//培训课程id
 	private String trainCourseNo;			//培训课程编号
 	private String trainCourseName;			//培训课程名称
 	private String trainCourseLanguage;		//培训语言
@@ -30,7 +30,7 @@ public class TrainCourse extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getTrainCourseId() {
+	public Long getTrainCourseId() {
 		return trainCourseId;
 	}
 	public String getTrainCourseNo() {
@@ -51,7 +51,7 @@ public class TrainCourse extends BaseEntity implements Serializable {
 	public String getTrainCourseTutor() {
 		return trainCourseTutor;
 	}
-	public void setTrainCourseId(Integer trainCourseId) {
+	public void setTrainCourseId(Long trainCourseId) {
 		this.trainCourseId = trainCourseId;
 	}
 	public void setTrainCourseNo(String trainCourseNo) {

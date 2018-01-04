@@ -24,7 +24,7 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_trainPlan")
 public class TrainPlan extends BaseEntity implements Serializable {
 	
-	private Integer	trainPlanId;	//培训计划id
+	private Long	trainPlanId;	//培训计划id
 	private String trainCourseNo;	//培训课程编号
 	private String trainCourseName;	//培训课程名称
 	private String trainPlanContent;//培训内容
@@ -37,7 +37,7 @@ public class TrainPlan extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getTrainPlanId() {
+	public Long getTrainPlanId() {
 		return trainPlanId;
 	}
 	public String getTrainCourseNo() {
@@ -58,20 +58,20 @@ public class TrainPlan extends BaseEntity implements Serializable {
 	public String getTrainMaterialNo() {
 		return trainMaterialNo;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getTrainPlanStartTime() {
 		return trainPlanStartTime;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getTrainPlanEndTime() {
 		return trainPlanEndTime;
 	}
 	public String getTrainPlanTutor() {
 		return trainPlanTutor;
 	}
-	public void setTrainPlanId(Integer trainPlanId) {
+	public void setTrainPlanId(Long trainPlanId) {
 		this.trainPlanId = trainPlanId;
 	}
 	public void setTrainCourseNo(String trainCourseNo) {

@@ -20,16 +20,16 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_trainMaterial")
 public class TrainMaterial extends BaseEntity implements Serializable {
 	
-	private Integer trainMaterialId;		//培训材料id
+	private Long trainMaterialId;		//培训材料id
 	private String trainMaterialNo;			//培训材料编号
 	private String trainMaterialName;		//培训材料名称
 	private String trainMaterialContent;	//培训材料内容
 	private String trainMaterialSource;		//培训材料来源
-	private String trainMaterialAuthur;		//培训材料作者
+	private String trainMaterialAuthor;		//培训材料作者
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getTrainMaterialId() {
+	public Long getTrainMaterialId() {
 		return trainMaterialId;
 	}
 	public String getTrainMaterialNo() {
@@ -44,10 +44,10 @@ public class TrainMaterial extends BaseEntity implements Serializable {
 	public String getTrainMaterialSource() {
 		return trainMaterialSource;
 	}
-	public String getTrainMaterialAuthur() {
-		return trainMaterialAuthur;
+	public String getTrainMaterialAuthor() {
+		return trainMaterialAuthor;
 	}
-	public void setTrainMaterialId(Integer trainMaterialId) {
+	public void setTrainMaterialId(Long trainMaterialId) {
 		this.trainMaterialId = trainMaterialId;
 	}
 	public void setTrainMaterialNo(String trainMaterialNo) {
@@ -62,15 +62,15 @@ public class TrainMaterial extends BaseEntity implements Serializable {
 	public void setTrainMaterialSource(String trainMaterialSource) {
 		this.trainMaterialSource = trainMaterialSource;
 	}
-	public void setTrainMaterialAuthur(String trainMaterialAuthur) {
-		this.trainMaterialAuthur = trainMaterialAuthur;
+	public void setTrainMaterialAuthor(String trainMaterialAuthor) {
+		this.trainMaterialAuthor = trainMaterialAuthor;
 	}
 	
 	@Override
 	public String toString() {
 		return "TrainMaterial [trainMaterialId=" + trainMaterialId + ", trainMaterialNo=" + trainMaterialNo
 				+ ", trainMaterialName=" + trainMaterialName + ", trainMaterialContent=" + trainMaterialContent
-				+ ", trainMaterialSource=" + trainMaterialSource + ", trainMaterialAuthur=" + trainMaterialAuthur + "]";
+				+ ", trainMaterialSource=" + trainMaterialSource + ", trainMaterialAuthor=" + trainMaterialAuthor + "]";
 	}
 			
 			

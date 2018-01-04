@@ -34,7 +34,14 @@ public class EmployActivityService implements IEmployActivityService {
 		employActivityDao.delete(employActivity);
 		
 	}
-	
+	//批量删除
+	public void delete(List<Long> ids) {
+		List<EmployActivity> employActivitys =  (List<EmployActivity>)employActivityDao.findAll(ids);
+		if(employActivitys!=null) {
+			employActivityDao.delete(employActivitys);
+		}
+
+	}
 	@Transactional(readOnly = true)
 	public EmployActivity findOne(Long id) {
 		return employActivityDao.findOne(id);
