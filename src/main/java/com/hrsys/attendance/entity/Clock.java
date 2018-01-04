@@ -25,10 +25,10 @@ public class Clock {
 	private String employNo;	//员工的id
 	private String employName;	//员工姓名
 	private String deptName;	//所属部门
-	private Short clockType;	//打卡类型
+	private String clockType;	//打卡类型(上班、下班)
 	
-	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
 	private Date createTime;	//打卡时间
 
 	public Integer getId() {
@@ -55,10 +55,10 @@ public class Clock {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-	public Short getClockType() {
+	public String getClockType() {
 		return clockType;
 	}
-	public void setClockType(Short clockType) {
+	public void setClockType(String clockType) {
 		this.clockType = clockType;
 	}
 	public Date getCreateTime() {

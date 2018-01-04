@@ -25,12 +25,12 @@ public class Overtime {
 	private String employNo;	//员工的id
 	private String employName;	//员工姓名
 	
-	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
 	private Date otBeginTime;	//加班开始时间
 	
-	@DateTimeFormat(pattern="yyyy/MM/dd")
-	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
 	private Date otEndTime;		//加班结束时间
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")

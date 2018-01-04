@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.attendance.dao.DTO.ClockQueryDTO;
@@ -15,6 +16,7 @@ import com.hrsys.attendance.service.IClockService;
 import com.hrsys.attendance.web.IClockController;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
+import com.hrsys.common.util.DateUtil;
 
 /**
  * 考勤模块-打卡记录类控制器实现类
@@ -27,14 +29,17 @@ public class ClockController implements IClockController {
 	@Autowired
 	private IClockService clockService;
 
-	@RequestMapping(value = "/insertTestDate")
+	@RequestMapping(value = "/insertTestData")
 	@ResponseBody
-	public String insertTestDate() {
+	public String insertTestData() {
 		try {
 			for(int i=0; i<100; i++) {
 				Clock clock = new Clock();
-				clock.setEmployNo("E000"+i);
+				clock.setEmployNo("E00"+i);
 				clock.setEmployName("职工"+i);
+				clock.setDeptName("人事部");
+				clock.setClockType("上班");
+				clock.setCreateTime(DateUtil.getNow());
 				
 				clockService.saveOrUpdate(clock);
 			}
@@ -44,7 +49,7 @@ public class ClockController implements IClockController {
 		}
 	}
 
-	@RequestMapping("/saveOrUpdate")
+	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
 	public ExtAjaxResponse saveOrUpdate(Clock clock) {
 		try {
@@ -55,9 +60,9 @@ public class ClockController implements IClockController {
 		}
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public ExtAjaxResponse delete(Integer id) {
+	public ExtAjaxResponse delete(@RequestParam Integer id) {
 		try {
 			Clock clock = clockService.findOne(id);
 			if (clock != null) {
@@ -69,9 +74,9 @@ public class ClockController implements IClockController {
 		}
 	}
 
-	@RequestMapping("/deleteClocks")
+	@RequestMapping(value = "/deleteClocks")
 	@ResponseBody
-	public ExtAjaxResponse deleteClocks(Integer[] ids) {
+	public ExtAjaxResponse deleteClocks(@RequestParam Integer[] ids) {
 		try {
 			List<Integer> idLists = Arrays.asList(ids);
 			if (null != idLists) {
@@ -83,21 +88,22 @@ public class ClockController implements IClockController {
 		}
 	}
 
-	@RequestMapping("/findOne")
+	@RequestMapping(value = "/findOne")
 	@ResponseBody
-	public Clock findOne(Integer id) {
+	public Clock findOne(@RequestParam Integer id) {
 		return clockService.findOne(id);
 	}
 
-	@RequestMapping("/findAll")
+	@RequestMapping(value = "/findAll")
 	@ResponseBody
 	public List<Clock> findAll() {
 		return clockService.findAll();
 	}
 
-	@RequestMapping("/findByPage")
+	@RequestMapping(value = "/findByPage")
 	@ResponseBody
 	public Page<Clock> findByPage(ClockQueryDTO clockQueryDTO, ExtPageable pageable) {
+//		pageable.setPage(1);
 		return clockService.findAll(ClockQueryDTO.getSpecification(clockQueryDTO), pageable.getPageable());
 	}
 }

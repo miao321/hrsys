@@ -103,7 +103,7 @@
 			                	            },
 			                				failure: function(response, action){
 			                					 //var json = Ext.util.JSON.decode(response.responseText);
-			                					alert("msg:"+action.result.msg);
+			                					Ext.Msg.alert("提示:",action.result.msg);
 			                					// alert("msg:"+response.msg);
 			                				}
 			                			});

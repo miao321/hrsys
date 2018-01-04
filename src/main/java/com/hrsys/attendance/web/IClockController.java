@@ -15,7 +15,7 @@ import com.hrsys.attendance.entity.Clock;
  */
 public interface IClockController {
 	/** 插入一些测试数据 */
-	public String insertTestDate();
+	public String insertTestData();
 	
 	/** 插入或更改打卡记录数据 */
 	public ExtAjaxResponse saveOrUpdate(Clock clock);

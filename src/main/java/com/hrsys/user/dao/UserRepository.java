@@ -1,8 +1,6 @@
 package com.hrsys.user.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,4 +18,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>,J
 	@Modifying
 	@Query("update User user set user.password = ?2 where user.id = ?1")
 	public void updateUser(Long id,String comfirPassword);
+	
+	/*public User getByUserName(String userName);
+	public Set<String> getRoles(String userName);
+    public Set<String> getPermissions(String userName);*/
 }

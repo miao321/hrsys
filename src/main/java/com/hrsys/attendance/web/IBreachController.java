@@ -15,7 +15,7 @@ import com.hrsys.common.ExtPageable;
  */
 public interface IBreachController {
 	/** 插入一些测试数据 */
-	public String insertTestDate();
+	public String insertTestData();
 	
 	/** 插入或更改违规记录数据 */
 	public ExtAjaxResponse saveOrUpdate(Breach breach);

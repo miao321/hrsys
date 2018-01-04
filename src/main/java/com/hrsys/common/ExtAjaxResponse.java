@@ -1,5 +1,7 @@
 package com.hrsys.common;
 
+import com.hrsys.user.entity.User;
+
 public class ExtAjaxResponse 
 {
 	private boolean success= true;
@@ -15,11 +17,15 @@ public class ExtAjaxResponse
 		this.success = success;
 		this.msg = msg;
 	}
+
 	
 	public boolean isSuccess() {
 		return success;
 	}
 	public String getMsg() {
 		return msg;
-	}	
+	}
+
+	
+	
 }
