@@ -28,7 +28,7 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!-- 启动AOP切面自动代理 -->
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> --> 
 	<!-- 设置主页面：访问/自动跳转到home视图 -->
-	<mvc:view-controller path="/" view-name="login"/>
+	<mvc:view-controller path="/" view-name="index"/>
 	<!-- springmvc 页面重定向设置： -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />

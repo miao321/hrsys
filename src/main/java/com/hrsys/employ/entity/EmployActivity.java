@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hrsys.common.entity.BaseEntity;
 
@@ -22,7 +24,8 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_employActivity")
 public class EmployActivity extends BaseEntity implements Serializable {
 	
-	private Integer employActivityId;		//招聘活动id
+	private Long employActivityId;		//招聘活动id
+	private String employActivityNo;		//招聘活动编号
 	private String employActivityName;		//招聘活动名称
 	private Date employActivityDate;		//招聘活动举办日期
 	private String employActivityPlace;		//招聘活动举办地点
@@ -32,13 +35,19 @@ public class EmployActivity extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getEmployActivityId() {
+	public Long getEmployActivityId() {
 		return employActivityId;
 	}
+	
+	public String getEmployActivityNo() {
+		return employActivityNo;
+	}
+
 	public String getEmployActivityName() {
 		return employActivityName;
 	}
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getEmployActivityDate() {
 		return employActivityDate;
 	}
@@ -54,8 +63,11 @@ public class EmployActivity extends BaseEntity implements Serializable {
 	public String getEmployActivityMark() {
 		return employActivityMark;
 	}
-	public void setEmployActivityId(Integer employActivityId) {
+	public void setEmployActivityId(Long employActivityId) {
 		this.employActivityId = employActivityId;
+	}
+	public void setEmployActivityNo(String employActivityNo) {
+		this.employActivityNo = employActivityNo;
 	}
 	public void setEmployActivityName(String employActivityName) {
 		this.employActivityName = employActivityName;
@@ -75,14 +87,17 @@ public class EmployActivity extends BaseEntity implements Serializable {
 	public void setEmployActivityMark(String employActivityMark) {
 		this.employActivityMark = employActivityMark;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "EmployActivity [employActivityId=" + employActivityId + ", employActivityName=" + employActivityName
-				+ ", employActivityDate=" + employActivityDate + ", employActivityPlace=" + employActivityPlace
-				+ ", employActivityPhone=" + employActivityPhone + ", employActivityContent=" + employActivityContent
-				+ ", employActivityMark=" + employActivityMark + "]";
+		return "EmployActivity [employActivityId=" + employActivityId + ", employActivityNo=" + employActivityNo
+				+ ", employActivityName=" + employActivityName + ", employActivityDate=" + employActivityDate
+				+ ", employActivityPlace=" + employActivityPlace + ", employActivityPhone=" + employActivityPhone
+				+ ", employActivityContent=" + employActivityContent + ", employActivityMark=" + employActivityMark
+				+ "]";
 	}
+	
+
 
 	
 }

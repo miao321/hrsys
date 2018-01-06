@@ -20,7 +20,8 @@ import com.hrsys.common.entity.BaseEntity;
 @Table(name="t_employChannel")
 public class EmployChannel extends BaseEntity implements Serializable {
 	
-	private Integer employChannelId; 			//招聘渠道id
+	private Long employChannelId; 				//招聘渠道id
+	private String employChannelNo;				//招聘渠道编号
 	private String employChannelName;			//招聘渠道名称
 	private String employChannelPhone;			//招聘渠道联系电话
 	private String employChannelDescription;	//招聘渠道简介
@@ -28,8 +29,11 @@ public class EmployChannel extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getEmployChannelId() {
+	public Long getEmployChannelId() {
 		return employChannelId;
+	}
+	public String getEmployChannelNo() {
+		return employChannelNo;
 	}
 	public String getEmployChannelName() {
 		return employChannelName;
@@ -43,8 +47,11 @@ public class EmployChannel extends BaseEntity implements Serializable {
 	public String getEmployChannelMark() {
 		return employChannelMark;
 	}
-	public void setEmployChannelId(Integer employChannelId) {
+	public void setEmployChannelId(Long employChannelId) {
 		this.employChannelId = employChannelId;
+	}
+	public void setEmployChannelNo(String employChannelNo) {
+		this.employChannelNo = employChannelNo;
 	}
 	public void setEmployChannelName(String employChannelName) {
 		this.employChannelName = employChannelName;
@@ -61,9 +68,10 @@ public class EmployChannel extends BaseEntity implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "EmployChannel [employChannelId=" + employChannelId + ", employChannelName=" + employChannelName
-				+ ", employChannelPhone=" + employChannelPhone + ", employChannelDescription="
-				+ employChannelDescription + ", employChannelMark=" + employChannelMark + "]";
+		return "EmployChannel [employChannelId=" + employChannelId + ", employChannelNo=" + employChannelNo
+				+ ", employChannelName=" + employChannelName + ", employChannelPhone=" + employChannelPhone
+				+ ", employChannelDescription=" + employChannelDescription + ", employChannelMark=" + employChannelMark
+				+ "]";
 	}
 	
 	
