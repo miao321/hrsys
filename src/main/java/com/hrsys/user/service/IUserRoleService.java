@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.UserRole;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 
@@ -19,6 +20,7 @@ public interface IUserRoleService {
 	
 	//动态条件查询
 	public Page<UserRole> findAll(Specification<UserRole> spec,Pageable pageable);
+	
 	
    /* public UserRole getByUserRoleName(String userRoleName);
 	public Set<String> getRoles(String userRoleName);

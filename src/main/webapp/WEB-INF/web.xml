@@ -10,6 +10,14 @@ version="3.1">
 	<welcome-file>login.jsp</welcome-file>
 </welcome-file-list>
 <display-name>hrsys</display-name>
+    <!--spring配置文件的加载的监听 器-->
+	<!-- <context-param>
+    	<param-name>contextConfigLocation</param-name>
+    	<param-value>classpath*:applicationContext.xml</param-value>
+    </context-param> 
+    <listener>
+    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>  -->
 	 <!-- shiro过滤器定义 -->
     <!-- <filter>  
        <filter-name>shiroFilter</filter-name>  

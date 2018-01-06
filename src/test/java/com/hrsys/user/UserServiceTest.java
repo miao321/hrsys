@@ -41,7 +41,7 @@ public class UserServiceTest {
 			user.setPassword(EncryptUtils.encript("123"));
 			user.setBirthday(new Date());
 			
-			Role role = new Role();
+			/*Role role = new Role();
 			role.setRoleName("Java工程师");
 			
 			UserRole userRoles = new UserRole();
@@ -49,7 +49,7 @@ public class UserServiceTest {
 			userRoles.setRole(role);
 	
 			user.getUserRoles().add(userRoles);
-			role.getUserRoles().add(userRoles);
+			role.getUserRoles().add(userRoles);*/
 			
 			userService.saveOrUpdate(user);
 		//	roleService.saveOrUpdate(role);

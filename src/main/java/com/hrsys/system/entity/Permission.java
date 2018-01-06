@@ -1,18 +1,22 @@
 package com.hrsys.system.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hrsys.user.entity.User;
 
 @Entity
 @Table(name = "t_permission")
@@ -27,27 +31,24 @@ public class Permission {
     //所属角色编号
     private Integer roleId;
     
-    private List<Role> role = new ArrayList<Role>();
-    private List<User> user = new ArrayList<User>();
+    private Set<Role> role = new HashSet<Role>();
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST },targetEntity = Role.class,  fetch = FetchType.EAGER)  
+    @JoinTable(name = "t_permission_t_role", joinColumns = { @JoinColumn(name = "permission_id", updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "role_id", updatable = true) })  
+    @Cascade(value = { org.hibernate.annotations.CascadeType.SAVE_UPDATE })  
     @JsonIgnore
-	public List<Role> getRole() {
+    public Set<Role> getRole() {
 		return role;
-	}
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JsonIgnore
-	public List<User> getUser() {
-		return user;
 	}
 	public String getToken() {
 		return token;
 	}
+	
 	public String getUrl() {
 		return url;
 	}
@@ -72,12 +73,8 @@ public class Permission {
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
-	public void setRole(List<Role> role) {
+	public void setRole(Set<Role> role) {
 		this.role = role;
-	}
-	public void setUser(List<User> user) {
-		this.user = user;
-	}
-        
+	}  
      
  }

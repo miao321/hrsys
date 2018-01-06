@@ -14,8 +14,27 @@ import com.hrsys.system.entity.Permission;
 
 
 public class PermissionQueryDTO {
-	
-
+	private Long id;
+	private Long permission_id;
+	private Long role_id;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getPermission_id() {
+		return permission_id;
+	}
+	public void setPermission_id(Long permission_id) {
+		this.permission_id = permission_id;
+	}
+	public Long getRole_id() {
+		return role_id;
+	}
+	public void setRole_id(Long role_id) {
+		this.role_id = role_id;
+	}
 	//提供static的工具方法： 根据当前userQueryDTO对象来组装动态查询条件
 	public static Specification<Permission> getSpecification(PermissionQueryDTO permissionQueryDTO){
 		Specification<Permission> spec = new Specification<Permission>() {

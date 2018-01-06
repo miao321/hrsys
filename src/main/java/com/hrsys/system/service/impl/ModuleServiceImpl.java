@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.hrsys.annotation.SysLog;
 import com.hrsys.system.dao.ModuleRepository;
 import com.hrsys.system.entity.Module;
 import com.hrsys.system.service.IModuleService;
@@ -24,17 +25,15 @@ public class ModuleServiceImpl implements IModuleService {
 	private static final Logger logger = LoggerFactory.getLogger(ModuleServiceImpl.class);
 	@Autowired
 	private ModuleRepository moduleRepository;
-	@Override
+	@SysLog(module="模块管理",methods="保存或者更新数据")
 	public void saveOrUpdate(Module module) {
 		moduleRepository.save(module);
 	}
-
-	@Override
+	@SysLog(module="模块管理",methods="删除一条数据")
 	public void delete(Module module) {
 		moduleRepository.delete(module);
 	}
-
-	@Override
+	@SysLog(module="模块管理",methods="删除多条数据")
 	public void delete(List<Long> ids) {
 		List<Module> moduleLists = (List<Module>) moduleRepository.findAll(ids);
 		if (moduleLists != null) {
@@ -42,18 +41,15 @@ public class ModuleServiceImpl implements IModuleService {
 		}
 
 	}
-
-	@Override
+	@SysLog(module="模块管理",methods="查找一条数据")
 	public Module findOne(Long id) {
 		return moduleRepository.findOne(id);
 	}
-
-	@Override
+	@SysLog(module="模块管理",methods="查找所有数据")
 	public List<Module> findAll() {
 		return (List<Module>) moduleRepository.findAll();
 	}
-
-	@Override
+	@SysLog(module="模块管理",methods="查找所有数据并分页排序")
 	public Page<Module> findAll(Specification<Module> spec, Pageable pageable) {
 		return moduleRepository.findAll(spec, pageable);
 	}

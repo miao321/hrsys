@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.hrsys.common.ExtJsonResult;
 import com.hrsys.user.entity.User;
+import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 
 public interface IUserService {
 	public void saveOrUpdate(User user);
@@ -19,8 +21,7 @@ public interface IUserService {
 	
 	//动态条件查询
 	public Page<User> findAll(Specification<User> spec,Pageable pageable);
-	
-   /* public User getByUserName(String userName);
-	public Set<String> getRoles(String userName);
-    public Set<String> getPermissions(String userName);*/
+	public List<UserRoleQueryDTO> findUserRole();
+	public List<User> find(String hql, Class<User> class1, String[] strings);
+
 }

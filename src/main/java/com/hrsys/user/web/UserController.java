@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hrsys.annotation.SysControllerLog;
 import com.hrsys.common.EncryptUtils;
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.dto.UserQueryDTO;
+import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 import com.hrsys.user.service.ILoginService;
 import com.hrsys.user.service.IUserService;
 import com.hrsys.user.service.impl.LoginServiceImpl;
@@ -35,6 +38,7 @@ public class UserController {
 	@Autowired
 	private ILoginService loginServiceImpl;
 	@RequestMapping("/saveOrUpdate")
+	@SysControllerLog(module="用户管理",methods="添加用户")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(User user) {
 		User user2 = loginServiceImpl.findUser(user.getUserName());
 		if (user2 != null) {
@@ -49,6 +53,7 @@ public class UserController {
 		}	
 	}
 	@RequestMapping("/save")
+	@SysControllerLog(module="用户管理",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse save(User user,@RequestParam Long id) {
 		try {
 			//user.setPassword(EncryptUtils.encript(user.getPassword()));
@@ -59,6 +64,7 @@ public class UserController {
 		}	
 	}	
 	@RequestMapping("/delete")
+	@SysControllerLog(module="用户管理",methods="删除一条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
 		try {
 			User user = userService.findOne(id);
@@ -71,6 +77,7 @@ public class UserController {
 		}		
 	}
 	@RequestMapping("/deleteUsers")
+	@SysControllerLog(module="用户管理",methods="删除多条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);
@@ -83,19 +90,31 @@ public class UserController {
 		}
 	}	
 	@RequestMapping("/findOne")
+	@SysControllerLog(module="用户管理",methods="查找一条数据")
 	public @ResponseBody User findOne(@RequestParam Long id) {
 		User user = userService.findOne(id);
 		return user;
 	}	
 	@RequestMapping("/findAll")
+	@SysControllerLog(module="用户管理",methods="查找所有数据")
 	public @ResponseBody List<User> findAll(){
 		List<User> userLists = userService.findAll();
 		return userLists;		
 	}	
 	@RequestMapping("/findPage")
+	@SysControllerLog(module="用户管理",methods="查找所有数据")
 	public @ResponseBody Page<User> findPage(UserQueryDTO userQueryDTO,ExtPageable extPageable){
 		Page<User> page = userService.findAll(userQueryDTO.getSpecification(userQueryDTO), extPageable.getPageable());
 		return page;	
+	}
+	
+	/**/
+	@RequestMapping("/findUserRole")
+	@SysControllerLog(module="用户管理",methods="用户角色关联")
+	public @ResponseBody ExtJsonResult<UserRoleQueryDTO> findUserRole(){
+		List<UserRoleQueryDTO> findUserRole = userService.findUserRole();
+		return new ExtJsonResult<UserRoleQueryDTO>(findUserRole);
+		//return new ExtAjaxResponse(true, "操作成功");
 	}
 	
 }

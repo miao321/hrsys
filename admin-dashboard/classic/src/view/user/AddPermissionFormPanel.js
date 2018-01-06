@@ -52,7 +52,7 @@ Ext.define('Admin.view.user.AddPermissionFormPanel',{
 	            xtype: 'button',
 	            ui: 'soft-green',
 	            text: '提交',
-	            handler : 'addRole'
+	            handler : 'addPermission'
 	        },{
 	            xtype: 'button',
 	            ui: 'soft-red',

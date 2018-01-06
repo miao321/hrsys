@@ -31,7 +31,7 @@ public class ExtResponse {
 	private String familyPhone;//家庭电话
 	private String email;//电子邮箱地址
 	private String userAccount;//职工账号
-	private Integer deptId;//部门编号
+	private String deptName;//部门编号
 	private String remark;//备注
 	public ExtResponse() {
 		
@@ -44,7 +44,7 @@ public class ExtResponse {
 	public ExtResponse(boolean success, String msg, Long id, String userNo, String userName, String password,
 			String userNickName, String sex, Date birthday, Integer age, String nativePlace, String nation,
 			String culture, String college, String body, String marriage, String idCord, String phone,
-			String familyPhone, String email, String userAccount, Integer deptId, String remark) {
+			String familyPhone, String email, String userAccount, String deptName, String remark) {
 		this.success = success;
 		this.msg = msg;
 		this.id = id;
@@ -66,7 +66,7 @@ public class ExtResponse {
 		this.familyPhone = familyPhone;
 		this.email = email;
 		this.userAccount = userAccount;
-		this.deptId = deptId;
+		this.deptName = deptName;
 		this.remark = remark;
 	}
 	public boolean isSuccess() {
@@ -133,8 +133,8 @@ public class ExtResponse {
 	public String getUserAccount() {
 		return userAccount;
 	}
-	public Integer getDeptId() {
-		return deptId;
+	public String getDeptName() {
+		return deptName;
 	}
 	public String getRemark() {
 		return remark;

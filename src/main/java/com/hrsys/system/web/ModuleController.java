@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hrsys.annotation.SysControllerLog;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.system.entity.Module;
@@ -25,6 +26,7 @@ public class ModuleController {
 	@Autowired
 	private IModuleService moduleService;
 	@RequestMapping("/saveOrUpdate")
+	@SysControllerLog(module="模块管理",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Module module) {
 		try {
 			moduleService.saveOrUpdate(module);
@@ -34,6 +36,7 @@ public class ModuleController {
 		}	
 	}	
 	@RequestMapping("/delete")
+	@SysControllerLog(module="模块管理",methods="删除一条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
 		try {
 			Module module = moduleService.findOne(id);
@@ -46,6 +49,7 @@ public class ModuleController {
 		}		
 	}
 	@RequestMapping("/deleteModules")
+	@SysControllerLog(module="模块管理",methods="删除多条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);
@@ -58,16 +62,19 @@ public class ModuleController {
 		}
 	}	
 	@RequestMapping("/findOne")
+	@SysControllerLog(module="模块管理",methods="查找一条数据")
 	public @ResponseBody Module findOne(@RequestParam Long id) {
 		Module module = moduleService.findOne(id);
 		return module;
 	}	
 	@RequestMapping("/findAll")
+	@SysControllerLog(module="模块管理",methods="查找所有数据")
 	public @ResponseBody List<Module> findAll(){
 		List<Module> moduleLists = moduleService.findAll();
 		return moduleLists;		
 	}	
 	@RequestMapping("/findPage")
+	@SysControllerLog(module="模块管理",methods="查找所有数据并分页排序")
 	public @ResponseBody Page<Module> findPage(ModuleQueryDTO moduleQueryDTO,ExtPageable extPageable){
 		Page<Module> page = moduleService.findAll(moduleQueryDTO.getSpecification(moduleQueryDTO), extPageable.getPageable());
 		return page;	

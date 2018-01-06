@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hrsys.annotation.SysControllerLog;
+import com.hrsys.annotation.SysLog;
 import com.hrsys.common.EncryptUtils;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtResponse;
@@ -38,6 +40,7 @@ public class LoginController {
 	private ILoginService loginService;
 	//登录
 	@RequestMapping("/login")
+	@SysControllerLog(module="系统登录",methods="登录")
 	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password,HttpSession session) throws Exception, IOException {
 		logger.debug("login request: {userName={}, password={}}", userName, password);		
 		User user = loginService.login(userName,EncryptUtils.encript(password) );
@@ -64,6 +67,7 @@ public class LoginController {
 	}
 	//修改密码
 	@RequestMapping("/updatePassword")
+	@SysControllerLog(module="用户管理",methods="修改密码")
 	public @ResponseBody ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String  comfirPassword,HttpSession session) throws NoSuchAlgorithmException {		
 		System.out.println(password);
 		System.out.println("pass:"+session.getAttribute("password"));
@@ -80,18 +84,20 @@ public class LoginController {
 	}
 	
 	//修改个人信息
-		@RequestMapping("/updateMessage")
-		public @ResponseBody ExtResponse updateMessage(HttpSession session) throws NoSuchAlgorithmException {					
-			User user = (User) session.getAttribute("user");
-			if (user != null) {
-				return new ExtResponse(true, "操作成功", user.getId(), user.getUserNo(), user.getUserName(), user.getPassword(), user.getUserNickName(), user.getSex(), user.getBirthday(), user.getAge(), user.getNativePlace(), user.getNation(),
-						user.getCulture(), user.getCollege(), user.getBody(), user.getMarriage(), user.getIdCord(), user.getPhone(), user.getFamilyPhone(), user.getEmail(), user.getUserAccount(), user.getDeptId(), user.getRemark());
-			}
-			return new ExtResponse(false, "操作不成功");
+	@RequestMapping("/updateMessage")
+	@SysControllerLog(module="用户管理",methods="修改个人信息")
+	public @ResponseBody ExtResponse updateMessage(HttpSession session) throws NoSuchAlgorithmException {					
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			return new ExtResponse(true, "操作成功", user.getId(), user.getUserNo(), user.getUserName(), user.getPassword(), user.getUserNickName(), user.getSex(), user.getBirthday(), user.getAge(), user.getNativePlace(), user.getNation(),
+					user.getCulture(), user.getCollege(), user.getBody(), user.getMarriage(), user.getIdCord(), user.getPhone(), user.getFamilyPhone(), user.getEmail(), user.getUserAccount(), user.getDeptName(), user.getRemark());
 		}
+		return new ExtResponse(false, "操作不成功");
+	}
 	
 	//退出系统
 	@RequestMapping("/logout")
+	@SysControllerLog(module="用户管理",methods="退出系统")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return "login";

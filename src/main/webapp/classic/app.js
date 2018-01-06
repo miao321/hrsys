@@ -83133,6 +83133,7 @@ Ext.define('Admin.view.user.AddPermissionFormPanel',{
 	extend:'Ext.form.Panel',
 	xtype:'addPermissionFormPanel',   //对应NavigationTree store 的 viewType:'user'
 	labelAlign: 'left',
+	id:'addPermissionFormPanel',
     //	id:'Form1',
     autoHeight: true,
     width: 513,
@@ -83183,7 +83184,7 @@ Ext.define('Admin.view.user.AddPermissionFormPanel',{
 	            xtype: 'button',
 	            ui: 'soft-green',
 	            text: '提交',
-	            handler : 'addRole'
+	            handler : 'addPermission'
 	        },{
 	            xtype: 'button',
 	            ui: 'soft-red',
@@ -83279,11 +83280,11 @@ Ext.define('Admin.view.user.UpdateMessageFormPanel',{
         xtype: 'textfield',
         fieldLabel: '家庭电话',
         name:'familyPhone'
-    }, {
+	    }, {
         xtype: 'textfield',
         fieldLabel: '部门号',
-        name:'deptId'
-    }, {
+    	name:'deptId'
+   },{
         xtype: 'textfield',
         fieldLabel: '身份证号',
         name:'idCord'
@@ -83562,8 +83563,9 @@ Ext.define('Admin.model.user.UserGridPanelModel', {
 		{type: 'string',name: 'body'},
 		{type: 'string',name: 'college'},
 		{type: 'string',name: 'culture'},
-		{type: 'int',name: 'deptId'},
+	//	{type: 'int',name: 'deptId'},
 		{type: 'string',name: 'email'},
+		{type: 'string',name: 'deptName'},
 		{type: 'string',name: 'familyPhone'},
 		{type: 'string',name: 'idCord'},
 		{type: 'string',name: 'marriage'},
@@ -83634,7 +83636,35 @@ Ext.define('Admin.model.user.DeptGridPanelModel', {
     ]
 });
 
-Ext.define('Admin.store.NavigationTree', {extend:Ext.data.TreeStore, storeId:'NavigationTree', fields:[{name:'text'}], root:{expanded:true, children:[{text:'系统管理', iconCls:'x-fa fa-desktop', viewType:'admindashboard', routeId:'dashboard', children:[{text:'角色管理', iconCls:'x-fa fa-user-plus', viewType:'roleModelPanel', leaf:true}, {text:'模块管理', iconCls:'x-fa fa-clone',viewType:'moduleModelPanel', leaf:true}, {text:'用户权限分配', iconCls:'x-fa fa-user-plus',viewType:'userPermissionModelPanel', leaf:true}, {text:'部门管理', iconCls:'x-fa fa-users',viewType:'deptModelPanel', leaf:true}, {text:'日志管理', iconCls:'x-fa fa-envelope-o',viewType:'logModelPanel', 
+Ext.define('Admin.model.user.PermissionGridPanelModel', {
+    extend: 'Admin.model.Base',
+    fields: [
+		{type: 'int'	,name: 'id'},	
+		{type: 'string',name: 'token'},	
+		{type: 'string',name: 'url'},	
+		{type: 'string',name: 'description'},
+		{type: 'int',name: 'roleId'}	
+    ]
+});
+Ext.define('Admin.model.user.UserRoleGridPanelModel', {
+    extend: 'Admin.model.Base',
+    fields: [
+		{type: 'int'	,name: 'id'},
+		{type: 'int',name: 'userId'},
+		{type: 'int',name: 'roleId'},	
+    ]
+});
+Ext.define('Admin.model.user.LogGridPanelModel', {
+    extend: 'Admin.model.Base',
+    fields: [
+		{type: 'int'	,name: 'id'},
+		{type: 'string',name: 'userName'},
+		{type: 'date',name: 'startTime'},
+		{type: 'date',name: 'endTime'}
+    ]
+});
+
+Ext.define('Admin.store.NavigationTree', {extend:Ext.data.TreeStore, storeId:'NavigationTree', fields:[{name:'text'}], root:{expanded:true, children:[{text:'系统管理', iconCls:'x-fa fa-desktop', viewType:'admindashboard', routeId:'dashboard', children:[{text:'角色管理', iconCls:'x-fa fa-user-plus', viewType:'roleModelPanel', leaf:true}, {text:'模块管理', iconCls:'x-fa fa-clone',viewType:'moduleModelPanel', leaf:true}, {text:'用户权限分配', iconCls:'x-fa fa-user-plus',viewType:'permissionModelPanel', leaf:true}, {text:'部门管理', iconCls:'x-fa fa-users',viewType:'deptModelPanel', leaf:true}, {text:'日志管理', iconCls:'x-fa fa-envelope-o',viewType:'logModelPanel', 
 leaf:true}]}, {text:'用户管理模块', iconCls:'x-fa fa-user', viewType:'userModelPanel', children:[{text:'修改密码', iconCls:'x-fa fa-exchange', viewType:'changePassword', leaf:true}, ]}, {text:'人事管理', iconCls:'x-fa fa-user-circle', viewType:'email', children:[{text:'职员信息', iconCls:'x-fa fa-user-circle', 
 viewType:'pageblank', leaf:true}, {text:'职员合同管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'人事变动', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'人事变动查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员安排', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}, {text:'外出人员查询', iconCls:'x-fa fa-user-circle', viewType:'page404', leaf:true}]}, {text:'薪资管理', iconCls:'x-fa fa-money', viewType:'profile', children:[{text:'账套管理', 
 iconCls:'x-fa fa-money', viewType:'pageblank', leaf:true}, {text:'薪资项目管理', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'绩效考核设置', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'绩效考核表', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'考核记录管理', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'薪资计算', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}, {text:'薪资导出', iconCls:'x-fa fa-money', viewType:'page404', leaf:true}]}, {text:'招聘管理', 
@@ -83642,7 +83672,7 @@ iconCls:'x-fa fa-hand-pointer-o', viewType:'searchresults', children:[{text:'招
 {text:'培训管理', iconCls:'x-fa fa-heart', children:[{text:'培训计划管理', iconCls:'x-fa fa-file-o', viewType:'pageblank', leaf:true}, {text:'培训实施管理', iconCls:'x-fa fa-star', viewType:'page404', leaf:true}, {text:'培训需求计划', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'培训课程管理', iconCls:'x-fa fa-star', viewType:'page404', leaf:true}, {text:'培训材料管理', iconCls:'x-fa fa-file-o', viewType:'page404', leaf:true}, {text:'培训统计及分析', iconCls:'x-fa fa-map', viewType:'page404', leaf:true}]}, {text:'考勤管理', 
 iconCls:'x-fa fa-leanpub', expanded:false, selectable:false, children:[{text:'上下班打卡记录', iconCls:'x-fa fa-file-o', viewType:'pageblank', leaf:true}, {text:'加班记录', iconCls:'x-fa fa-star', viewType:'page404', leaf:true}, {text:'考勤规则', iconCls:'x-fa fa-file-o', viewType:'page500', leaf:true}, {text:'加班通知', iconCls:'x-fa fa-star', viewType:'lockscreen', leaf:true}, {text:'数据分析及显示', iconCls:'x-fa fa-map', viewType:'login', leaf:true}, {text:'考勤信息下载', iconCls:'x-fa fa-share-square-o', viewType:'register', 
 leaf:true}]}]}});
-Ext.define('Admin.store.user.UserGridPanelStore', {extend:Ext.data.Store, alias:'store.userGridPanelStore', model:'Admin.model.user.UserGridPanelModel', pageSize:25, proxy:{type:'ajax', url:'user/findPage.json', reader:{type:'json', rootProperty:'content', totalProperty:'totalElements'}, simpleSortMode:true}, remoteSort:true, sorters:{direction:'DESC', property:'id'}});
+Ext.define('Admin.store.user.UserGridPanelStore', {extend:Ext.data.Store, alias:'store.userGridPanelStore', model:'Admin.model.user.UserGridPanelModel', pageSize:25, proxy:{type:'ajax', url:'user/findUserRole.json', reader:{type:'json', rootProperty:'lists', totalProperty:'totalElements'}, simpleSortMode:true}, remoteSort:true, sorters:{direction:'DESC', property:'id'}});
 
 Ext.define('Admin.store.user.RoleGridPanelStore', {
 	extend: 'Ext.data.Store',
@@ -83700,6 +83730,77 @@ Ext.define('Admin.store.user.DeptGridPanelStore', {
 	proxy: {
 		type: 'ajax',
 		url:'dept/findPage.json',
+		reader: {
+			type: 'json',
+			rootProperty: 'content',
+			totalProperty:'totalElements'
+		},
+		simpleSortMode:true  //发送简单排序字段
+	},
+	remoteSort:true,  //远程（全局）排序
+//	autoLoad: 'true',
+	sorters: {
+		direction: 'DESC',
+		property: 'id'
+	}
+});
+
+Ext.define('Admin.store.user.PermissionGridPanelStore', {
+	extend: 'Ext.data.Store',
+	alias: 'store.permissionGridPanelStore', // ViewModel中stores type
+	model: 'Admin.model.user.PermissionGridPanelModel',
+	//autoLoad:true,
+	pageSize:25,
+	proxy: {
+		type: 'ajax',
+		url:'permission/findPage.json',
+		reader: {
+			type: 'json',
+			rootProperty: 'content',
+			totalProperty:'totalElements'
+		},
+		simpleSortMode:true  //发送简单排序字段
+	},
+	remoteSort:true,  //远程（全局）排序
+//	autoLoad: 'true',
+	sorters: {
+		direction: 'DESC',
+		property: 'id'
+	}
+});
+
+Ext.define('Admin.store.user.LogGridPanelStore', {
+	extend: 'Ext.data.Store',
+	alias: 'store.logGridPanelStore', // ViewModel中stores type
+	model: 'Admin.model.user.LogGridPanelModel',
+	//autoLoad:true,
+	pageSize:25,
+	proxy: {
+		type: 'ajax',
+		url:'log/findPage.json',
+		reader: {
+			type: 'json',
+			rootProperty: 'content',
+			totalProperty:'totalElements'
+		},
+		simpleSortMode:true  //发送简单排序字段
+	},
+	remoteSort:true,  //远程（全局）排序
+//	autoLoad: 'true',
+	sorters: {
+		direction: 'DESC',
+		property: 'id'
+	}
+});
+Ext.define('Admin.store.user.UserRoleGridPanelStore', {
+	extend: 'Ext.data.Store',
+	alias: 'store.userRoleGridPanelStore', // ViewModel中stores type
+	model: 'Admin.model.user.UserRoleGridPanelModel',
+	//autoLoad:true,
+	pageSize:25,
+	proxy: {
+		type: 'ajax',
+		url:'userRole/findPage.json',
 		reader: {
 			type: 'json',
 			rootProperty: 'content',
@@ -83910,24 +84011,19 @@ updateUserMessage: function(button) {
     , this);
 },
 	
-addRole:function(btn) {
-  /*	var grid = btn.up('gridpanel');*/
+addRole:function(btn) { 
 	var selModel = Ext.getCmp('userGridPanel').getSelectionModel();/*.getSelection();*/
-	  alert(selModel);
 	 var form=Ext.getCmp('addRoleFormPanel');
      var role = form.getForm().findField('id').getValue();
+      if (selModel.hasSelection()) {
     Ext.MessageBox.confirm('提示', '确定要该用户添加角色？', function(btn, text) {
     if (btn == 'yes') {
    	Ext.getCmp('addRoleWindow').close();
-    //var role = Ext.getCmp('addRoleFormPanel').getValues();
-   
      var selected = selModel.getSelection();
         var selectIds = []; //要删除的id
         Ext.each(selected, function (item) {
             selectIds.push(item.data.id);
         }),
-       /* Ext.widget("xtype")
-        	Ext.getCmp("id")form['id']*/
       Ext.Ajax.request(
 	       {url:'userRole/save',
 	        method:'post',	        
@@ -83946,8 +84042,50 @@ addRole:function(btn) {
 	      }});
 	    }
   }, this);
+  }else {
+            Ext.Msg.alert("错误", "没有任何用户被选中，无法进行添加角色操作！",function(){
+            	Ext.getCmp('addRoleWindow').close();
+            });
+        }
 },
-	   	
+addPermission:function(btn) { 
+	var selModel = Ext.getCmp('roleGridPanel').getSelectionModel();/*.getSelection();*/
+	 var form=Ext.getCmp('addPermissionFormPanel');
+     var permission = form.getForm().findField('id').getValue();
+    if (selModel.hasSelection()) {
+    Ext.MessageBox.confirm('提示', '确定要该角色添加权限？', function(btn, text) {
+    if (btn == 'yes') {
+   	Ext.getCmp('addPermissionWindow').close();
+     var selected = selModel.getSelection();
+        var selectIds = []; //要删除的id
+        Ext.each(selected, function (item) {
+            selectIds.push(item.data.id);
+        }),
+      Ext.Ajax.request(
+	       {url:'permission/save',
+	        method:'post',	        
+	    params:{role_id:selectIds
+	        	,permission_id:permission
+		        },
+	        success:function(response, options) {
+	        var json = Ext.util.JSON.decode(response.responseText);
+	        if (json.success) {
+	          Ext.Msg.alert('系统提示', json.msg, function() {	          
+	            Ext.getCmp('roleGridPanel').getStore().reload();	          
+	          });
+	        } else {
+	          Ext.Msg.alert('系统提示', json.msg);
+	        }
+	      }});
+	    }
+  }, this);
+}else {
+            Ext.Msg.alert("错误", "没有任何角色被选中，无法进行添加权限操作！",function(){
+            	Ext.getCmp('addPermissionWindow').close();
+            });
+            
+        }
+},	   	
 });
 Ext.define('Admin.view.main.MainModel', {extend:Ext.app.ViewModel, alias:'viewmodel.main', data:{currentView:null}});
 
@@ -84074,11 +84212,32 @@ Ext.define('Admin.view.user.UserAddForm', {
         valueField: "Value",
         emptyText: "--请选择--",
         queryMode: "local"
-    }, {
-        xtype: 'textfield',
-        fieldLabel: '部门号',
-        name:'deptId',
-        emptyText: '请输入部门号'
+    }, {      
+       xtype: "combobox",
+       name: "deptName",
+       model:'local',
+       fieldLabel: "部门名",
+       store: {
+       	   autoLoad:true,
+       	   fields:[{name:'id',type:'int'},{name:'deptName',type:'string'}],
+	       	proxy: {
+				type: 'ajax',
+				url:'dept/findAll.json',
+				reader: {
+					type: 'json',
+					rootProperty: 'lists',
+					totalProperty:'totalElements'
+				  }
+			}
+		},
+        editable: false,
+        valueField: "deptName",
+        displayField: "deptName",
+       
+        emptyText: "--请选择--",
+        queryMode: "local",
+     //   height:40,
+	//	style:'text-align:center;margin-top:20px;'
 	}, {
         xtype: 'textfield',
         fieldLabel: '邮箱地址',
@@ -84495,6 +84654,7 @@ Ext.define('Admin.view.user.DeptAddForm', {
        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -84504,11 +84664,163 @@ Ext.define('Admin.view.user.DeptAddForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+       	editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
         fieldLabel: '备注',
         name:'remark'
+    }],
+
+    bbar: {
+        overflowHandler: 'menu',
+        items: ['->',{
+            xtype: 'button',
+            ui: 'soft-green',
+            text: '提交',
+            handler : 'submitEditForm'
+        },{
+            xtype: 'button',
+            ui: 'soft-red',
+            text: '取消',
+	        handler :function(bt){
+	        	var win = bt.up('window');
+		        if (win) {
+		            win.close();
+		        }
+	        }
+        },'->']
+    }
+});
+
+Ext.define('Admin.view.user.PermissionAddForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.permissionAddForm',
+    requires: [
+        'Ext.button.Button',
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Date',
+		'Ext.form.field.Time', 
+        'Ext.form.field.Number',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Picker',
+        'Ext.form.field.TextArea',
+        'Ext.form.field.File',
+        'Ext.form.field.HtmlEditor'
+    ],
+//因为Window是独立Create的并不属于UserModelPanel主视图
+//所以：必须绑定viewModel才可以刷新Grid数据
+//所以：必须绑定ViewController才可以绑定事件
+    viewModel: {type: 'permissionViewModel'},
+    controller: 'permissionViewController',
+    //cls: '',
+
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+
+    items: [{
+        xtype: 'textfield', //hidden
+        fieldLabel: 'token',
+        name:'token',
+        //readOnly:true
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '资源url',
+        name:'url'
+    },{
+        xtype: 'textfield',
+        fieldLabel: '权限说明',
+        name:'description'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '所属角色编号',
+        name:'roleId',      
+    }],
+
+    bbar: {
+        overflowHandler: 'menu',
+        items: ['->',{
+            xtype: 'button',
+            ui: 'soft-green',
+            text: '提交',
+            handler : 'submitEditForm'
+        },{
+            xtype: 'button',
+            ui: 'soft-red',
+            text: '取消',
+	        handler :function(bt){
+	        	var win = bt.up('window');
+		        if (win) {
+		            win.close();
+		        }
+	        }
+        },'->']
+    }
+});
+
+Ext.define('Admin.view.user.LogAddForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.logAddForm',
+    requires: [
+        'Ext.button.Button',
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Date',
+		'Ext.form.field.Time', 
+        'Ext.form.field.Number',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Picker',
+        'Ext.form.field.TextArea',
+        'Ext.form.field.File',
+        'Ext.form.field.HtmlEditor'
+    ],
+//因为Window是独立Create的并不属于UserModelPanel主视图
+//所以：必须绑定viewModel才可以刷新Grid数据
+//所以：必须绑定ViewController才可以绑定事件
+    viewModel: {type: 'logViewModel'},
+    controller: 'logViewController',
+    //cls: '',
+
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+
+    items: [{
+        xtype: 'textfield',
+        fieldLabel: '用户名',
+        name:'userName'
+    }, {
+        xtype: 'datefield',
+        fieldLabel: '登录时间',
+        name:'startTime',
+        format: 'Y/m/d H:i:s'
+    }, {
+        xtype: 'datefield',
+        fieldLabel: '下线时间',
+        name:'endTime',
+        format: 'Y/m/d H:i:s',      
     }],
 
     bbar: {
@@ -84646,6 +84958,71 @@ Ext.define('Admin.view.user.DeptAddWindow', {
         this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
     }
 });
+Ext.define('Admin.view.user.PermissionAddWindow', {
+    extend: 'Ext.window.Window',
+    alias: 'widget.permissionAddWindow',
+   	xtype:'permissionAddWindow',
+    autoShow: true,
+    modal: true,
+    layout: 'fit',
+    //items:[],
+    afterRender: function () {
+        var me = this;
+        me.callParent(arguments);
+        me.syncSize();
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+    },
+    doDestroy: function () {
+        Ext.un(this.resizeListeners);
+        this.callParent();
+    },
+    onViewportResize: function () {
+        this.syncSize();
+    },
+    syncSize: function () {
+        var width = Ext.Element.getViewportWidth(),
+            height = Ext.Element.getViewportHeight();
+        this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
+        this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
+    }
+});
+
+Ext.define('Admin.view.user.LogAddWindow', {
+    extend: 'Ext.window.Window',
+    alias: 'widget.logAddWindow',
+   	xtype:'logAddWindow',
+    autoShow: true,
+    modal: true,
+    layout: 'fit',
+    //items:[],
+    afterRender: function () {
+        var me = this;
+        me.callParent(arguments);
+        me.syncSize();
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+    },
+    doDestroy: function () {
+        Ext.un(this.resizeListeners);
+        this.callParent();
+    },
+    onViewportResize: function () {
+        this.syncSize();
+    },
+    syncSize: function () {
+        var width = Ext.Element.getViewportWidth(),
+            height = Ext.Element.getViewportHeight();
+        this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
+        this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
+    }
+});
 
 Ext.define('Admin.view.user.UserEditForm', {
     extend: 'Ext.form.Panel',
@@ -84700,7 +85077,8 @@ Ext.define('Admin.view.user.UserEditForm', {
     },{
         xtype: 'textfield',
         fieldLabel: '密码',
-        name:'password'
+        name:'password',
+        readOnly:true
     }, {
         xtype: 'datefield',
         fieldLabel: '生日',
@@ -84715,7 +85093,7 @@ Ext.define('Admin.view.user.UserEditForm', {
         fieldLabel: '身体状况',
         name:'body',
         store: bodyStore,
-        editable: false,
+         
         displayField: "Name",
         valueField: "Value",
         //emptyText: "--请选择--",
@@ -84739,9 +85117,29 @@ Ext.define('Admin.view.user.UserEditForm', {
         fieldLabel: '年龄',
         name:'age'
     }, {
-        xtype: 'textfield',
-        fieldLabel: '部门号',
-        name:'deptId'
+        xtype: "combobox",
+       name: "deptName",
+       model:'local',
+       fieldLabel: "部门名",
+       store: {
+       	   autoLoad:true,
+       	   fields:[{name:'id',type:'int'},{name:'deptName',type:'string'}],
+	       	proxy: {
+				type: 'ajax',
+				url:'dept/findAll.json',
+				reader: {
+					type: 'json',
+					rootProperty: 'lists',
+					totalProperty:'totalElements'
+				  }
+			}
+		},
+        editable: false,
+        valueField: "deptName",
+        displayField: "deptName",
+       
+        emptyText: "--请选择--",
+        queryMode: "local",
     }, {
         xtype: 'textfield',
         fieldLabel: '家庭电话',
@@ -85117,6 +85515,7 @@ Ext.define('Admin.view.user.DeptEditForm', {
         xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+       	editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -85126,11 +85525,177 @@ Ext.define('Admin.view.user.DeptEditForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+       	editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
         fieldLabel: '备注',
         name:'remark'
+    }],
+
+    bbar: {
+        overflowHandler: 'menu',
+        items: ['->',{
+            xtype: 'button',
+            ui: 'soft-green',
+            text: '提交',
+            handler : 'submitEditForm'
+        },{
+            xtype: 'button',
+            ui: 'soft-red',
+            text: '取消',
+	        handler :function(bt){
+	        	var win = bt.up('window');
+		        if (win) {
+		            win.close();
+		        }
+	        }
+        },'->']
+    }
+});
+Ext.define('Admin.view.user.PermissionEditForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.permissionEditForm',
+    requires: [
+        'Ext.button.Button',
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Date',
+		'Ext.form.field.Time', 
+        'Ext.form.field.Number',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Picker',
+        'Ext.form.field.TextArea',
+        'Ext.form.field.File',
+        'Ext.form.field.HtmlEditor'
+    ],
+//因为Window是独立Create的并不属于UserModelPanel主视图
+//所以：必须绑定viewModel才可以刷新Grid数据
+//所以：必须绑定ViewController才可以绑定事件
+    viewModel: {type: 'permissionViewModel'},
+    controller: 'permissionViewController',
+    //cls: '',
+
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+	
+	 items: [{
+        xtype: 'textfield', //hidden
+        fieldLabel: 'id',
+        name:'id',
+        readOnly:true
+    },{
+        xtype: 'textfield', //hidden
+        fieldLabel: 'token',
+        name:'token',
+        readOnly:true
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '资源url',
+        name:'url'
+    },{
+        xtype: 'textfield',
+        fieldLabel: '权限说明',
+        name:'description'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '所属角色编号',
+        name:'roleId',      
+    }],
+
+    bbar: {
+        overflowHandler: 'menu',
+        items: ['->',{
+            xtype: 'button',
+            ui: 'soft-green',
+            text: '提交',
+            handler : 'submitEditForm'
+        },{
+            xtype: 'button',
+            ui: 'soft-red',
+            text: '取消',
+	        handler :function(bt){
+	        	var win = bt.up('window');
+		        if (win) {
+		            win.close();
+		        }
+	        }
+        },'->']
+    }
+});
+Ext.define('Admin.view.user.LogEditForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.logEditForm',
+    requires: [
+        'Ext.button.Button',
+        'Ext.form.field.Text',
+        'Ext.form.field.Checkbox',
+        'Ext.form.field.ComboBox',
+        'Ext.form.field.Date',
+		'Ext.form.field.Time', 
+        'Ext.form.field.Number',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Picker',
+        'Ext.form.field.TextArea',
+        'Ext.form.field.File',
+        'Ext.form.field.HtmlEditor'
+    ],
+//因为Window是独立Create的并不属于UserModelPanel主视图
+//所以：必须绑定viewModel才可以刷新Grid数据
+//所以：必须绑定ViewController才可以绑定事件
+    viewModel: {type: 'logViewModel'},
+    controller: 'logViewController',
+    //cls: '',
+
+    layout: {
+        type:'vbox',
+        align:'stretch'
+    },
+
+    bodyPadding: 10,
+    scrollable: true,
+
+    defaults: {
+        labelWidth: 60,
+        labelSeparator: ''
+    },
+	
+	 items: [{
+        xtype: 'textfield', //hidden
+        fieldLabel: 'id',
+        name:'id',
+        readOnly:true
+    },{
+        xtype: 'textfield',
+        fieldLabel: '用户名',
+        name:'userName'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '操作模块',
+        name:'module'
+       
+    },{
+        xtype: 'textfield',
+        fieldLabel: '操作内容',
+        name:'operation'
+             
+  }, {
+        xtype: 'datefield',
+        fieldLabel: '操作时间',
+        name:'operationTime',
+        format: 'Y/m/d H:i:s'
+       	     
     }],
 
     bbar: {
@@ -85265,9 +85830,71 @@ Ext.define('Admin.view.user.DeptEditWindow', {
         this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
     }
 });
+Ext.define('Admin.view.user.PermissionEditWindow', {
+    extend: 'Ext.window.Window',
+    alias: 'widget.permissionEditWindow',
+    autoShow: true,
+    modal: true,
+    layout: 'fit',
+    //items:[],
+    afterRender: function () {
+        var me = this;
+        me.callParent(arguments);
+        me.syncSize();
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+    },
+    doDestroy: function () {
+        Ext.un(this.resizeListeners);
+        this.callParent();
+    },
+    onViewportResize: function () {
+        this.syncSize();
+    },
+    syncSize: function () {
+        var width = Ext.Element.getViewportWidth(),
+            height = Ext.Element.getViewportHeight();
+        this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
+        this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
+    }
+});
+Ext.define('Admin.view.user.LogEditWindow', {
+    extend: 'Ext.window.Window',
+    alias: 'widget.logEditWindow',
+    autoShow: true,
+    modal: true,
+    layout: 'fit',
+    //items:[],
+    afterRender: function () {
+        var me = this;
+        me.callParent(arguments);
+        me.syncSize();
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+    },
+    doDestroy: function () {
+        Ext.un(this.resizeListeners);
+        this.callParent();
+    },
+    onViewportResize: function () {
+        this.syncSize();
+    },
+    syncSize: function () {
+        var width = Ext.Element.getViewportWidth(),
+            height = Ext.Element.getViewportHeight();
+        this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
+        this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
+    }
+});
 Ext.define('Admin.view.user.UserGridPanel', {extend:Ext.grid.Panel, xtype:'userGridPanel', title:'用户管理列表', id:'userGridPanel', dockedItems:[{xtype:'toolbar', items:[{xtype:'combobox', fieldLabel:'', name:'searchFieldName', reference:'searchFieldName', store:{proxy:{type:'memory', reader:'array'}, fields:['key', 'value'], data:[['用户名', 'userName'], ['密码', 'password']]}, queryMode:'local', displayField:'key', valueField:'value', value:'userName', allowBlank:false}, '-', {xtype:'textfield', name:'searchFieldValue', 
-reference:'searchFieldValue'}, '-', {text:'快捷查询', tooltip:'快捷查询', iconCls:'x-fa fa-search', handler:'search'}, '-', {xtype:'button',iconCls:'x-fa fa-trash', text:'批量删除', listeners:{click:'deleteUsers'}}, '-', {xtype:'button',text:'添加用户', tooltip:'添加', iconCls:'x-fa fa-plus', handler:'openAddWindow'},'-', {xtype:'button',text:'角色', tooltip:'角色', iconCls:'x-fa fa-plus',handler:'addRoleWindow' }, '-', {xtype:'button',text:'修改个人信息', tooltip:'修改个人信息', iconCls:'x-fa fa-exchange', handler:'updateMessage'}]}], selModel:{selType:'checkboxmodel'}, bind:'{userlists}', layout:'fit', columns:[{header:'ID', dataIndex:'id', flex:1}, {header:'userName', dataIndex:'userName', flex:1}, {header:'Password', dataIndex:'password', flex:1}, 
-{header:'Birthday', dataIndex:'birthday', flex:1, renderer:Ext.util.Format.dateRenderer('Y/m/d H:i:s')}, {xtype:'actioncolumn', items:[{xtype:'button', iconCls:'x-fa fa-pencil',tooltip:'编辑', handler:'openEditWindow'}, {xtype:'button', iconCls:'x-fa fa-trash', tooltip:'删除',handler:'deleteUser'}], cls:'content-column', width:120, text:'操作', tooltip:'操作 ', flex:1}], bbar:{xtype:'pagingtoolbar', bind:'{userlists}', displayInfo:true, displayMsg:'Displaying topics {0} - {1} of {2}', emptyMsg:'No topics to display', items:['-', 
+reference:'searchFieldValue'}, '-', {text:'快捷查询', tooltip:'快捷查询', iconCls:'x-fa fa-search', handler:'search'}, '-', {xtype:'button',iconCls:'x-fa fa-trash', text:'批量删除', listeners:{click:'deleteUsers'}}, '-', {xtype:'button',text:'添加用户', tooltip:'添加', iconCls:'x-fa fa-plus', handler:'openAddWindow'},'-', {xtype:'button',text:'角色', tooltip:'角色', iconCls:'x-fa fa-plus',handler:'addRoleWindow' }, '-', {xtype:'button',text:'修改个人信息', tooltip:'修改个人信息', iconCls:'x-fa fa-exchange', handler:'updateMessage'}]}], selModel:{selType:'checkboxmodel'}, bind:'{userlists}', layout:'fit', columns:[{header:'ID', dataIndex:'id', flex:1}, {header:'用户名', dataIndex:'userName', flex:1}, {header:'角色名', dataIndex:'roleName', flex:1}, 
+{header:'部门名', dataIndex:'deptName', flex:1}, {xtype:'actioncolumn', items:[{xtype:'button', iconCls:'x-fa fa-pencil',tooltip:'编辑', handler:'openEditWindow'}, {xtype:'button', iconCls:'x-fa fa-trash', tooltip:'删除',handler:'deleteUser'}], cls:'content-column', width:120, text:'操作', tooltip:'操作 ', flex:1}], bbar:{xtype:'pagingtoolbar', bind:'{userlists}', displayInfo:true, displayMsg:'Displaying topics {0} - {1} of {2}', emptyMsg:'No topics to display', items:['-', 
 ]}});
 
 Ext.define('Admin.view.user.RoleGridPanel',{
@@ -85291,6 +85918,13 @@ Ext.define('Admin.view.user.RoleGridPanel',{
             text:'权限',
             iconCls: 'x-fa fa-plus',
             handler : 'addPermissionWindow'
+        } ,'-', {
+            xtype:'button',
+            iconCls:'x-fa fa-trash',
+            text: '批量删除',
+				listeners:{
+		        click:'deleteRoles'
+    		}
         }]
 	}],
 	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
@@ -85344,14 +85978,7 @@ Ext.define('Admin.view.user.RoleGridPanel',{
             displayMsg: 'Displaying topics {0} - {1} of {2}',
             emptyMsg: "No topics to display",
             //layout:'center',
-            items:[
-                '-', {
-                xtype:'button',
-                text: '批量删除',
-					listeners:{
-			        click:'deleteRoles'
-        		}
-            }]
+           
             
         	}
 });
@@ -85372,7 +85999,14 @@ Ext.define('Admin.view.user.ModuleGridPanel',{
                	text:'添加',
                 iconCls: 'x-fa fa-plus',
                 handler : 'openAddWindow'
-            }]
+            },'-', {
+            xtype:'button',
+            iconCls:'x-fa fa-trash',
+            text: '批量删除',
+				listeners:{
+		        click:'deleteModules'
+    		}
+        }]
 	}],
 	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
 	selModel: {
@@ -85381,7 +86015,7 @@ Ext.define('Admin.view.user.ModuleGridPanel',{
 	bind:'{modulelists}',
 	layout:'fit',
 	columns:[
-		{header:'ID',dataIndex:'moduleId',flex:1},
+		{header:'ID',dataIndex:'id',flex:1},
 		{header:'模块名称',dataIndex:'moduleName',flex:1},		
 		{header:'父部门',dataIndex:'parentName',flex:1},
 		{header:'状态',dataIndex:'state',flex:1},
@@ -85424,14 +86058,7 @@ Ext.define('Admin.view.user.ModuleGridPanel',{
             displayInfo: true,
             displayMsg: 'Displaying topics {0} - {1} of {2}',
             emptyMsg: "No topics to display",
-            items:[
-                '-', {
-                xtype:'button',
-                text: '批量删除',
-					listeners:{
-			        click:'deleteModules'
-        		}
-            }]
+            
             
         	}
 });
@@ -85452,7 +86079,14 @@ Ext.define('Admin.view.user.DeptGridPanel',{
                 iconCls: 'x-fa fa-plus',
                 text:'添加',
                 handler : 'openAddWindow'
-            }]
+            },'-', {
+            xtype:'button',
+            iconCls:'x-fa fa-trash',
+            text: '批量删除',
+				listeners:{
+		        click:'deleteDepts'
+    		}
+        }]
 	}],
 	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
 	selModel: {
@@ -85504,14 +86138,134 @@ Ext.define('Admin.view.user.DeptGridPanel',{
             displayInfo: true,
             displayMsg: 'Displaying topics {0} - {1} of {2}',
             emptyMsg: "No topics to display",
-            items:[
-                '-', {
-                xtype:'button',
-                text: '批量删除',
-					listeners:{
-			        click:'deleteDepts'
-        		}
-            }]
+            
+            
+        	}
+});
+Ext.define('Admin.view.user.PermissionGridPanel',{
+	extend:'Ext.grid.Panel',
+	xtype:'permissionGridPanel',
+	title:'权限分配管理列表',
+	id:'permissionGridPanel',
+	requires: [
+    	'Ext.grid.column.RowNumberer',
+    	'Ext.selection.CheckboxModel'
+    ],
+    dockedItems: [{
+        xtype: 'toolbar',
+        items: ['-',{
+                xtype: 'button',
+                text:'添加',
+                iconCls: 'x-fa fa-plus',
+                handler : 'openAddWindow'
+            },'-', {
+            xtype:'button',
+            iconCls:'x-fa fa-trash',
+            text: '批量删除',
+				listeners:{
+		        click:'deletePermissions'
+    		}
+        }]
+	}],
+	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
+	selModel: {
+                selType: 'checkboxmodel'
+ 	},
+	bind:'{permissionlists}',
+	layout:'fit',
+	columns:[
+		{header:'ID',dataIndex:'id',flex:1},
+		{header:'资源URL',dataIndex:'url',flex:1},		
+		{header:'权限说明',dataIndex:'description',flex:1},
+	//	{header:'部门联系电话',dataIndex:'deptPhone',flex:1},
+	//	{xtype: 'rownumberer',width: 40, sortable: false},
+		{
+            xtype: 'actioncolumn',
+            items: [{
+        		xtype: 'button',
+                iconCls: 'x-fa fa-pencil',
+                handler : 'openEditWindow'
+            },{
+                xtype: 'button',
+                iconCls: 'x-fa fa-trash',
+                handler : 'deletePermission'
+	        }],
+            cls: 'content-column',
+            width: 120,
+            //dataIndex: 'bool',
+            text: '操作',
+            tooltip: '操作 ',
+            flex:1
+          }			
+	],
+	bbar: {
+		    xtype: 'pagingtoolbar',//注意以后MVVM中使用新写法,不要使用Ext.create()
+            //store: Ext.data.StoreManager.lookup('simpsonsStore'),
+           	bind:'{permissionlists}',
+            displayInfo: true,
+            displayMsg: 'Displaying topics {0} - {1} of {2}',
+            emptyMsg: "No topics to display",
+            
+            
+        	}
+});
+
+Ext.define('Admin.view.user.LogGridPanel',{
+	extend:'Ext.grid.Panel',
+	xtype:'logGridPanel',
+	title:'日志管理列表',
+	id:'logGridPanel',
+	requires: [
+    	'Ext.grid.column.RowNumberer',
+    	'Ext.selection.CheckboxModel'
+    ],
+    dockedItems: [{
+        xtype: 'toolbar',
+        items: ['-', {
+            xtype:'button',
+            iconCls:'x-fa fa-trash',
+            text: '批量删除',
+				listeners:{
+		        click:'deleteLogs'
+    		}
+        }]
+	}],
+	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
+	selModel: {
+                selType: 'checkboxmodel'
+ 	},
+	bind:'{loglists}',
+	layout:'fit',
+	columns:[				
+		{header:'ID',dataIndex:'id',flex:1},
+		{header:'用户名',dataIndex:'userName'/*text:loginUser*/,flex:1},		
+		{header:'操作模块',dataIndex:'module',flex:1},
+		{header:'操作内容',dataIndex:'operation',flex:1},
+		{header:'操作时间',dataIndex:'operationTime',flex:1,renderer:Ext.util.Format.dateRenderer('Y/m/d H:i:s')},
+	//	{xtype: 'rownumberer',width: 40, sortable: false},
+		{
+            xtype: 'actioncolumn',
+            items: [{
+                xtype: 'button',
+                iconCls: 'x-fa fa-trash',
+                handler : 'deleteLog'
+	        }],
+            cls: 'content-column',
+            width: 120,
+            //dataIndex: 'bool',
+            text: '操作',
+            tooltip: '操作 ',
+            flex:1
+          }			
+	],
+	bbar: {
+		    xtype: 'pagingtoolbar',//注意以后MVVM中使用新写法,不要使用Ext.create()
+            //store: Ext.data.StoreManager.lookup('simpsonsStore'),
+           	bind:'{loglists}',
+            displayInfo: true,
+            displayMsg: 'Displaying topics {0} - {1} of {2}',
+            emptyMsg: "No topics to display",
+           
             
         	}
 });
@@ -85549,27 +86303,28 @@ Ext.define('Admin.view.user.DeptModelPanel',{
 	items:[{xtype:'deptGridPanel'}]
 //	html:'组织机构管理'
 });
-Ext.define('Admin.view.user.UserPermissionModelPanel',{
+Ext.define('Admin.view.user.PermissionModelPanel',{
 	extend:'Ext.container.Container',
-	xtype:'userPermissionModelPanel',   //对应NavigationTree store 的 viewType:'user'
+	xtype:'permissionModelPanel',   //对应NavigationTree store 的 viewType:'user'
 		requires:[],
-//	controller:'userViewController',
-//	viewModel:{type:'userViewModel'},
+	controller:'permissionViewController',
+	viewModel:{type:'permissionViewModel'},
 //	listeners:{hide:'onHideView'},
 	layout:'fit',
-//	items:[{xtype:'userGridPanel'}]
-	html:'用户权限分配模块'
+	items:[{xtype:'permissionGridPanel'}]
+
 });
+
 Ext.define('Admin.view.user.LogModelPanel',{
 	extend:'Ext.container.Container',
 	xtype:'logModelPanel',   //对应NavigationTree store 的 viewType:'user'
 		requires:[],
-//	controller:'userViewController',
-//	viewModel:{type:'userViewModel'},
+	controller:'logViewController',
+	viewModel:{type:'logViewModel'},
 //	listeners:{hide:'onHideView'},
 	layout:'fit',
-//	items:[{xtype:'userGridPanel'}]
-	html:'日志管理模块'
+	items:[{xtype:'logGridPanel'}]
+
 });
 Ext.define('Admin.view.user.UserViewController', {extend:Ext.app.ViewController, alias:'controller.userViewController', onShowPreviewButtonClick:function(btn) {
   alert('Hello');
@@ -85708,7 +86463,7 @@ updateMessage: function(view, recIndex, cellIndex, item, e, record) {
 					win.down('form').getForm().findField("familyPhone").setValue(json.familyPhone);
 					win.down('form').getForm().findField("email").setValue(json.email);
 					win.down('form').getForm().findField("userAccount").setValue(json.userAccount);
-					win.down('form').getForm().findField("deptId").setValue(json.deptId);
+					win.down('form').getForm().findField("deptName").setValue(json.deptName);
 					win.down('form').getForm().findField("remark").setValue(json.remark);
 				}			                		
 				else{
@@ -86108,6 +86863,256 @@ Ext.define('Admin.view.user.DeptViewController', {
 
 });
 
+Ext.define('Admin.view.user.PermissionViewController', {
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.permissionViewController',
+	requires: [
+    	'Ext.grid.column.RowNumberer',
+    	'Ext.selection.CheckboxModel'
+    ]
+    ,openAddWindow: function(view, recIndex, cellIndex, item, e, record) {
+      		var cfg = Ext.apply({
+                xtype: 'permissionAddWindow',
+                items: [Ext.apply({xtype: 'permissionAddForm'})]
+		});
+		var win = Ext.create(cfg);
+    }
+    ,submitAddForm: function(btn) {
+      		var form = btn.up('form');
+			form.getForm().submit({       
+				url:'permission/saveOrUpdate',
+				//waitMsg: '正在上传，请耐心等待....',
+				success: function(form, action){    
+					Ext.Msg.alert('提示', action.result.msg,function(){
+						btn.up('window').close();
+					//	form.getViewModel().getStore('userDataList').reload();
+	                   Ext.getCmp('permissionGridPanel').getStore().reload();
+						
+					});       
+				},       
+				failure: function(form, action){
+					Ext.Msg.alert('提示', action.result.msg);
+				}
+			});
+    }
+    ,openEditWindow: function(view, recIndex, cellIndex, item, e, record) {
+    	var cfg = Ext.apply({
+                xtype: 'permissionEditWindow',
+                items: [Ext.apply({xtype: 'permissionEditForm'})]
+		});
+		var win = Ext.create(cfg);
+		
+		win.down("form").getForm().loadRecord(record);//加载修改数据到Form
+      	
+    }
+     ,submitEditForm: function(btn) {
+      		var form = btn.up('form');
+			form.getForm().submit({       
+				url:'permission/saveOrUpdate',
+				//waitMsg: '正在上传，请耐心等待....',
+				success: function(form, action){    
+					Ext.Msg.alert('提示', action.result.msg,function(){
+						btn.up('window').close();
+						//form.getViewModel().getStore('roleDataList').reload();
+	                   			Ext.getCmp('permissionGridPanel').getStore().reload();
+						
+					});       
+				},       
+				failure: function(form, action){
+					Ext.Msg.alert('提示', action.result.msg);
+				}
+			});
+	}
+
+     ,deletePermission: function(view, recIndex, cellIndex, item, e, record) {
+      		Ext.MessageBox.confirm('提示', '确定要进行删除操作吗？数据将无法还原！',
+      			function(btn, text){
+                	if(btn=='yes'){
+				Ext.Ajax.request({ 
+					url : 'permission/delete', 
+					method : 'post', 
+					params : { id :record.get('id')}, 
+					success: function(response, options) {
+					                var json = Ext.util.JSON.decode(response.responseText);
+						            if(json.success){
+						            	Ext.Msg.alert('系统提示', json.msg, function() {
+						                    view.getStore().reload();
+						                });
+							        }else{
+							        	 Ext.Msg.alert('系统提示', json.msg);
+							        }
+					            }
+					});
+               		}
+            	}
+            , this);
+   
+    },
+     	
+    deletePermissions: function(btn) {
+      	var grid = btn.up('gridpanel');
+		var selModel = grid.getSelectionModel();
+        if (selModel.hasSelection()) {
+            Ext.Msg.confirm("警告", "确定要删除吗？", function (button) {
+                if (button == "yes") {
+                    var selected = selModel.getSelection();
+                    var selectIds = []; //要删除的id
+                    Ext.each(selected, function (item) {
+                        selectIds.push(item.data.id);
+                    })
+                  	Ext.Ajax.request({ 
+						url : 'permission/deletePermissions', 
+						method : 'post', 
+						params : { 
+							//ids[] :selectIds
+							ids :selectIds
+						}, 
+						success: function(response, options) {
+			                var json = Ext.util.JSON.decode(response.responseText);
+				            if(json.success){
+				            	Ext.Msg.alert('操作成功', json.msg, function() {
+				                    grid.getStore().reload();
+				                });
+					        }else{
+					        	 Ext.Msg.alert('操作失败', json.msg);
+					        }
+			            }
+					});
+
+                }
+            });
+        }
+        else {
+            Ext.Msg.alert("错误", "没有任何行被选中，无法进行删除操作！");
+        }
+    }
+
+});
+Ext.define('Admin.view.user.LogViewController', {
+	extend: 'Ext.app.ViewController',
+	alias: 'controller.logViewController',
+	requires: [
+    	'Ext.grid.column.RowNumberer',
+    	'Ext.selection.CheckboxModel'
+    ]
+    ,openAddWindow: function(view, recIndex, cellIndex, item, e, record) {
+      		var cfg = Ext.apply({
+                xtype: 'logAddWindow',
+                items: [Ext.apply({xtype: 'logAddForm'})]
+		});
+		var win = Ext.create(cfg);
+    }
+    ,submitAddForm: function(btn) {
+      		var form = btn.up('form');
+			form.getForm().submit({       
+				url:'log/saveOrUpdate',
+				//waitMsg: '正在上传，请耐心等待....',
+				success: function(form, action){    
+					Ext.Msg.alert('提示', action.result.msg,function(){
+						btn.up('window').close();
+					//	form.getViewModel().getStore('userDataList').reload();
+	                   Ext.getCmp('logGridPanel').getStore().reload();
+						
+					});       
+				},       
+				failure: function(form, action){
+					Ext.Msg.alert('提示', action.result.msg);
+				}
+			});
+    }
+    ,openEditWindow: function(view, recIndex, cellIndex, item, e, record) {
+    	var cfg = Ext.apply({
+                xtype: 'logEditWindow',
+                items: [Ext.apply({xtype: 'logEditForm'})]
+		});
+		var win = Ext.create(cfg);
+		
+		win.down("form").getForm().loadRecord(record);//加载修改数据到Form
+      	
+    }
+     ,submitEditForm: function(btn) {
+      		var form = btn.up('form');
+			form.getForm().submit({       
+				url:'log/saveOrUpdate',
+				//waitMsg: '正在上传，请耐心等待....',
+				success: function(form, action){    
+					Ext.Msg.alert('提示', action.result.msg,function(){
+						btn.up('window').close();
+						//form.getViewModel().getStore('roleDataList').reload();
+	                   Ext.getCmp('logGridPanel').getStore().reload();
+						
+					});       
+				},       
+				failure: function(form, action){
+					Ext.Msg.alert('提示', action.result.msg);
+				}
+			});
+	}
+
+     ,deleteLog: function(view, recIndex, cellIndex, item, e, record) {
+      		Ext.MessageBox.confirm('提示', '确定要进行删除操作吗？数据将无法还原！',
+      			function(btn, text){
+                	if(btn=='yes'){
+				Ext.Ajax.request({ 
+					url : 'log/delete', 
+					method : 'post', 
+					params : { id :record.get('id')}, 
+					success: function(response, options) {
+					                var json = Ext.util.JSON.decode(response.responseText);
+						            if(json.success){
+						            	Ext.Msg.alert('系统提示', json.msg, function() {
+						                    view.getStore().reload();
+						                });
+							        }else{
+							        	 Ext.Msg.alert('系统提示', json.msg);
+							        }
+					            }
+					});
+               		}
+            	}
+            , this);
+   
+    },
+     	
+    deleteLogs: function(btn) {
+      	var grid = btn.up('gridpanel');
+		var selModel = grid.getSelectionModel();
+        if (selModel.hasSelection()) {
+            Ext.Msg.confirm("警告", "确定要删除吗？", function (button) {
+                if (button == "yes") {
+                    var selected = selModel.getSelection();
+                    var selectIds = []; //要删除的id
+                    Ext.each(selected, function (item) {
+                        selectIds.push(item.data.id);
+                    })
+                  	Ext.Ajax.request({ 
+						url : 'log/deleteLogs', 
+						method : 'post', 
+						params : { 
+							//ids[] :selectIds
+							ids :selectIds
+						}, 
+						success: function(response, options) {
+			                var json = Ext.util.JSON.decode(response.responseText);
+				            if(json.success){
+				            	Ext.Msg.alert('操作成功', json.msg, function() {
+				                    grid.getStore().reload();
+				                });
+					        }else{
+					        	 Ext.Msg.alert('操作失败', json.msg);
+					        }
+			            }
+					});
+
+                }
+            });
+        }
+        else {
+            Ext.Msg.alert("错误", "没有任何行被选中，无法进行删除操作！");
+        }
+    }
+
+});
 Ext.define('Admin.view.user.UserViewModel', {extend:Ext.app.ViewModel, alias:'viewmodel.userViewModel', stores:{userlists:{type:'userGridPanelStore', autoLoad:true}}});
 Ext.define('Admin.view.user.RoleViewModel', {
     extend: 'Ext.app.ViewModel',
@@ -86155,6 +87160,38 @@ Ext.define('Admin.view.user.DeptViewModel', {
     ],
     stores: {
 	deptlists: {type: 'deptGridPanelStore',autoLoad:true}
+    }
+});
+Ext.define('Admin.view.user.PermissionViewModel', {
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.permissionViewModel',//配置到主视图的ViewModel名
+    requires: [
+        'Ext.data.Store',
+        'Ext.data.proxy.Memory',
+        'Ext.data.field.Integer',
+        'Ext.data.field.String',
+        'Ext.data.field.Date',
+        'Ext.data.field.Boolean',
+        'Ext.data.reader.Json'
+    ],
+    stores: {
+	permissionlists: {type: 'permissionGridPanelStore',autoLoad:true}
+    }
+});
+Ext.define('Admin.view.user.LogViewModel', {
+    extend: 'Ext.app.ViewModel',
+    alias: 'viewmodel.logViewModel',//配置到主视图的ViewModel名
+    requires: [
+        'Ext.data.Store',
+        'Ext.data.proxy.Memory',
+        'Ext.data.field.Integer',
+        'Ext.data.field.String',
+        'Ext.data.field.Date',
+        'Ext.data.field.Boolean',
+        'Ext.data.reader.Json'
+    ],
+    stores: {
+	loglists: {type: 'logGridPanelStore',autoLoad:true}
     }
 });
 Ext.application({extend:Admin.Application, name:'Admin', mainView:'Admin.view.main.Main'});

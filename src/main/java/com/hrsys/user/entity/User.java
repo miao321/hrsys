@@ -7,24 +7,17 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hrsys.system.entity.Dept;
-import com.hrsys.system.entity.Permission;
-import com.hrsys.system.entity.Role;
+import com.hrsys.system.entity.Log;
 @Entity
 @Table(name="t_user")
 public class User implements Serializable {
@@ -48,20 +41,21 @@ public class User implements Serializable {
 	private String familyPhone;//家庭电话
 	private String email;//电子邮箱地址
 	private String userAccount;//职工账号
-	private Integer deptId;//部门编号
-	private String roleName;  //角色名
+	//private Integer deptId;//部门编号
+	private String deptName;//部门名
 	private String remark;//备注
 	
 	private List<UserRole> userRoles = new ArrayList<UserRole>();
-	private List<Permission> permissions = new ArrayList<Permission>();
 	//private Dept dept;
+	
+	private List<Log> logs = new ArrayList<Log>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
 	@JsonIgnore
 	public List<UserRole> getUserRoles() {
 		return userRoles;
@@ -71,15 +65,15 @@ public class User implements Serializable {
 //	public Dept getDept() {
 //		return dept;
 //	}
-	@ManyToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
 	@JsonIgnore
-	public List<Permission> getPermissions() {
-		return permissions;
+	public List<Log> getLogs() {
+		return logs;
 	}
-	
 	public String getUserNo() {
 		return userNo;
 	}	
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -128,9 +122,6 @@ public class User implements Serializable {
 	}
 	public String getUserAccount() {
 		return userAccount;
-	}
-	public Integer getDeptId() {
-		return deptId;
 	}
 	public String getRemark() {
 		return remark;
@@ -190,9 +181,6 @@ public class User implements Serializable {
 	public void setUserAccount(String userAccount) {
 		this.userAccount = userAccount;
 	}
-	public void setDeptId(Integer deptId) {
-		this.deptId = deptId;
-	}
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
@@ -206,22 +194,19 @@ public class User implements Serializable {
 	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 //	public void setDept(Dept dept) {
 //		this.dept = dept;
 //	}
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
+	public void setLogs(List<Log> logs) {
+		this.logs = logs;
 	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userNo=" + userNo + ", userName=" + userName + ", password=" + password
-				+ ", userNickName=" + userNickName + ", sex=" + sex + ", birthday=" + birthday + ", age=" + age
-				+ ", nativePlace=" + nativePlace + ", nation=" + nation + ", culture=" + culture + ", college="
-				+ college + ", body=" + body + ", marriage=" + marriage + ", idCord=" + idCord + ", phone=" + phone
-				+ ", familyPhone=" + familyPhone + ", email=" + email + ", userAccount=" + userAccount + ", deptId="
-				+ deptId + ", remark=" + remark + "]";
-	}
+	
 	
 	
 

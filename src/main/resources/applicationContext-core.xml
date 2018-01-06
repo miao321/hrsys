@@ -11,11 +11,12 @@ http://www.springframework.org/schema/aop
 http://www.springframework.org/schema/aop/spring-aop.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd">
-
+	
 	<!-- 启动上下文组件扫描（默认启用注解） -->
 	<context:component-scan base-package="com.hrsys.*.service"/>
+	<context:component-scan base-package="com.hrsys.aop.SysLogAop"/>
 	<!--<context:component-scan base-package="com.ssh.demo.common.util"/>-->
 	<!-- 启动AOP切面自动代理 -->
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<aop:aspectj-autoproxy proxy-target-class="true"/> 
 	
 </beans>

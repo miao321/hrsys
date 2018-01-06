@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hrsys.annotation.SysControllerLog;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
@@ -26,6 +27,7 @@ public class RoleController {
 	@Autowired
 	private IRoleService roleService;
 	@RequestMapping("/saveOrUpdate")
+	@SysControllerLog(module="角色管理",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Role role) {
 		try {
 			roleService.saveOrUpdate(role);
@@ -35,6 +37,7 @@ public class RoleController {
 		}	
 	}	
 	@RequestMapping("/delete")
+	@SysControllerLog(module="角色管理",methods="删除一条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
 		try {
 			Role role = roleService.findOne(id);
@@ -47,6 +50,7 @@ public class RoleController {
 		}		
 	}
 	@RequestMapping("/deleteRoles")
+	@SysControllerLog(module="角色管理",methods="删除多条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);
@@ -59,21 +63,20 @@ public class RoleController {
 		}
 	}	
 	@RequestMapping("/findOne")
+	@SysControllerLog(module="角色管理",methods="查找一条数据")
 	public @ResponseBody Role findOne(@RequestParam Long id) {
 		Role role = roleService.findOne(id);
 		return role;
 	}	
-	/*@RequestMapping("/findAll")
-	public @ResponseBody List<Role> findAll(){
-		List<Role> roleLists = roleService.findAll();
-		return roleLists;		
-	}*/
+	
 	@RequestMapping("/findAll")
+	@SysControllerLog(module="角色管理",methods="查找所有数据")
 	public @ResponseBody ExtJsonResult<Role> findAll(){
 		List<Role> roleLists = roleService.findAll();
 		return new ExtJsonResult<Role>(roleLists);
 	}
 	@RequestMapping("/findPage")
+	@SysControllerLog(module="角色管理",methods="查找所有数据并分页排序")
 	public @ResponseBody Page<Role> findPage(RoleQueryDTO roleQueryDTO,ExtPageable extPageable){
 		Page<Role> page = roleService.findAll(roleQueryDTO.getSpecification(roleQueryDTO), extPageable.getPageable());
 		return page;	

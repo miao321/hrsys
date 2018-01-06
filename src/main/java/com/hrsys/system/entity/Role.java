@@ -3,7 +3,9 @@ package com.hrsys.system.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -41,25 +43,27 @@ public class Role extends BaseEntity implements Serializable {
 	
 	
 	private List<UserRole> userRoles = new ArrayList<UserRole>();
-	private List<Permission> permission = new ArrayList<Permission>(); 
+	private Set<Permission> permission = new HashSet<Permission>(); 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}	
-	@OneToMany(mappedBy="role",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="role")
 	@JsonIgnore
 	public List<UserRole> getUserRoles() {
 		return userRoles;
 	}
-	@ManyToMany(cascade=CascadeType.ALL,mappedBy="role")
+	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.PERSIST},  
+			   mappedBy = "role", targetEntity = Permission.class) 
 	@JsonIgnore
-	public List<Permission> getPermission() {
+	public Set<Permission> getPermission() {
 		return permission;
 	}
 	public String getRoleName() {
 		return roleName;
 	}
+	
 	public String getCreateModule() {
 		return createModule;
 	}
@@ -115,10 +119,8 @@ public class Role extends BaseEntity implements Serializable {
 	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	public void setPermission(List<Permission> permission) {
+	public void setPermission(Set<Permission> permission) {
 		this.permission = permission;
 	}
-	
-	
-	
+
 }
