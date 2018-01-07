@@ -82,7 +82,30 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 	</bean>
 	<!--5.注解事务 ：transaction-manager="transactionManager" proxy-target-class="true" -->
 	<tx:annotation-driven />	
+	<!-- 3.事务管理器-->
+	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean> -->
 	
+
+	<!-- 4.txAdvice-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 5.aop-->
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* com.hrsys.*.service..*.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+	</aop:config>
 	<!--6.指定JPA实现的持久层的根目录 
 		entity-manager-factory-ref:默认获取id=entityManagerFactory Bean
 		transaction-manager-ref:默认获取id=transactionManager Bean

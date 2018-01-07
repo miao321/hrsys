@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hrsys.annotation.SysLog;
 import com.hrsys.system.dao.ModuleRepository;
@@ -21,6 +22,7 @@ import com.hrsys.system.service.IModuleService;
 
 
 @Service
+@Transactional
 public class ModuleServiceImpl implements IModuleService {
 	private static final Logger logger = LoggerFactory.getLogger(ModuleServiceImpl.class);
 	@Autowired

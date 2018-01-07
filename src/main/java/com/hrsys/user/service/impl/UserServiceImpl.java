@@ -24,6 +24,7 @@ import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 import com.hrsys.user.service.IUserService;
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Autowired

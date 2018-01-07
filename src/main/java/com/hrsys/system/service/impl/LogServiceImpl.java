@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hrsys.annotation.SysLog;
 import com.hrsys.system.dao.LogRepository;
@@ -16,6 +17,7 @@ import com.hrsys.system.entity.Log;
 import com.hrsys.system.service.ILogService;
 import com.hrsys.user.entity.User;
 @Service
+@Transactional
 public class LogServiceImpl implements ILogService {
 	private static final Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
 	@Autowired

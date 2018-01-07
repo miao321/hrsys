@@ -9,12 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hrsys.annotation.SysLog;
 import com.hrsys.system.dao.RoleRepository;
 import com.hrsys.system.entity.Role;
 import com.hrsys.system.service.IRoleService;
 @Service
+@Transactional
 public class RoleServiceImpl implements IRoleService {
 	private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 	@Autowired

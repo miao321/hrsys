@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hrsys.annotation.SysLog;
 import com.hrsys.system.dao.DeptRepository;
@@ -17,6 +18,7 @@ import com.hrsys.system.service.IDeptService;
 
 
 @Service
+@Transactional
 public class DeptServiceImpl implements IDeptService {
 	private static final Logger logger = LoggerFactory.getLogger(DeptServiceImpl.class);
 	@Autowired

@@ -69,6 +69,7 @@ public class SysLogAop{
 				log.setModule(map.get("module").toString());
 				log.setMethod(map.get("methods").toString());
 				log.setOperationTime(new Date());
+				//log.setUser(user);
 				log.setUserName(user.getUserName());
 				user.getLogs().add(log);				
 				logService.saveOrUpdate(log);
@@ -93,6 +94,7 @@ public class SysLogAop{
 			log.setModule(map.get("module").toString());
 			log.setMethod(map.get("methods").toString());
 			log.setOperationTime(new Date());
+			//log.setUser(user);
 			log.setUserName(user.getUserName());
 			user.getLogs().add(log);				
 			logService.saveOrUpdate(log);
