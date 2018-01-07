@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,7 +66,7 @@ public class User implements Serializable {
 //	public Dept getDept() {
 //		return dept;
 //	}
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user",fetch=FetchType.EAGER)
 	@JsonIgnore
 	public List<Log> getLogs() {
 		return logs;

@@ -32,12 +32,7 @@
 					    items: [{
 					    	xtype: 'textfield',
 					     	cls: 'auth-textbox',
-					     	allowBlank:false,
-					        //allowBlank: '用户名不能为空',
-					       // minLength:6,  
-				           // minLengthText:'用户名长度为[6-20]',  
-				           // maxLength:20,  
-				           // maxLength:'用户名长度为[6-20]',  
+					     	allowBlank:false, 
 					        fieldLabel: '用户名:',
 					        name: 'userName',
 					        width:308,
@@ -50,12 +45,7 @@
 					    	xtype: 'textfield',
 					    	cls: 'auth-textbox',
 					    	allowBlank:false,
-					    	//allowBlank:'密码不能为空',  
-				            //minLength:6,  
-				            //minLengthText:'密码长度为[6-20]',  
-				            //maxLength:20,  
-				            //maxLength:'密码长度为[6-20]',
-					        fieldLabel: '密码:',
+					    	fieldLabel: '密码:',
 					        name: 'password',
 					        width:308,
 					        height:40,
@@ -111,7 +101,7 @@
 			                    	}
 			                    }
 			                },
-			                {
+			                /* {
 			                    xtype: 'button',
 			                    reference: 'loginButton',
 			                    scale: 'large',
@@ -128,7 +118,7 @@
 			                    	}
 			                      
 			                    }
-			                },
+			                }, */
 					    ],
 					    defaults: {
 					        anchor: '100%',
@@ -140,8 +130,13 @@
 			
 			
 		</script>
+		<style type="text/css">
+			.class{
+				background:url("http://pic4.nipic.com/20091121/3764872_215617048242_2.jpg");
+			}
+		</style>
 	</head>
 	<body>
-		
+		<!-- <img src="http://pic4.nipic.com/20091121/3764872_215617048242_2.jpg"  alt="上海鲜花港 - 郁金香" /> -->
 	</body>
 </html>

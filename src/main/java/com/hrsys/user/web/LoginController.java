@@ -98,9 +98,14 @@ public class LoginController {
 	//退出系统
 	@RequestMapping("/logout")
 	@SysControllerLog(module="用户管理",methods="退出系统")
-	public String logout(HttpServletRequest request) {
+	public @ResponseBody ExtAjaxResponse logout(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return "login";
+		try {
+			
+			return new ExtAjaxResponse(true, "退出系统");
+		} catch (Exception e) {
+			return new ExtAjaxResponse(false, "退出系统失败");
+		}
 	}
 	//判断是否已经登录   ??有点问题
 	@RequestMapping("/isLogined")

@@ -15,7 +15,11 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/mvc
 http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
+	
+		<aop:aspectj-autoproxy proxy-target-class="true"/>
+<!-- 开启aop，对类代理 -->
+	<aop:config proxy-target-class="true"></aop:config>
+	
 	<context:component-scan base-package="com.hrsys.*.web"/>
 	<context:component-scan base-package="com.hrsys.common"/>
 	<mvc:annotation-driven enable-matrix-variables="true">
@@ -25,8 +29,6 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
-	<!-- 启动AOP切面自动代理 -->
-	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> --> 
 	<!-- 设置主页面：访问/自动跳转到home视图 -->
 	<mvc:view-controller path="/" view-name="index"/>
 	<!-- springmvc 页面重定向设置： -->
@@ -43,6 +45,7 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	
 	<mvc:resources  mapping="/js/**" location="/js/" />
 	<mvc:resources  mapping="/css/**" location="/css/" />
+	<mvc:resources  mapping="/images/**" location="/images/" />
 	
 	
 </beans>

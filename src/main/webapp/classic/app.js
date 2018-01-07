@@ -83949,7 +83949,7 @@ logout: function(button) {
 	    success:function(response, options) {
         var json = Ext.util.JSON.decode(response.responseText);
         if (json.success) {
-          Ext.Msg.alert('系统提示',json.msg);
+          
           window.location='login.jsp';
         } else {
           Ext.Msg.alert('系统提示', json.msg);
@@ -84408,20 +84408,22 @@ Ext.define('Admin.view.user.RoleAddForm', {
         fieldLabel: '创建时间',
         name:'createTime',
         format: 'Y/m/d H:i:s',
-       	allowBlank:false,  
+     	allowBlank:false,  
+       editable:false,
         emptyText: '请输入创建时间'
     }, {
         xtype: 'textfield',
         fieldLabel: '修改人',
         name:'updateBy',
-       	allowBlank:false,  
+     	allowBlank:false,  
         emptyText: '请输入修改人'
     }, {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
         format: 'Y/m/d H:i:s',
-       	allowBlank:false,  
+     	allowBlank:false,  
+       editable:false,
         emptyText: '请输入修改时间'
     }, {
         xtype: 'textfield',
@@ -84490,11 +84492,6 @@ Ext.define('Admin.view.user.ModuleAddForm', {
     },
 
     items: [{
-        xtype: 'textfield', //hidden
-        fieldLabel: 'id',
-        name:'id',
-        readOnly:true
-    },{
         xtype: 'textfield',
         fieldLabel: '父节点ID',
         name:'parentId'
@@ -84538,6 +84535,7 @@ Ext.define('Admin.view.user.ModuleAddForm', {
        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -84547,6 +84545,7 @@ Ext.define('Admin.view.user.ModuleAddForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -85277,7 +85276,8 @@ Ext.define('Admin.view.user.RoleEditForm', {
        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
-        format: 'Y/m/d H:i:s'
+        format: 'Y/m/d H:i:s',
+           editable:false
     }, {
         xtype: 'textfield',
         fieldLabel: '修改人',
@@ -85286,7 +85286,8 @@ Ext.define('Admin.view.user.RoleEditForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
-        format: 'Y/m/d H:i:s'
+        format: 'Y/m/d H:i:s',
+        	editable:false
     }, {
         xtype: 'textfield',
         fieldLabel: '备注',
@@ -85400,6 +85401,7 @@ Ext.define('Admin.view.user.ModuleEditForm', {
         xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -85409,6 +85411,7 @@ Ext.define('Admin.view.user.ModuleEditForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -85688,7 +85691,7 @@ Ext.define('Admin.view.user.LogEditForm', {
     },{
         xtype: 'textfield',
         fieldLabel: '操作内容',
-        name:'operation'
+        name:'method'
              
   }, {
         xtype: 'datefield',
@@ -86240,7 +86243,7 @@ Ext.define('Admin.view.user.LogGridPanel',{
 		{header:'ID',dataIndex:'id',flex:1},
 		{header:'用户名',dataIndex:'userName'/*text:loginUser*/,flex:1},		
 		{header:'操作模块',dataIndex:'module',flex:1},
-		{header:'操作内容',dataIndex:'operation',flex:1},
+		{header:'操作内容',dataIndex:'method',flex:1},
 		{header:'操作时间',dataIndex:'operationTime',flex:1,renderer:Ext.util.Format.dateRenderer('Y/m/d H:i:s')},
 	//	{xtype: 'rownumberer',width: 40, sortable: false},
 		{

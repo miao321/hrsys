@@ -43,6 +43,13 @@ public class SysLogAop{
 	private LocalVariableTableParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
 	@Autowired
 	private ILogService logService;
+	
+	/*@Pointcut("execution(public * *(..))")
+	private void anyPublicOperation() {}
+	
+	@Pointcut("within(com.hrsys.*.service..*)")
+	public void inServiceLayer() {}*/
+	
 	@Pointcut("@annotation(com.hrsys.annotation.SysLog)")
 	public void LogAspect() {
 	}
@@ -59,8 +66,8 @@ public class SysLogAop{
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         User user = (User) request.getSession().getAttribute("user");
         HttpSession session = request.getSession();
-        Object value = session.getAttribute("user");
-		System.out.println("value:"+value);
+       /* Object value = session.getAttribute("user");
+		System.out.println("value:"+value);*/
 		try {			
 			if(user!=null) {
 				

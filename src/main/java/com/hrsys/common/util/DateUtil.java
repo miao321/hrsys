@@ -20,9 +20,9 @@ public class DateUtil {
 		}
 	}
 	
-	/** 按yyyy-MM-dd hh:mm:ss字符串格式传入日期，包含时分秒 */
+	/** 按yyyy-MM-dd HH:mm:ss字符串格式传入日期，包含时分秒 */
 	public static Date StringToHMS(String time) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			return sdf.parse(time);
 		} catch (ParseException e) {

@@ -89,7 +89,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 	
 
 	<!-- 4.txAdvice-->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="save*" propagation="REQUIRED"/>
 			<tx:method name="insert*" propagation="REQUIRED"/>
@@ -101,11 +101,11 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 		</tx:attributes>
 	</tx:advice>
 	
-	<!-- 5.aop-->
+	5.aop
 	<aop:config>
 		<aop:pointcut id="pointcut" expression="execution(* com.hrsys.*.service..*.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
-	</aop:config>
+	</aop:config> -->
 	<!--6.指定JPA实现的持久层的根目录 
 		entity-manager-factory-ref:默认获取id=entityManagerFactory Bean
 		transaction-manager-ref:默认获取id=transactionManager Bean

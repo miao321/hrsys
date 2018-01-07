@@ -72,7 +72,7 @@ public class UserServiceImpl implements IUserService {
 			dto.setPassword(obj[5]+"");
 			dto.setUserNickName(obj[6]+"");
 			dto.setSex(obj[7]+"");
-			dto.setBirthday(DateUtil.StringToHMS(obj[8].toString()));
+			//dto.setBirthday(DateUtil.StringToHMS(obj[8].toString()));
 			//dto.setAge(Integer.valueOf(obj[9].toString()));
 			dto.setNativePlace(obj[10]+"");
 			dto.setNation(obj[11]+"");
