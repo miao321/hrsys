@@ -2,17 +2,15 @@ package com.hrsys.user.web;
 
 
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-import org.hibernate.loader.plan.exec.process.spi.ReturnReader;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,49 +20,51 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.annotation.SysControllerLog;
-import com.hrsys.annotation.SysLog;
 import com.hrsys.common.EncryptUtils;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtResponse;
-import com.hrsys.user.dao.UserRepository;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.service.ILoginService;
-import com.hrsys.user.service.IUserService;
-import com.hrsys.user.service.impl.UserServiceImpl;
+import com.hrsys.user.service.impl.LoginServiceImpl;
 
 
 @Controller
 public class LoginController {
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	@Autowired
 	private ILoginService loginService;
-	//登录
-	@RequestMapping("/login")
-	@SysControllerLog(module="系统登录",methods="登录")
-	public @ResponseBody ExtAjaxResponse login(@RequestParam String userName,@RequestParam String password,HttpSession session) throws Exception, IOException {
-		logger.debug("login request: {userName={}, password={}}", userName, password);		
-		User user = loginService.login(userName,EncryptUtils.encript(password) );
-		
-		if (user == null) {
-			return new ExtAjaxResponse(false, String.format("用户\"%s\"不存在", userName));
+	
+	@RequestMapping(value="/login")
+	public String login(HttpServletRequest request,HttpSession session) throws Exception {		
+		String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");
+		if(exceptionClassName!=null){
+			if (UnknownAccountException.class.getName().equals(exceptionClassName)) {			
+                session.setAttribute("result", "账号不存在");
+			} else if (IncorrectCredentialsException.class.getName().equals(
+					exceptionClassName)) {				
+				session.setAttribute("result2", "用户名/密码错误");
+			} else{
+				//最终在异常处理器生成未知错误
+				throw new Exception();
+			}
 		}
-		if (!EncryptUtils.encript(password).equals(user.getPassword())) {
-			return new ExtAjaxResponse(false, "密码不正确！");
-		}
-		session.setAttribute("user", user);
-		session.setAttribute("userName", userName);
-		session.setAttribute("userId", user.getId());
-		session.setAttribute("password", user.getPassword());		
-		try {
-							
-				User result = loginService.login(userName, password);
-				return new ExtAjaxResponse(true, "登录成功2");						
-		} catch (Exception e) {
-			logger.error("{}", e);
-			return new ExtAjaxResponse(false, "登录失败");
-			//request.getRequestDispatcher("login").forward(request, response);		
-		}
+		return "login";
 	}
+	@RequestMapping(value="first")
+	@SysControllerLog(module="用户模块",methods="登录系统")
+   public String first(HttpSession session)throws Exception{	
+		//从shiro的session中取User
+		Subject subject = SecurityUtils.getSubject();
+		//取身份信息
+		String userName =  (String) subject.getPrincipal();
+		session.setAttribute("userName", userName);
+		User user = loginService.findUser(userName);
+		session.setAttribute("user", user);
+		session.setAttribute("userName", user.getUserName());
+		session.setAttribute("userId", user.getId());
+		session.setAttribute("password", user.getPassword());
+		return "WEB-INF/pages/index";
+	}	
 	//修改密码
 	@RequestMapping("/updatePassword")
 	@SysControllerLog(module="用户管理",methods="修改密码")
@@ -96,17 +96,13 @@ public class LoginController {
 	}
 	
 	//退出系统
-	@RequestMapping("/logout")
-	@SysControllerLog(module="用户管理",methods="退出系统")
-	public @ResponseBody ExtAjaxResponse logout(HttpServletRequest request) {
-		request.getSession().invalidate();
-		try {
-			
-			return new ExtAjaxResponse(true, "退出系统");
-		} catch (Exception e) {
-			return new ExtAjaxResponse(false, "退出系统失败");
-		}
+	@RequestMapping(value="logout")
+	@SysControllerLog(module="用户模块",methods="退出系统")
+	public String loginout() {
+		
+		return "login";
 	}
+
 	//判断是否已经登录   ??有点问题
 	@RequestMapping("/isLogined")
 	public @ResponseBody ExtAjaxResponse isLogined() {

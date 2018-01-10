@@ -52,16 +52,4 @@ public class UserRoleServiceImpl implements IUserRoleService {
 	public Page<UserRole> findAll(Specification<UserRole> spec, Pageable pageable) {
 		return userRoleRepository.findAll(spec, pageable);
 	}
-	/*@Override
-	public Set<String> getRoles(String userRoleName) {
-		return userRoleRepository.getRoles(userRoleName);
-	}
-	@Override
-	public Set<String> getPermissions(String userRoleName) {
-		return userRoleRepository.getPermissions(userRoleName);
-	}
-	@Override
-	public UserRole getByUserRoleName(String userRoleName) {
-		return userRoleRepository.getByUserRoleName(userRoleName);
-	}*/
 }

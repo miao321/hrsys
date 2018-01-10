@@ -6,37 +6,14 @@ xsi:schemaLocation="
 http://xmlns.jcp.org/xml/ns/javaee
 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 version="3.1">
-<welcome-file-list>
-	<welcome-file>login.jsp</welcome-file>
-</welcome-file-list>
-<display-name>hrsys</display-name>
-    <!--spring配置文件的加载的监听 器-->
-	<!-- <context-param>
-    	<param-name>contextConfigLocation</param-name>
-    	<param-value>classpath*:applicationContext.xml</param-value>
-    </context-param> 
-    <listener>
-    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>  -->
-	 <!-- shiro过滤器定义 -->
-    <!-- <filter>  
-       <filter-name>shiroFilter</filter-name>  
-       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
-       <init-param>  
-       该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理  
-       <param-name>targetFilterLifecycle</param-name>  
-       <param-value>true</param-value>  
-       </init-param>  
-    </filter>  
-    <filter-mapping>  
-            <filter-name>shiroFilter</filter-name>  
-            <url-pattern>/*</url-pattern>  
-    </filter-mapping> -->
-    <!-- spring -->
+	<display-name>hrsys</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:application*.xml</param-value>
+		<param-value>classpath:applicationContext*.xml</param-value>
 	</context-param>
+	
+	<display-name>springmvc</display-name>
+	
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -46,22 +23,39 @@ version="3.1">
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-    <!-- 编码过滤器 -->
-    <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <async-supported>true</async-supported>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- Spring监听器 -->
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	 <!-- 配置Spring的OpenSessionInViewFilter，以解决懒加载问题  -->  
+    <filter>  
+        <filter-name>OpenSessionInViewFilter</filter-name>  
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>OpenSessionInViewFilter</filter-name>  
+        <url-pattern>/</url-pattern>  
+    </filter-mapping> 
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<!-- 设置true由servlet容器控制filter的生命周期 -->
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- 设置spring容器filter的bean id，如果不设置则找与filter-name一致的bean-->
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>shiroFilter</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<welcome-file-list>
+	    <welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

@@ -3,6 +3,8 @@ package com.hrsys.system.web;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,9 @@ public class RoleController {
 	@Autowired
 	private IRoleService roleService;
 	@RequestMapping("/saveOrUpdate")
-	@SysControllerLog(module="角色管理",methods="保存或者更新数据")
+	//@SysControllerLog(module="角色管理",methods="保存或者更新数据")
+	@RequiresPermissions("role/saveOrUpdate")
+	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Role role) {
 		try {
 			roleService.saveOrUpdate(role);

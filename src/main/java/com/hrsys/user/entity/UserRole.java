@@ -23,6 +23,7 @@ public class UserRole {
      private Long id;
      private User user;     
      private Role role;
+     
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      public Long getId() {

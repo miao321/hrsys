@@ -18,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hrsys.system.entity.Dept;
 import com.hrsys.system.entity.Log;
 @Entity
 @Table(name="t_user")
@@ -42,35 +43,34 @@ public class User implements Serializable {
 	private String familyPhone;//家庭电话
 	private String email;//电子邮箱地址
 	private String userAccount;//职工账号
-	//private Integer deptId;//部门编号
 	private String deptName;//部门名
 	private String remark;//备注
 	
 	private List<UserRole> userRoles = new ArrayList<UserRole>();
-	//private Dept dept;
-	
-	private List<Log> logs = new ArrayList<Log>();
+	private List<Dept> deptLists = new ArrayList<Dept>();
+	//private List<Log> logs = new ArrayList<Log>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user",fetch=FetchType.EAGER)
 	@JsonIgnore
 	public List<UserRole> getUserRoles() {
 		return userRoles;
 	}
-//	@ManyToOne(cascade=CascadeType.ALL)
-//	@JsonIgnore
-//	public Dept getDept() {
-//		return dept;
-//	}
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user",fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
+	@JsonIgnore
+	public List<Dept> getDeptLists() {
+		return deptLists;
+	}
+	/*
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user",fetch=FetchType.LAZY)
 	@JsonIgnore
 	public List<Log> getLogs() {
 		return logs;
-	}
+	}*/
 	public String getUserNo() {
 		return userNo;
 	}	
@@ -190,8 +190,7 @@ public class User implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
+	}	
 	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
@@ -201,12 +200,12 @@ public class User implements Serializable {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-//	public void setDept(Dept dept) {
-//		this.dept = dept;
-//	}
-	public void setLogs(List<Log> logs) {
-		this.logs = logs;
+	public void setDeptLists(List<Dept> deptLists) {
+		this.deptLists = deptLists;
 	}
+	/*public void setLogs(List<Log> logs) {
+		this.logs = logs;
+	}*/
 	
 	
 	

@@ -1,6 +1,6 @@
 package com.hrsys.shiro;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,52 +15,112 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hrsys.system.entity.Module;
+import com.hrsys.system.entity.Permission;
 import com.hrsys.system.entity.Role;
+import com.hrsys.system.service.IPermissionService;
+import com.hrsys.system.service.IRoleService;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.UserRole;
+import com.hrsys.user.service.ILoginService;
+import com.hrsys.user.service.IUserRoleService;
 import com.hrsys.user.service.IUserService;
 
-public class MyRealm extends AuthorizingRealm {
-	@Autowired 
+public class MyRealm extends AuthorizingRealm{
+	@Autowired
+	private ILoginService loginService;
+	@Autowired
+	private IPermissionService permissionService;
+	@Autowired
+	private IRoleService roleService;
+	@Autowired
 	private IUserService userService;
+	public String getName() {
+		return "myRealm";
+	}
 	
-	//授权   当jsp页面出现Shiro标签时，就会执行授权方法
-		protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
-			System.out.println("授权");
-			User user = (User) pc.fromRealm(this.getName()).iterator().next();//根据realm的名字去找对应的realm
-			
-			/*List<UserRole> roles = user.getUserRoles();//对象导航
-			List<String> permissions = new ArrayList<String>();
-			for(UserRole role :roles){
-				//遍历每个角色 
-				Set<Module> modules = role.getModules();//得到每个角色下的模块列表
-				for(Module m :modules){
-					permissions.add(m.getName());
-				}
-			}*/
-			
-			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			//info.addStringPermissions(permissions);//添加用户的模块（权限）
-			return info;
+	@Override
+	public boolean supports(AuthenticationToken token) {
+		return token instanceof UsernamePasswordToken;
+	}
+	
+	@Override
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		// TODO Auto-generated method stub
+		//获取输入的的身份信息
+		String userName = (String) token.getPrincipal();
+		//从数据库中去的传入的信息		
+		//模拟差不到这个用户
+		User user = loginService.findUser(userName);	
+		if(user == null) {
+			return null;
 		}
-		//认证   token 代表用户在界面输入的用户名和密码
-		protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-			System.out.println("认证");
-			
-			//1.向下转型
-			UsernamePasswordToken upToken  = (UsernamePasswordToken) token;
-			
-			//2.调用业务方法，实现根据用户名查询
-			String hql = "from User where userName=?";
-			List<User> list = userService.find(hql, User.class, new String[]{upToken.getUsername()});
-			if(list!=null && list.size()>0){
-				User user = list.get(0);
-				AuthenticationInfo info = new SimpleAuthenticationInfo(user,user.getPassword(),this.getName());
-				return info;   //此处如果返回，就会立即进入到密码比较器
+		String password = user.getPassword();	
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userName, password, this.getName());
+		return simpleAuthenticationInfo;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
+		
+		String userName = (String) principal.fromRealm(getName()).iterator().next();
+		
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		if(userName != null) {
+			List<UserRole> userRoles = userService.getRoleByUserName(userName);
+			for (UserRole userRole : userRoles) {
+				info.addRole(userRole.getRole().getRoleName());
 			}
-			
-			return null;//就会出现异常
+			List<String> permissions = userService.getPermissionsByUserName(userName);
+			if (permissions != null && !permissions.isEmpty()) {
+				for(String each : permissions) {
+					info.addStringPermission(each);
+					
+					System.out.println(each);
+				}
+			}
+		}
+		System.out.println("++++++++:"+info);
+		return info;
+	}
+		//User user = (User) principal.fromRealm(this.getName()).iterator().next();
+		//Set<Role> roleSet = user.getUserRoles();
+	/*	System.out.println("++++:"+principal.getPrimaryPrincipal());
+		Object user =  principal.getPrimaryPrincipal();
+		System.out.println("AuthenticationInfo+++:"+user);
+		HashSet<String> set = new HashSet<String>();
+		HashSet<String> set2 = new HashSet<String>();
+		System.out.println(0000);
+		User us = loginService.findUser(user.toString());
+		System.out.println(us.getUserName());
+		
+		Set<Permission> permissions = null;
+		try {
+			//permissions = (Set<Permission>) permissionService.findOne(user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (permissions != null) {
+			for(Permission permission : permissions) {
+				set.add(permission.getUrl());
+			}
 		}
 		
-	}
+		Set<Role> roles = null;
+		try {
+			//roles = (Set<Role>) roleService.findOne(user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (roles != null) {
+			for(Role role : roles) {
+				set2.add(role.getRoleName());
+			}			
+		}
+		//查询权限数据  并返回权限数据
+		SimpleAuthorizationInfo simpleAuthorizationInfo  =new SimpleAuthorizationInfo();
+		simpleAuthorizationInfo.addStringPermissions(set);
+		simpleAuthorizationInfo.addRoles(set2);
+		return simpleAuthorizationInfo;
+	
+	}*/
+}

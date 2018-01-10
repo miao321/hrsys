@@ -37,8 +37,8 @@ public class UserServiceTest {
 	public void save() throws NoSuchAlgorithmException {
 		
 			User user = new User();
-			user.setUserName("sss");
-			user.setPassword(EncryptUtils.encript("123"));
+			user.setUserName("aaa");
+			user.setPassword("123");
 			user.setBirthday(new Date());
 			
 			/*Role role = new Role();
@@ -54,7 +54,6 @@ public class UserServiceTest {
 			userService.saveOrUpdate(user);
 		//	roleService.saveOrUpdate(role);
 			
-			System.out.println(user);
 		
 		
 	}

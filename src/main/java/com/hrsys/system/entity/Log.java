@@ -27,18 +27,18 @@ public class Log implements Serializable {
 	private Date operationTime;  //操作时间
 	private String module;  //操作模块
 	
-	private User user;
+	//private User user;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
-	@ManyToOne(cascade=CascadeType.ALL)
+	/*@ManyToOne(cascade=CascadeType.ALL)
 	@JsonIgnore
 	public User getUser() {
 		return user;
-	}
+	}*/
 	public String getUserName() {
 		return userName;
 	}
@@ -69,8 +69,8 @@ public class Log implements Serializable {
 	public void setModule(String module) {
 		this.module = module;
 	}
-	public void setUser(User user) {
+	/*public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 
 }

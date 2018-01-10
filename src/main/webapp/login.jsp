@@ -1,142 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta charset="UTF-8"/>
-		<title>登录</title>
-		<!--CSS -->
-		<link rel="stylesheet" type="text/css" href="classic/resources/Admin-all_1.css" />
-		<link rel="stylesheet" type="text/css" href="classic/resources/Admin-all_2.css" />
-		<link rel="stylesheet" type="text/css" href="classic/resources/Admin-all_3.css" />
-		<!--JS -->
-		<script  type="text/javascript" src="js/ext-all.js"></script>
-
-		<script  type="text/javascript">
-			Ext.onReady(function(){
-				Ext.create('Ext.form.Panel', {				
-					    title: '登录',
-					    //defaultButton : 'loginButton',
-					    autoComplete: true,
-					  	//bodyStyle:'padding:5px 5px 0',  
-         				buttonAlign:'center' ,  
-					    frame:true,
-					    width: 415,
-					    height:380,
-					  	bodyPadding:20,
-					    //bodyMargin:20,
-					    defaultType: 'textfield',
-					    layout:'absolute',
-					    x:550,
-					    y:130,
-					    items: [{
-					    	xtype: 'textfield',
-					     	cls: 'auth-textbox',
-					     	allowBlank:false, 
-					        fieldLabel: '用户名:',
-					        name: 'userName',
-					        width:308,
-					        height:40,
-				        	emptyText: '请输入用户名',
-				        	style:'text-align:center;'
-				        	
-					     
-					    }, {
-					    	xtype: 'textfield',
-					    	cls: 'auth-textbox',
-					    	allowBlank:false,
-					    	fieldLabel: '密码:',
-					        name: 'password',
-					        width:308,
-					        height:40,
-					        emptyText: '请输入密码',
-					        inputType: 'password',
-					        style:'margin-top:20px;font-family:bold;font-size:20px;text-align:center;',					      
-					        y:110
-					    }, {
-					        xtype: 'checkboxfield',
-					        flex : 1,
-					         height: 30,
-					        fieldLabel: '记住我',
-					        name: 'remember',
-					        style:'margin-top:6px;text-align:center;',
-					        x:20,
-					        y:150
-					    },
-					    	{
-			                    xtype: 'button',
-			                    reference: 'loginButton',
-			                    scale: 'large',
-			                    ui: 'soft-green',
-			                    iconAlign: 'right',
-			                    iconCls: 'x-fa fa-angle-right',
-			                    text: 'Login',
-			                    formBind: true,
-			                    x:20,
-			                    y:40,
-			                    listeners: {
-			                    	click : function() {
-			                    		var form = this.up('form');
-			                    		
-			                    		form.getForm().submit({       
-			                				url:'login',
-			                				//waitMsg: '正在跳转，请耐心等待....',
-			                				method : 'post', 
-			                				
-			                				success: function(response, action) {		
-			                					var flag=action.result.success;			                		
-			                					if(flag){
-			                						window.location="index.jsp";
-			                					}else{
-			                						window.location="login.jsp";			          						
-			                					}			                			
-			                	            },
-			                				failure: function(response, action){
-			                					 //var json = Ext.util.JSON.decode(response.responseText);
-			                					Ext.Msg.alert("提示:",action.result.msg);
-			                					// alert("msg:"+response.msg);
-			                				}
-			                			});
-			                    		
-			                    	}
-			                    }
-			                },
-			                /* {
-			                    xtype: 'button',
-			                    reference: 'loginButton',
-			                    scale: 'large',
-			                    ui: 'soft-green',
-			                    iconAlign: 'right',
-			                    iconCls: 'x-fa fa-angle-right',
-			                    text: 'Register',
-			                    //formBind: true,
-			                    x:20,
-			                    y:50,
-			                    listeners: {
-			                    	click : function() {
-			                    		 window.location='register.jsp';
-			                    	}
-			                      
-			                    }
-			                }, */
-					    ],
-					    defaults: {
-					        anchor: '100%',
-					        labelWidth: 60
-					    },					    				   
-				    renderTo: Ext.getBody()
-				});		
-			});
-			
-			
-		</script>
-		<style type="text/css">
-			.class{
-				background:url("http://pic4.nipic.com/20091121/3764872_215617048242_2.jpg");
-			}
-		</style>
-	</head>
-	<body>
-		<!-- <img src="http://pic4.nipic.com/20091121/3764872_215617048242_2.jpg"  alt="上海鲜花港 - 郁金香" /> -->
-	</body>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>用户登陆</title>
+<script src="js/jquery-3.2.1.min.js" type="text/javascript"> </script>
+<script src="js/keyEvent.js" type="text/javascript"> </script>
+<script src="js/bootstrap.min.js"> </script>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/adminStyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body onkeydown="keyLogin();">
+	<div class="navbar navbar-default navbar-fixed-top" style="background:#272727;color:white" >
+		<div class="container">
+			<div class="row" style="font-size:20px;margin-top:10px;">
+				<div class="col-sm-12">
+					登录
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row" style="margin-top:100px;align:center;">
+		<div class="col-sm-offset-4 col-sm-4" style="background:#eee;width:500px;border-radius:8px;box-shadow:5px 5px 5px #333">
+			<form action="login" method="post" role="form">
+				<div class="form-group" style="margin-top:15px">
+					<div class="col-sm-12">
+						<input type="text" id="username" name="username" class="form-control" placeholder="请输入帐号">
+					</div>
+				</div>
+				<div class="form-group" >
+					<div class="col-sm-12" style="margin-top:15px">
+						<input type="password"  id="password" name="password" class="form-control" placeholder="请输入密码">
+					</div>				
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12" style="margin-top:15px">
+						<button type="submit" id="login" class="btn btn-primary" class="form-control" style="width:100%">登录</button>
+					</div>
+				</div>
+			</form>
+			<!-- 注册 -->
+				<div class="col-sm-12" style="margin-top:15px;margin-bottom:15px">
+					<a href="register.jsp" type="button" class="btn btn-primary form-horizontal" style="width:100%" >注册</a>
+				</div>
+				<span style="color:red;">${result}</span>
+		</div>
+	</div>
+</body>
 </html>

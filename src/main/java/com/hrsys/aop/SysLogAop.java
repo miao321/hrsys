@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -33,16 +34,25 @@ import com.hrsys.annotation.SysLog;
 import com.hrsys.system.entity.Log;
 import com.hrsys.system.service.ILogService;
 import com.hrsys.user.entity.User;
+import com.hrsys.user.service.ILoginService;
+import com.hrsys.user.service.IUserRoleService;
+import com.hrsys.user.service.IUserService;
+import com.hrsys.user.service.impl.UserServiceImpl;
 
 
 @Component
 @Aspect
+
 public class SysLogAop{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private LocalVariableTableParameterNameDiscoverer parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
 	@Autowired
 	private ILogService logService;
+	@Autowired
+	private IUserService userService;
+	@Autowired
+	private ILoginService loginService;
 	
 	/*@Pointcut("execution(public * *(..))")
 	private void anyPublicOperation() {}
@@ -66,6 +76,7 @@ public class SysLogAop{
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         User user = (User) request.getSession().getAttribute("user");
         HttpSession session = request.getSession();
+        
        /* Object value = session.getAttribute("user");
 		System.out.println("value:"+value);*/
 		try {			
@@ -76,9 +87,13 @@ public class SysLogAop{
 				log.setModule(map.get("module").toString());
 				log.setMethod(map.get("methods").toString());
 				log.setOperationTime(new Date());
+				
 				//log.setUser(user);
 				log.setUserName(user.getUserName());
-				user.getLogs().add(log);				
+				//log.setUser(user);
+			
+				//user.getLogs().add(log);	
+				//logService.saveOrUpdate(log);
 				logService.saveOrUpdate(log);
 			}			
 		} catch (Throwable e) {
@@ -103,9 +118,9 @@ public class SysLogAop{
 			log.setOperationTime(new Date());
 			//log.setUser(user);
 			log.setUserName(user.getUserName());
-			user.getLogs().add(log);				
+			//user.getLogs().add(log);				
+			//logService.saveOrUpdate(log);
 			logService.saveOrUpdate(log);
-			
 			
 		} catch (Exception e) {
 			//logger.error("异常信息:{}", e.getMessage());

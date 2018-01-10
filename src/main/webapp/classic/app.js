@@ -83946,7 +83946,7 @@ logout: function(button) {
 		url:'logout', 
 		method:'post', 
 	//	params:{id:record.get('id')},
-	    success:function(response, options) {
+	 /*   success:function(response, options) {
         var json = Ext.util.JSON.decode(response.responseText);
         if (json.success) {
           
@@ -83954,7 +83954,8 @@ logout: function(button) {
         } else {
           Ext.Msg.alert('系统提示', json.msg);
         }
-      }});
+      }*/
+      });
   },
 
 
@@ -84179,6 +84180,7 @@ Ext.define('Admin.view.user.UserAddForm', {
         fieldLabel: '生日',
         name:'birthday',
         format: 'Y/m/d H:i:s',
+        editable:false,
         emptyText: '请输入生日'
     }, {
         xtype: 'textfield',

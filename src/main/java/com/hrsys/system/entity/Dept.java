@@ -42,7 +42,7 @@ public class Dept extends BaseEntity implements Serializable {
 	
 	private Dept parentName;//父部门
 	private List<Dept> childDept = new ArrayList<Dept>();
-	//private List<User> userList = new ArrayList<User>();
+	private User user;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -59,13 +59,11 @@ public class Dept extends BaseEntity implements Serializable {
 	public List<Dept> getChildDept() {
 		return childDept;
 	}
-	
-//	@OneToMany(cascade=CascadeType.ALL,mappedBy="dept")
-//	@JsonIgnore
-//	public List<User> getUserList() {
-//		return userList;
-//	}
-//	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JsonIgnore
+	public User getUser() {
+		return user;
+	}
 	public Integer getDeptId() {
 		return deptId;
 	}
@@ -154,10 +152,10 @@ public class Dept extends BaseEntity implements Serializable {
 	public void setChildDept(List<Dept> childDept) {
 		this.childDept = childDept;
 	}
-//	public void setUserList(List<User> userList) {
-//		this.userList = userList;
-//	}
-//	
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	
 
 }

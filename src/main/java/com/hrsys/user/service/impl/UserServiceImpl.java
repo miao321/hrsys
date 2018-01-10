@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.spi.LoggerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,13 @@ import com.hrsys.annotation.SysLog;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.util.DateUtil;
+import com.hrsys.system.dao.LogRepository;
+import com.hrsys.system.entity.Log;
+import com.hrsys.system.entity.Permission;
+import com.hrsys.system.entity.Role;
 import com.hrsys.user.dao.UserRepository;
 import com.hrsys.user.entity.User;
+import com.hrsys.user.entity.UserRole;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 import com.hrsys.user.service.IUserService;
 @Service
@@ -29,6 +35,8 @@ public class UserServiceImpl implements IUserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Autowired
 	private UserRepository userRepository;
+	
+
 	@SysLog(module="用户管理",methods="保存或者更新数据")
 	public void saveOrUpdate(User user) {
 		userRepository.save(user);		
@@ -72,8 +80,8 @@ public class UserServiceImpl implements IUserService {
 			dto.setPassword(obj[5]+"");
 			dto.setUserNickName(obj[6]+"");
 			dto.setSex(obj[7]+"");
-			//dto.setBirthday(DateUtil.StringToHMS(obj[8].toString()));
-			//dto.setAge(Integer.valueOf(obj[9].toString()));
+			dto.setBirthday(DateUtil.StringToHMS(obj[8]+""));
+			//dto.setAge(Integer.valueOf(obj[9]+""));
 			dto.setNativePlace(obj[10]+"");
 			dto.setNation(obj[11]+"");
 			dto.setCulture(obj[12]+"");
@@ -87,7 +95,7 @@ public class UserServiceImpl implements IUserService {
 			dto.setUserAccount(obj[20]+"");
 			dto.setRemark(obj[21]+"");
 			
-			System.out.println(dto);
+		
 			list.add(dto);
 		}
 		
@@ -98,6 +106,35 @@ public class UserServiceImpl implements IUserService {
 	public List<User> find(String hql, Class<User> class1, String[] strings) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public List<UserRole> getRoleByUserName(String userName) {
+		User user = userRepository.findUser(userName);
+		if (user == null) {
+			return null;
+		}
+		List<UserRole> roles = user.getUserRoles();
+		
+		return roles;
+	}
+	
+	@Override
+	public List<String> getPermissionsByUserName(String userName) {
+		User user = userRepository.findUser(userName);
+		if (user == null) {
+			return null;
+		}
+		List<String> permissionLists = new ArrayList<String>();
+		for(UserRole userRole : user.getUserRoles()) {
+			System.out.println("userRole"+userRole);
+			Role role = userRole.getRole();
+			
+			for(Permission permission : role.getPermission()) {
+				permissionLists.add(permission.getUrl());
+			}
+		}
+		System.out.println("permissionLists:"+permissionLists);
+		return permissionLists;
 	}
 	
 	

@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
 xmlns="http://www.springframework.org/schema/beans"
-xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:p="http://www.springframework.org/schema/p"
+xmlns:aop="http://www.springframework.org/schema/aop"
 xmlns:context="http://www.springframework.org/schema/context"
-xmlns:mvc="http://www.springframework.org/schema/mvc"
 xsi:schemaLocation="
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd
-http://www.springframework.org/schema/mvc
-http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
-		<aop:aspectj-autoproxy proxy-target-class="true"/>
-<!-- 开启aop，对类代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- 开启aop，对类代理 -->
 	<aop:config proxy-target-class="true"></aop:config>
-	
+	<context:component-scan base-package="com.hrsys.aop"></context:component-scan>
+	 <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+	<!--扫描web层的@Controller-->
 	<context:component-scan base-package="com.hrsys.*.web"/>
-	<context:component-scan base-package="com.hrsys.common"/>
-	<mvc:annotation-driven enable-matrix-variables="true">
+	<context:component-scan base-package="com.hrsys.common"/>   	
+	
+	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<constructor-arg value="UTF-8" />
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	
 	<!-- 设置主页面：访问/自动跳转到home视图 -->
-	<mvc:view-controller path="/" view-name="index"/>
+	<!--  <mvc:view-controller path="/" view-name="index"/>-->
+	
 	<!-- springmvc 页面重定向设置： -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<!-- <mvc:default-servlet-handler/> -->
 	
-	<mvc:resources  mapping="/classic/**" location="/classic/" />
+		<mvc:resources  mapping="/classic/**" location="/classic/" />
 	<mvc:resources  mapping="/resources/**" location="/resources/" />
 	<mvc:resources  mapping="/classic.json" location="/" />
 	<mvc:resources  mapping="/theme-neptune/**" location="/theme-neptune/" />
