@@ -27,6 +27,7 @@ import com.hrsys.system.entity.Role;
 import com.hrsys.user.dao.UserRepository;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.UserRole;
+import com.hrsys.user.entity.dto.UserRoleDTO;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 import com.hrsys.user.service.IUserService;
 @Service
@@ -71,29 +72,41 @@ public class UserServiceImpl implements IUserService {
 		List<UserRoleQueryDTO>  list = new ArrayList<UserRoleQueryDTO>();
 		List<Object[]> userRole = userRepository.findUserRole();
 		for(Object[] obj : userRole) {
-			UserRoleQueryDTO dto = new UserRoleQueryDTO();			
-			dto.setId(Long.parseLong(obj[0].toString()));
-			dto.setUserName(obj[1]+"");
-			dto.setDeptName(obj[2]+"");
-			dto.setRoleName(obj[3]+"");
-			dto.setUserNo(obj[4]+"");
-			dto.setPassword(obj[5]+"");
-			dto.setUserNickName(obj[6]+"");
-			dto.setSex(obj[7]+"");
-			dto.setBirthday(DateUtil.StringToHMS(obj[8]+""));
-			//dto.setAge(Integer.valueOf(obj[9]+""));
-			dto.setNativePlace(obj[10]+"");
-			dto.setNation(obj[11]+"");
-			dto.setCulture(obj[12]+"");
-			dto.setCollege(obj[13]+"");
-			dto.setBody(obj[14]+"");
-			dto.setMarriage(obj[15]+"");
-			dto.setIdCord(obj[16]+"");
-			dto.setPhone(obj[17]+"");
-			dto.setFamilyPhone(obj[18]+"");
-			dto.setEmail(obj[19]+"");
-			dto.setUserAccount(obj[20]+"");
-			dto.setRemark(obj[21]+"");
+			UserRoleQueryDTO dto = new UserRoleQueryDTO();
+			
+			//dto.setRoleId(Long.parseLong(obj[0].toString()));
+			dto.setUserName(obj[0]+"");
+			dto.setDeptName(obj[1]+"");
+			dto.setRoleName(obj[2]+"");
+			dto.setUserNo(obj[3]+"");
+			dto.setPassword(obj[4]+"");
+			dto.setUserNickName(obj[5]+"");
+			dto.setSex(obj[6]+"");
+			/*if (dto.getBirthday() == null) {
+				return null;
+			}else {
+				dto.setBirthday(DateUtil.StringToHMS(obj[8]+""));
+			}
+			if (dto.getAge() == null) {
+				return null;
+			}else {
+				dto.setAge(Integer.valueOf(obj[9]+""));
+			}*/
+			
+			//dto.setBirthday(DateUtil.StringToHMS(obj[7]+""));
+			//dto.setAge(Integer.valueOf(obj[8]+""));
+			dto.setNativePlace(obj[9]+"");
+			dto.setNation(obj[10]+"");
+			dto.setCulture(obj[11]+"");
+			dto.setCollege(obj[12]+"");
+			dto.setBody(obj[13]+"");
+			dto.setMarriage(obj[14]+"");
+			dto.setIdCord(obj[15]+"");
+			dto.setPhone(obj[16]+"");
+			dto.setFamilyPhone(obj[17]+"");
+			dto.setEmail(obj[18]+"");
+			dto.setUserAccount(obj[19]+"");
+			dto.setRemark(obj[20]+"");
 			
 		
 			list.add(dto);
@@ -102,6 +115,59 @@ public class UserServiceImpl implements IUserService {
 		 
 		return list;
 	}
+	
+	
+	
+	public List<UserRoleDTO> findUserRole2() {
+		List<UserRoleDTO>  list = new ArrayList<UserRoleDTO>();
+		List<Object[]> userRole = userRepository.findUserRole();
+		List<User> user  =  (List<User>) userRepository.findAll();
+		System.out.println("user++++:"+user);
+		for(Object[] obj : userRole) {
+			UserRoleDTO dto = new UserRoleDTO();
+			
+			dto.setUserName(obj[0]+"");
+			dto.setDeptName(obj[1]+"");
+			dto.setRoleName(obj[2]+"");
+			dto.setUserNo(obj[3]+"");
+			dto.setPassword(obj[4]+"");
+			dto.setUserNickName(obj[5]+"");
+			dto.setSex(obj[6]+"");
+			/*if (dto.getBirthday() == null) {
+				return null;
+			}else {
+				dto.setBirthday(DateUtil.StringToHMS(obj[8]+""));
+			}
+			if (dto.getAge() == null) {
+				return null;
+			}else {
+				dto.setAge(Integer.valueOf(obj[9]+""));
+			}*/
+			
+			//dto.setBirthday(DateUtil.StringToHMS(obj[7]+""));
+			//dto.setAge(Integer.valueOf(obj[8]+""));
+			dto.setNativePlace(obj[9]+"");
+			dto.setNation(obj[10]+"");
+			dto.setCulture(obj[11]+"");
+			dto.setCollege(obj[12]+"");
+			dto.setBody(obj[13]+"");
+			dto.setMarriage(obj[14]+"");
+			dto.setIdCord(obj[15]+"");
+			dto.setPhone(obj[16]+"");
+			dto.setFamilyPhone(obj[17]+"");
+			dto.setEmail(obj[18]+"");
+			dto.setUserAccount(obj[19]+"");
+			dto.setRemark(obj[20]+"");
+			
+		
+			list.add(dto);
+		}
+		
+		 
+		return list;
+	}
+	
+	
 	@Override
 	public List<User> find(String hql, Class<User> class1, String[] strings) {
 		// TODO Auto-generated method stub

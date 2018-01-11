@@ -1,6 +1,6 @@
-Ext.define('Admin.view.user.OrganizationViewModel', {
+Ext.define('Admin.view.user.DeptViewModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.organizationViewModel',//配置到主视图的ViewModel名
+    alias: 'viewmodel.deptViewModel',//配置到主视图的ViewModel名
     requires: [
         'Ext.data.Store',
         'Ext.data.proxy.Memory',
@@ -11,6 +11,6 @@ Ext.define('Admin.view.user.OrganizationViewModel', {
         'Ext.data.reader.Json'
     ],
     stores: {
-	organizationlists: {type: 'organizationGridPanelStore',autoLoad:true}
+	deptlists: {type: 'deptGridPanelStore',autoLoad:true}
     }
 });

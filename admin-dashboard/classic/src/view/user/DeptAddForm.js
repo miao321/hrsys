@@ -1,6 +1,6 @@
-Ext.define('Admin.view.user.OrganizationAddForm', {
+Ext.define('Admin.view.user.DeptAddForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.organizationAddForm',
+    alias: 'widget.deptAddForm',
     requires: [
         'Ext.button.Button',
         'Ext.form.field.Text',
@@ -18,8 +18,8 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
 //因为Window是独立Create的并不属于UserModelPanel主视图
 //所以：必须绑定viewModel才可以刷新Grid数据
 //所以：必须绑定ViewController才可以绑定事件
-    viewModel: {type: 'organizationViewModel'},
-    controller: 'organizationViewController',
+    viewModel: {type: 'deptViewModel'},
+    controller: 'deptViewController',
     //cls: '',
 
     layout: {
@@ -36,7 +36,7 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
     },
 
     items: [{
-        xtype: 'textfield', //hidden
+        xtype: 'hidden', //hidden
         fieldLabel: 'id',
         name:'id',
         readOnly:true
@@ -44,7 +44,7 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
         xtype: 'textfield', //hidden
         fieldLabel: '部门编号',
         name:'deptId',
-        readOnly:true
+        //readOnly:true
     }, {
         xtype: 'textfield',
         fieldLabel: '部门名字',
@@ -77,6 +77,7 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -86,6 +87,7 @@ Ext.define('Admin.view.user.OrganizationAddForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+       	editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',

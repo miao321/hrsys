@@ -43,7 +43,7 @@ public class Role extends BaseEntity implements Serializable {
 	
 	
 	private List<UserRole> userRoles = new ArrayList<UserRole>();
-	private Set<Permission> permission = new HashSet<Permission>(); 
+	private List<Permission> permission = new ArrayList<Permission>(); 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getId() {
@@ -57,12 +57,16 @@ public class Role extends BaseEntity implements Serializable {
 	@ManyToMany(cascade={CascadeType.MERGE,CascadeType.PERSIST},  
 			   mappedBy = "role", targetEntity = Permission.class) 
 	@JsonIgnore
-	public Set<Permission> getPermission() {
+	public List<Permission> getPermission() {
 		return permission;
 	}
+	/*public Set<Permission> getPermission() {
+		return permission;
+	}*/
 	public String getRoleName() {
 		return roleName;
 	}
+	
 	
 	public String getCreateModule() {
 		return createModule;
@@ -119,8 +123,9 @@ public class Role extends BaseEntity implements Serializable {
 	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	public void setPermission(Set<Permission> permission) {
+	public void setPermission(List<Permission> permission) {
 		this.permission = permission;
 	}
+	
 
 }

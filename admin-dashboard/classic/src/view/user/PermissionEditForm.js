@@ -79,3 +79,4 @@ Ext.define('Admin.view.user.PermissionEditForm', {
         },'->']
     }
 });
+

@@ -26,9 +26,15 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long>,J
 	public void updateUser(Long id,String comfirPassword);
 	
 	
-	@Query(value="select u.id,u.userName,u.deptName,r.roleName,u.userNo,u.password,u.userNickName,"
+	@Query(value="select u.userName,u.deptName,r.roleName,u.userNo,u.password,u.userNickName,"
 			+ "u.sex,u.birthday,u.age,u.nativePlace,u.nation,u.culture,u.college,u.body,u.marriage, "
 			+ "u.idCord,u.phone,u.familyPhone,u.email,u.userAccount,u.remark from t_user as u left join t_user_role as ur on u.id=ur.userId left join t_role as r on r.id=ur.roleId",nativeQuery=true)
 	public List<Object[]> findUserRole();
+	
+	@Query(value="select u.userName,u.deptName,r.roleName,u.userNo,u.password,u.userNickName,"
+			+ "u.sex,u.birthday,u.age,u.nativePlace,u.nation,u.culture,u.college,u.body,u.marriage, "
+			+ "u.idCord,u.phone,u.familyPhone,u.email,u.userAccount,u.remark from t_user as u left join t_user_role as ur on u.id=ur.userId left join t_role as r on r.id=ur.roleId",nativeQuery=true)
+	public List<Object[]> findUserRole2();
+	
 	
 }

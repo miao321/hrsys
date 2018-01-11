@@ -2,10 +2,10 @@ Ext.define('Admin.view.user.AddRole', {
     extend: 'Ext.window.Window',
     alias: 'addRoleWindow',
    	xtype:'addRoleWindow',
+   	id:'addRoleWindow',
     autoShow: true,
     modal: true,
     layout: 'fit',
-   	id:'addRoleWindow',
     //items:[],
     afterRender: function () {
         var me = this;

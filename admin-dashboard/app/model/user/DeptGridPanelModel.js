@@ -1,4 +1,4 @@
-Ext.define('Admin.model.user.OrganizationGridPanelModel', {
+Ext.define('Admin.model.user.DeptGridPanelModel', {
     extend: 'Admin.model.Base',
     fields: [
 		{type: 'int'	,name: 'id'},

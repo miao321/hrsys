@@ -2,6 +2,7 @@ Ext.define('Admin.view.user.AddPermissionFormPanel',{
 	extend:'Ext.form.Panel',
 	xtype:'addPermissionFormPanel',   //对应NavigationTree store 的 viewType:'user'
 	labelAlign: 'left',
+	id:'addPermissionFormPanel',
     //	id:'Form1',
     autoHeight: true,
     width: 513,
@@ -66,3 +67,4 @@ Ext.define('Admin.view.user.AddPermissionFormPanel',{
 	        },'->']
 	    }
 });
+	

@@ -1,12 +1,12 @@
-Ext.define('Admin.store.user.OrganizationGridPanelStore', {
+Ext.define('Admin.store.user.DeptGridPanelStore', {
 	extend: 'Ext.data.Store',
-	alias: 'store.organizationGridPanelStore', // ViewModel中stores type
-	model: 'Admin.model.user.OrganizationGridPanelModel',
+	alias: 'store.deptGridPanelStore', // ViewModel中stores type
+	model: 'Admin.model.user.DeptGridPanelModel',
 	//autoLoad:true,
 	pageSize:25,
 	proxy: {
 		type: 'ajax',
-		url:'organization/findPage.json',
+		url:'dept/findPage.json',
 		reader: {
 			type: 'json',
 			rootProperty: 'content',

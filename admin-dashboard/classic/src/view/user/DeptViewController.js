@@ -1,27 +1,27 @@
-Ext.define('Admin.view.user.OrganizationViewController', {
+Ext.define('Admin.view.user.DeptViewController', {
 	extend: 'Ext.app.ViewController',
-	alias: 'controller.organizationViewController',
+	alias: 'controller.deptViewController',
 	requires: [
     	'Ext.grid.column.RowNumberer',
     	'Ext.selection.CheckboxModel'
     ]
     ,openAddWindow: function(view, recIndex, cellIndex, item, e, record) {
       		var cfg = Ext.apply({
-                xtype: 'organizationAddWindow',
-                items: [Ext.apply({xtype: 'organizationAddForm'})]
+                xtype: 'deptAddWindow',
+                items: [Ext.apply({xtype: 'deptAddForm'})]
 		});
 		var win = Ext.create(cfg);
     }
     ,submitAddForm: function(btn) {
       		var form = btn.up('form');
 			form.getForm().submit({       
-				url:'organization/saveOrUpdate',
+				url:'dept/saveOrUpdate',
 				//waitMsg: '正在上传，请耐心等待....',
 				success: function(form, action){    
 					Ext.Msg.alert('提示', action.result.msg,function(){
 						btn.up('window').close();
 					//	form.getViewModel().getStore('userDataList').reload();
-	                   Ext.getCmp('organizationGridPanel').getStore().reload();
+	                   Ext.getCmp('deptGridPanel').getStore().reload();
 						
 					});       
 				},       
@@ -32,8 +32,8 @@ Ext.define('Admin.view.user.OrganizationViewController', {
     }
     ,openEditWindow: function(view, recIndex, cellIndex, item, e, record) {
     	var cfg = Ext.apply({
-                xtype: 'organizationEditWindow',
-                items: [Ext.apply({xtype: 'organizationEditForm'})]
+                xtype: 'deptEditWindow',
+                items: [Ext.apply({xtype: 'deptEditForm'})]
 		});
 		var win = Ext.create(cfg);
 		
@@ -43,13 +43,13 @@ Ext.define('Admin.view.user.OrganizationViewController', {
      ,submitEditForm: function(btn) {
       		var form = btn.up('form');
 			form.getForm().submit({       
-				url:'organization/saveOrUpdate',
+				url:'dept/saveOrUpdate',
 				//waitMsg: '正在上传，请耐心等待....',
 				success: function(form, action){    
 					Ext.Msg.alert('提示', action.result.msg,function(){
 						btn.up('window').close();
 						//form.getViewModel().getStore('roleDataList').reload();
-	                   			Ext.getCmp('organizationGridPanel').getStore().reload();
+	                   			Ext.getCmp('deptGridPanel').getStore().reload();
 						
 					});       
 				},       
@@ -59,12 +59,12 @@ Ext.define('Admin.view.user.OrganizationViewController', {
 			});
 	}
 
-     ,deleteOrganization: function(view, recIndex, cellIndex, item, e, record) {
+     ,deleteDept: function(view, recIndex, cellIndex, item, e, record) {
       		Ext.MessageBox.confirm('提示', '确定要进行删除操作吗？数据将无法还原！',
       			function(btn, text){
                 	if(btn=='yes'){
 				Ext.Ajax.request({ 
-					url : 'organization/delete', 
+					url : 'dept/delete', 
 					method : 'post', 
 					params : { id :record.get('id')}, 
 					success: function(response, options) {
@@ -84,7 +84,7 @@ Ext.define('Admin.view.user.OrganizationViewController', {
    
     },
      	
-    deleteOrganizations: function(btn) {
+    deleteDepts: function(btn) {
       	var grid = btn.up('gridpanel');
 		var selModel = grid.getSelectionModel();
         if (selModel.hasSelection()) {
@@ -96,7 +96,7 @@ Ext.define('Admin.view.user.OrganizationViewController', {
                         selectIds.push(item.data.id);
                     })
                   	Ext.Ajax.request({ 
-						url : 'organization/deleteOrganizations', 
+						url : 'dept/deleteDepts', 
 						method : 'post', 
 						params : { 
 							//ids[] :selectIds

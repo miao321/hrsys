@@ -1,16 +1,1 @@
-Ext.define('Admin.view.user.UserViewModel', {
-    extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.userViewModel',//配置到主视图的ViewModel名
-    requires: [
-        'Ext.data.Store',
-        'Ext.data.proxy.Memory',
-        'Ext.data.field.Integer',
-        'Ext.data.field.String',
-        'Ext.data.field.Date',
-        'Ext.data.field.Boolean',
-        'Ext.data.reader.Json'
-    ],
-    stores: {
-    userlists: {type: 'userGridPanelStore',autoLoad:true}
-    }
-});
+Ext.define('Admin.view.user.UserViewModel', {extend:Ext.app.ViewModel, alias:'viewmodel.userViewModel', stores:{userlists:{type:'userGridPanelStore', autoLoad:true}}});

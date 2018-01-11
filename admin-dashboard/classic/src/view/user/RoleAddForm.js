@@ -36,44 +36,57 @@ Ext.define('Admin.view.user.RoleAddForm', {
     },
 
     items: [{
-        xtype: 'textfield', //hidden
-        fieldLabel: 'id',
-        name:'id',
-        readOnly:true
-    },{
         xtype: 'textfield',
         fieldLabel: '角色名',
-        name:'roleName'
+        name:'roleName',
+       	allowBlank:false,  
+        emptyText: '请输入角色名'
     }, {
         xtype: 'textfield',
         fieldLabel: '排序号',
-        name:'orderNo'
+        name:'orderNo',
+       	allowBlank:false,  
+        emptyText: '请输入排序号'
     }, {
         xtype: 'textfield',
         fieldLabel: '创建模块',
-        name:'createModule',      
+        name:'createModule',
+       	allowBlank:false,  
+        emptyText: '请输入模块名'      
     }, {
         xtype: 'textfield',
         fieldLabel: '创建人',
-        name:'createBy'
+        name:'createBy',
+       	allowBlank:false,  
+        emptyText: '请输入创建人'
     }, {
        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
-        format: 'Y/m/d H:i:s'
+        format: 'Y/m/d H:i:s',
+     	allowBlank:false,  
+       editable:false,
+        emptyText: '请输入创建时间'
     }, {
         xtype: 'textfield',
         fieldLabel: '修改人',
-        name:'updateBy'
+        name:'updateBy',
+     	allowBlank:false,  
+        emptyText: '请输入修改人'
     }, {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
-        format: 'Y/m/d H:i:s'
+        format: 'Y/m/d H:i:s',
+     	allowBlank:false,  
+       editable:false,
+        emptyText: '请输入修改时间'
     }, {
         xtype: 'textfield',
         fieldLabel: '备注',
-        name:'remark'
+        name:'remark',
+       	allowBlank:false,  
+        emptyText: '请输入备注'
     }],
 
     bbar: {

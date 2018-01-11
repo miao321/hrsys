@@ -48,5 +48,9 @@ public class RoleServiceImpl implements IRoleService {
 	public Page<Role> findAll(Specification<Role> spec, Pageable pageable) {
 		return roleRepository.findAll(spec, pageable);
 	}
+	@Override
+	public Role findRole(String roleName) {
+		return roleRepository.findRole(roleName);
+	}
 
 }

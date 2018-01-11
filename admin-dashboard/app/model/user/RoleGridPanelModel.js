@@ -5,7 +5,6 @@ Ext.define('Admin.model.user.RoleGridPanelModel', {
 		{type: 'string',name: 'roleName'},
 		{type: 'string',name: 'remark'},
 		{type: 'int',name: 'orderNo'},
-	
 		{type: 'string',name: 'createModule'},
 		{type: 'string',name: 'createBy'},
 		{type: 'date',name: 'createTime'},

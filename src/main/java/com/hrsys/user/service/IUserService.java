@@ -11,6 +11,7 @@ import com.hrsys.common.ExtJsonResult;
 import com.hrsys.system.entity.Log;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.UserRole;
+import com.hrsys.user.entity.dto.UserRoleDTO;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 
 public interface IUserService {
@@ -25,6 +26,7 @@ public interface IUserService {
 	//动态条件查询
 	public Page<User> findAll(Specification<User> spec,Pageable pageable);
 	public List<UserRoleQueryDTO> findUserRole();
+	public List<UserRoleDTO> findUserRole2();
 	public List<User> find(String hql, Class<User> class1, String[] strings);
 
 }

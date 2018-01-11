@@ -16,6 +16,8 @@ public interface IRoleService {
 	public Role findOne(Long id);
 	public List<Role> findAll();
 	
+	public Role findRole(String roleName);
+	
 	
 	//动态条件查询
 	public Page<Role> findAll(Specification<Role> spec,Pageable pageable);

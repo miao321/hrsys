@@ -37,7 +37,7 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
 	<!-- 设置主页面：访问/自动跳转到home视图 -->
 	<!--  <mvc:view-controller path="/" view-name="index"/>-->
-	
+		<bean id="exceptionResolver" class="com.hrsys.exception.ShiroExceptionResolver"/>
 	<!-- springmvc 页面重定向设置： -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />

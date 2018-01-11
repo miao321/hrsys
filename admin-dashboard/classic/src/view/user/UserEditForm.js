@@ -46,8 +46,13 @@ Ext.define('Admin.view.user.UserEditForm', {
         name:'userName'
     }, {
         xtype: 'textfield',
+        fieldLabel: '昵称',
+        name:'userNickName'
+    },{
+        xtype: 'textfield',
         fieldLabel: '密码',
-        name:'password'
+        name:'password',
+        readOnly:true
     }, {
         xtype: 'datefield',
         fieldLabel: '生日',
@@ -58,33 +63,75 @@ Ext.define('Admin.view.user.UserEditForm', {
         fieldLabel: '毕业学校',
         name:'college'
     }, {
-        xtype: 'textfield',
+        xtype: "combobox",
         fieldLabel: '身体状况',
-        name:'body'
+        name:'body',
+        store: bodyStore,
+         
+        displayField: "Name",
+        valueField: "Value",
+        //emptyText: "--请选择--",
+        queryMode: "local"
     }, {
-        xtype: 'textfield',
+        xtype: "combobox",
         fieldLabel: '文化程度',
-        name:'culture'
+        name:'culture',
+        store: cultureStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        //emptyText: "--请选择--",
+        queryMode: "local"
     }, {
         xtype: 'textfield',
         fieldLabel: '邮箱地址',
         name:'email'
+    }, {
+        xtype: 'textfield',
+        fieldLabel: '年龄',
+        name:'age'
+    }, {
+        xtype: "combobox",
+       name: "deptName",
+       model:'local',
+       fieldLabel: "部门名",
+       store: {
+       	   autoLoad:true,
+       	   fields:[{name:'id',type:'int'},{name:'deptName',type:'string'}],
+	       	proxy: {
+				type: 'ajax',
+				url:'dept/findAll.json',
+				reader: {
+					type: 'json',
+					rootProperty: 'lists',
+					totalProperty:'totalElements'
+				  }
+			}
+		},
+        editable: false,
+        valueField: "deptName",
+        displayField: "deptName",
+       
+        emptyText: "--请选择--",
+        queryMode: "local",
     }, {
         xtype: 'textfield',
         fieldLabel: '家庭电话',
         name:'familyPhone'
     }, {
         xtype: 'textfield',
-        fieldLabel: '邮箱地址',
-        name:'email'
-    }, {
-        xtype: 'textfield',
         fieldLabel: '身份证号',
         name:'idCord'
     }, {
-        xtype: 'textfield',
+        xtype: "combobox",
         fieldLabel: '婚姻情况',
-        name:'marriage'
+        name:'marriage',
+        store: marriageStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        //emptyText: "--请选择--",
+        queryMode: "local"
     }, {
         xtype: 'textfield',
         fieldLabel: '民族',
@@ -102,9 +149,15 @@ Ext.define('Admin.view.user.UserEditForm', {
         fieldLabel: '备注',
         name:'remark'
     }, {
-        xtype: 'textfield',
+        xtype: "combobox",
         fieldLabel: '性别',
-        name:'sex'
+        name:'sex',
+        store: genderStore,
+        editable: false,
+        displayField: "Name",
+        valueField: "Value",
+        //emptyText: "--请选择--",
+        queryMode: "local"
     }, {
         xtype: 'textfield',
         fieldLabel: '职工账号',

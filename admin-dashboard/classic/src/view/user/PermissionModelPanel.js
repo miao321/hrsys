@@ -7,5 +7,5 @@ Ext.define('Admin.view.user.PermissionModelPanel',{
 //	listeners:{hide:'onHideView'},
 	layout:'fit',
 	items:[{xtype:'permissionGridPanel'}]
-	html:'组织机构管理'
+
 });

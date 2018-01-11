@@ -57,10 +57,11 @@ Ext.define('Admin.view.user.RoleEditForm', {
         fieldLabel: '创建人',
         name:'createBy'
     }, {
-        xtype: 'datefield',
+       xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
-        format: 'Y/m/d H:i:s'
+        format: 'Y/m/d H:i:s',
+           editable:false
     }, {
         xtype: 'textfield',
         fieldLabel: '修改人',
@@ -69,7 +70,8 @@ Ext.define('Admin.view.user.RoleEditForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
-        format: 'Y/m/d H:i:s'
+        format: 'Y/m/d H:i:s',
+        	editable:false
     }, {
         xtype: 'textfield',
         fieldLabel: '备注',

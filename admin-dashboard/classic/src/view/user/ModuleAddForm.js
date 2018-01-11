@@ -36,11 +36,6 @@ Ext.define('Admin.view.user.ModuleAddForm', {
     },
 
     items: [{
-        xtype: 'textfield', //hidden
-        fieldLabel: 'id',
-        name:'id',
-        readOnly:true
-    },{
         xtype: 'textfield',
         fieldLabel: '父节点ID',
         name:'parentId'
@@ -84,6 +79,7 @@ Ext.define('Admin.view.user.ModuleAddForm', {
        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -93,6 +89,7 @@ Ext.define('Admin.view.user.ModuleAddForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',

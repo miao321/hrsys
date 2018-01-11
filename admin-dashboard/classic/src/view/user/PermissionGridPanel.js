@@ -9,47 +9,19 @@ Ext.define('Admin.view.user.PermissionGridPanel',{
     ],
     dockedItems: [{
         xtype: 'toolbar',
-        items: [{
-	        xtype: 'combobox',
-	        fieldLabel: '',
-	        name: 'searchFieldName',
-	        reference:'searchFieldName',
-	        store: {
-	            proxy: {
-	                type: 'memory',
-	                reader: 'array'
-	            },
-	            fields: [ 'key', 'value'],
-	            data: [
-	                ['用户名', 'userName'],
-	                ['密码', 'password']
-	            ]
-	        },
-	        queryMode: 'local',
-	        displayField: 'key',
-	        valueField: 'value',
-	       	value:'userName',
-	        allowBlank: false
-	    },'-',{
-            xtype: 'textfield',
-            name:'searchFieldValue',
-            reference:'searchFieldValue'
-        },'-',{
-            text:'快捷查询',
-            tooltip:'快捷查询',
-            iconCls:'x-fa fa-search',
-            handler : 'search'
-        },'-',{
-            text:'高级查询',
-            tooltip:'高级查询',
-            iconCls:'x-fa fa-search-plus',
-            handler : 'openMoreSearchWindow'
-	        },'-',{
+        items: ['-',{
                 xtype: 'button',
                 text:'添加',
                 iconCls: 'x-fa fa-plus',
                 handler : 'openAddWindow'
-            }]
+            },'-', {
+            xtype:'button',
+            iconCls:'x-fa fa-trash',
+            text: '批量删除',
+				listeners:{
+		        click:'deletePermissions'
+    		}
+        }]
 	}],
 	//store:Ext.data.StoreManager.lookup('simpsonsStore'), //storeId
 	selModel: {
@@ -89,14 +61,7 @@ Ext.define('Admin.view.user.PermissionGridPanel',{
             displayInfo: true,
             displayMsg: 'Displaying topics {0} - {1} of {2}',
             emptyMsg: "No topics to display",
-            items:[
-                '-', {
-                xtype:'button',
-                text: '批量删除',
-					listeners:{
-			        click:'deletePermissions'
-        		}
-            }]
+            
             
         	}
 });

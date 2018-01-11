@@ -35,6 +35,7 @@ public class LoginController {
 	private ILoginService loginService;
 	
 	@RequestMapping(value="/login")
+	//@SysControllerLog(module="系统登录",methods="登录系统")
 	public String login(HttpServletRequest request,HttpSession session) throws Exception {		
 		String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");
 		if(exceptionClassName!=null){
@@ -51,7 +52,7 @@ public class LoginController {
 		return "login";
 	}
 	@RequestMapping(value="first")
-	@SysControllerLog(module="用户模块",methods="登录系统")
+	@SysControllerLog(module="系统登录",methods="登录系统")
    public String first(HttpSession session)throws Exception{	
 		//从shiro的session中取User
 		Subject subject = SecurityUtils.getSubject();
@@ -71,8 +72,8 @@ public class LoginController {
 	public @ResponseBody ExtAjaxResponse changePassword(@RequestParam Long id,@RequestParam String password,@RequestParam String  comfirPassword,HttpSession session) throws NoSuchAlgorithmException {		
 		System.out.println(password);
 		System.out.println("pass:"+session.getAttribute("password"));
-		String comPassword = EncryptUtils.encript(comfirPassword);
-		if (!EncryptUtils.encript(password).equals(session.getAttribute("password"))) {
+		String comPassword = comfirPassword;
+		if (!password.equals(session.getAttribute("password"))) {
 			return new ExtAjaxResponse(false, "密码错误，请重新输入");
 		}
 		try {
@@ -98,10 +99,19 @@ public class LoginController {
 	//退出系统
 	@RequestMapping(value="logout")
 	@SysControllerLog(module="用户模块",methods="退出系统")
-	public String loginout() {
-		
-		return "login";
+	public @ResponseBody ExtAjaxResponse logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+		try {
+			
+			return new ExtAjaxResponse(true, "退出系统");
+		} catch (Exception e) {
+			return new ExtAjaxResponse(false, "退出系统失败");
+		}
 	}
+	/*public String loginout(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "WEB-INF/pages/logout";
+	}*/
 
 	//判断是否已经登录   ??有点问题
 	@RequestMapping("/isLogined")

@@ -1,7 +1,7 @@
-Ext.define('Admin.view.user.OrganizationAddWindow', {
+Ext.define('Admin.view.user.DeptAddWindow', {
     extend: 'Ext.window.Window',
-    alias: 'widget.organizationAddWindow',
-   	xtype:'organizationAddWindow',
+    alias: 'widget.deptAddWindow',
+   	xtype:'deptAddWindow',
     autoShow: true,
     modal: true,
     layout: 'fit',

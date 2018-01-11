@@ -30,6 +30,9 @@ public class DeptController {
 	@RequestMapping("/saveOrUpdate")
 	@SysControllerLog(module="部门管理",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Dept dept) {
+		if (dept.getDeptName() != null) {
+			return new ExtAjaxResponse(false, "该部门已经存在 不用再添加");
+		}
 		try {
 			deptService.saveOrUpdate(dept);
 			return new ExtAjaxResponse(true, "操作成功");

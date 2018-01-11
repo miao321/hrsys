@@ -41,23 +41,20 @@ public class UserRoleController {
 	private IUserService userService;
 	@Autowired
 	private IRoleService roleService;
+	@Autowired 
+	private ILoginService loginService;
 	@RequestMapping("/save")
 	@SysControllerLog(module="用户管理",methods="添加用户")
 	@Scope("prototype")
-	public @ResponseBody ExtAjaxResponse save(UserRoleQueryDTO userRoleQueryDTO) {
-		User user = userService.findOne(userRoleQueryDTO.getUserId());
-		Role role = roleService.findOne(userRoleQueryDTO.getRoleId());
-		UserRole userRole = new UserRole();
-		if (userRoleQueryDTO.getId() != null) {
-			userRole.setId(userRoleQueryDTO.getId());
-		}
-		userRole.setUser(user);
-		userRole.setRole(role);
-		//user.getUserRoles().add(userRole);
-		//role.getUserRoles().add(userRole);
+	public @ResponseBody ExtAjaxResponse save(UserRoleQueryDTO userRoleQueryDTO,@RequestParam String userName) {
+		/*if (userRoleQueryDTO.getId() != null) {
+			return new ExtAjaxResponse(false, "该用户已经拥有此角色21312");
+		}*/
+		User user = loginService.findUser(userName);
+		System.out.println("user:"+user);
+		userRoleQueryDTO.setUserId(user.getId());
 		try {	
-			userRoleService.saveOrUpdate(userRole);
-			//userService.saveOrUpdate(user);
+			userRoleService.saveOrUpdate(userRoleQueryDTO);			
 			return new ExtAjaxResponse(true, "操作成功");
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "操作失败");
@@ -66,7 +63,7 @@ public class UserRoleController {
 	
 	
 	
-	@RequestMapping("/saveOrUpdate")
+	/*@RequestMapping("/saveOrUpdate")
 	@SysControllerLog(module="用户管理",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(UserRole userRole) {
 		try {
@@ -75,7 +72,7 @@ public class UserRoleController {
 		} catch (Exception e) {
 			return new ExtAjaxResponse(false, "操作失败");
 		}	
-	}	
+	}	*/
 	@RequestMapping("/delete")
 	@SysControllerLog(module="用户管理",methods="删除一条数据")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {

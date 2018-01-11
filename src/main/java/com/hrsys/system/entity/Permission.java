@@ -1,6 +1,7 @@
 package com.hrsys.system.entity;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,7 @@ public class Permission {
     //所属角色编号
     private Integer roleId;
     
-    private Set<Role> role = new HashSet<Role>();
+    private List<Role> role = new ArrayList<Role>();
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +43,16 @@ public class Permission {
     @JoinTable(name = "t_permission_t_role", joinColumns = { @JoinColumn(name = "permission_id", updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "role_id", updatable = true) })  
     @Cascade(value = { org.hibernate.annotations.CascadeType.SAVE_UPDATE })  
     @JsonIgnore
-    public Set<Role> getRole() {
+    public List<Role> getRole() {
 		return role;
 	}
+   /* public Set<Role> getRole() {
+		return role;
+	}*/
 	public String getToken() {
 		return token;
 	}
+	
 	
 	public String getUrl() {
 		return url;
@@ -73,8 +78,11 @@ public class Permission {
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
-	public void setRole(Set<Role> role) {
+	/*public void setRole(Set<Role> role) {
 		this.role = role;
-	}  
+	}  */
+	public void setRole(List<Role> role) {
+		this.role = role;
+	}
      
  }

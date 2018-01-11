@@ -18,8 +18,8 @@ Ext.define('Admin.view.user.DeptEditForm', {
 //因为Window是独立Create的并不属于UserModelPanel主视图
 //所以：必须绑定viewModel才可以刷新Grid数据
 //所以：必须绑定ViewController才可以绑定事件
-    viewModel: {type: 'deptViewModel'},
-    controller: 'deptViewController',
+    viewModel: {type: 'roleViewModel'},
+    controller: 'roleViewController',
     //cls: '',
 
     layout: {
@@ -74,9 +74,10 @@ Ext.define('Admin.view.user.DeptEditForm', {
         fieldLabel: '创建人',
         name:'createBy'
     }, {
-       xtype: 'datefield',
+        xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+       	editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -86,6 +87,7 @@ Ext.define('Admin.view.user.DeptEditForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+       	editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',

@@ -45,15 +45,21 @@ Ext.define('Admin.view.user.LogEditForm', {
         fieldLabel: '用户名',
         name:'userName'
     }, {
+        xtype: 'textfield',
+        fieldLabel: '操作模块',
+        name:'module'
+       
+    },{
+        xtype: 'textfield',
+        fieldLabel: '操作内容',
+        name:'method'
+             
+  }, {
         xtype: 'datefield',
-        fieldLabel: '登录时间',
-        name:'startTime',
+        fieldLabel: '操作时间',
+        name:'operationTime',
         format: 'Y/m/d H:i:s'
-    }, {
-        xtype: 'datefield',
-        fieldLabel: '下线时间',
-        name:'endTime',
-        format: 'Y/m/d H:i:s',      
+       	     
     }],
 
     bbar: {

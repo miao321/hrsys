@@ -17,6 +17,7 @@ public class PermissionQueryDTO {
 	private Long id;
 	private Long permission_id;
 	private Long role_id;
+	private String roleName;
 	public Long getId() {
 		return id;
 	}
@@ -34,6 +35,12 @@ public class PermissionQueryDTO {
 	}
 	public void setRole_id(Long role_id) {
 		this.role_id = role_id;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 	//提供static的工具方法： 根据当前userQueryDTO对象来组装动态查询条件
 	public static Specification<Permission> getSpecification(PermissionQueryDTO permissionQueryDTO){

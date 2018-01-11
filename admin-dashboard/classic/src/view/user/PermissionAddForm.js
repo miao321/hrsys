@@ -36,11 +36,6 @@ Ext.define('Admin.view.user.PermissionAddForm', {
     },
 
     items: [{
-        xtype: 'hidden', //hidden
-        fieldLabel: 'id',
-        name:'id',
-        readOnly:true
-    },{
         xtype: 'textfield', //hidden
         fieldLabel: 'token',
         name:'token',

@@ -84,6 +84,7 @@ Ext.define('Admin.view.user.ModuleEditForm', {
         xtype: 'datefield',
         fieldLabel: '创建时间',
         name:'createTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',
@@ -93,6 +94,7 @@ Ext.define('Admin.view.user.ModuleEditForm', {
         xtype: 'datefield',
         fieldLabel: '修改时间',
         name:'updateTime',
+        editable:false,
         format: 'Y/m/d H:i:s'
     }, {
         xtype: 'textfield',

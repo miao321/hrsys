@@ -1,10 +1,10 @@
 Ext.define('Admin.view.user.ChangePasswordFormPanel',{
-	extend:'Ext.container.Container',
+	extend:'Ext.form.Panel',
 	xtype:'changePasswordFormPanel',   //对应NavigationTree store 的 viewType:'user'
+//	controller: 'userViewController',
 	labelAlign: 'left',
-    //	id:'Form1',
     autoHeight: true,
-    width: 513,
+    width: 313,  	
     frame: true, 
     items: [
     {

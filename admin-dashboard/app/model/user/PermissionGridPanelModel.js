@@ -5,7 +5,6 @@ Ext.define('Admin.model.user.PermissionGridPanelModel', {
 		{type: 'string',name: 'token'},	
 		{type: 'string',name: 'url'},	
 		{type: 'string',name: 'description'},
-		{type: 'int',name: 'roleId'}
-	
+		{type: 'int',name: 'roleId'}	
     ]
 });

@@ -2,6 +2,7 @@ Ext.define('Admin.view.user.AddRoleFormPanel',{
 	extend:'Ext.form.Panel',
 	xtype:'addRoleFormPanel',   //对应NavigationTree store 的 viewType:'user'
 	labelAlign: 'left',
+	id:'addRoleFormPanel',
     //	id:'Form1',
     autoHeight: true,
     width: 513,

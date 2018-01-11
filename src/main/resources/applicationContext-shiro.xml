@@ -24,7 +24,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 				<!-- 退出拦截，请求logout.action执行退出操作
 				 /delete =perms[user:delete]
 				 -->
-				  /logout = logout
+				  /logout = anon
 			 	 /classic/**=anon			 	 
 				 /resources/**=anon
 				 /js/**=anon

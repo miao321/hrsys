@@ -34,6 +34,9 @@ public class PermissionController {
 	@RequestMapping("/saveOrUpdate")
 	@SysControllerLog(module="用户权限分配",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Permission permission) {
+		if (permission.getToken() != null) {
+			return new ExtAjaxResponse(false, "此权限已经存在，请在列表找");
+		}		
 		try {
 			permissionService.saveOrUpdate(permission);		   
 			return new ExtAjaxResponse(true, "操作成功");
@@ -44,23 +47,25 @@ public class PermissionController {
 	@RequestMapping("/save")
 	@SysControllerLog(module="用户权限分配",methods="添加权限")
 	public @ResponseBody ExtAjaxResponse save(PermissionQueryDTO permissionQueryDTO) {
+		if (permissionQueryDTO.getRole_id() != null) {
+			return new ExtAjaxResponse(false, "该角色已经拥有此权限");
+		}
+		Role role3 = roleService.findRole(permissionQueryDTO.getRoleName());
+		System.out.println("role3:"+role3);
 		Role role = roleService.findOne(permissionQueryDTO.getRole_id());
-		Permission permission = permissionService.findOne(permissionQueryDTO.getPermission_id());
-		/*Permission permission2 = new Permission();
-		if (permissionQueryDTO.getId() != null) {
-			permission2.setId(permissionQueryDTO.getId());
-		}*/
+		Permission permission = permissionService.findOne(permissionQueryDTO.getPermission_id());		
 		permission.getRole().add(role);
 		Role role2 = new Role();
 		role2.getPermission().add(permission);
 		//role.getPermission().add(permission);
-		//try {
+		permissionQueryDTO.setRole_id(role3.getId());
+		try {
 			permissionService.saveOrUpdate(permission);	
 			//roleService.saveOrUpdate(role2);
 			return new ExtAjaxResponse(true, "操作成功");
-		//} catch (Exception e) {
-		//	return new ExtAjaxResponse(false, "操作失败");
-		//}	
+		} catch (Exception e) {
+			return new ExtAjaxResponse(false, "操作失败");
+		}	
 	}	
 	@RequestMapping("/delete")
 	@SysControllerLog(module="用户权限分配",methods="删除一条数据")

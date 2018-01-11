@@ -19,8 +19,11 @@ import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.system.entity.Role;
+import com.hrsys.system.entity.dto.RolePermissionQueryDTO;
 import com.hrsys.system.entity.dto.RoleQueryDTO;
+import com.hrsys.system.service.IRolePermissionService;
 import com.hrsys.system.service.IRoleService;
+import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 
 @Controller
 @RequestMapping("/role")
@@ -28,11 +31,16 @@ public class RoleController {
 	private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 	@Autowired
 	private IRoleService roleService;
+	@Autowired
+	private IRolePermissionService rolePermissionService;
 	@RequestMapping("/saveOrUpdate")
 	//@SysControllerLog(module="角色管理",methods="保存或者更新数据")
-	@RequiresPermissions("role/saveOrUpdate")
+	//@RequiresPermissions("role/saveOrUpdate")
 	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Role role) {
+		/*if (role.getRoleName() != null) {
+			return new ExtAjaxResponse(false, "该角色已经存在不用再添加");
+		}*/
 		try {
 			roleService.saveOrUpdate(role);
 			return new ExtAjaxResponse(true, "操作成功");
@@ -84,6 +92,17 @@ public class RoleController {
 	public @ResponseBody Page<Role> findPage(RoleQueryDTO roleQueryDTO,ExtPageable extPageable){
 		Page<Role> page = roleService.findAll(roleQueryDTO.getSpecification(roleQueryDTO), extPageable.getPageable());
 		return page;	
+	}
+	
+	@RequestMapping("/findRolePermission")
+	public @ResponseBody ExtJsonResult<RolePermissionQueryDTO> findRolePermission(){
+		List<RolePermissionQueryDTO> findRolePermission = rolePermissionService.findRolePermission();
+		return new ExtJsonResult<RolePermissionQueryDTO>(findRolePermission);
+	}
+	@RequestMapping("/findPermission")
+	public @ResponseBody ExtJsonResult<RolePermissionQueryDTO> findPermission(){
+		List<RolePermissionQueryDTO> findPermission = rolePermissionService.findPermission();
+		return new ExtJsonResult<RolePermissionQueryDTO>(findPermission);
 	}
 
 

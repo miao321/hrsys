@@ -1,6 +1,6 @@
 Ext.define('Admin.view.user.AddPermissionWindow', {
     extend: 'Ext.window.Window',
-    alias: 'addPermissionWindow‘,
+    alias: 'addPermissionWindow',
    	xtype:'addPermissionWindow',
     autoShow: true,
     modal: true,

@@ -2,6 +2,8 @@ package com.hrsys.user.service.impl;
 
 import java.util.List;
 
+import javax.management.relation.RoleResult;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,23 @@ public class UserRoleServiceImpl implements IUserRoleService {
 	private static final Logger logger = LoggerFactory.getLogger(UserRoleServiceImpl.class);
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@Override
-	public void saveOrUpdate(UserRole userRole) {		
-		userRoleRepository.save(userRole);		
+	public void saveOrUpdate(UserRoleQueryDTO userRoleQueryDTO) {		
+		//userRoleRepository.save(userRole);	
+		User user = userRepository.findOne(userRoleQueryDTO.getUserId());
+		Role role = roleRepository.findOne(userRoleQueryDTO.getRoleId());
+		UserRole userRole = new UserRole();
+		if(userRoleQueryDTO.getId() != null) {
+			userRole.setId(userRoleQueryDTO.getId());
+		}
+		userRole.setUser(user);
+		userRole.setRole(role);
+		userRoleRepository.save(userRole);
 	}
 	@Override
 	public void delete(UserRole userRole) {

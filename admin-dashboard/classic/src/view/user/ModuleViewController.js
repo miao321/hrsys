@@ -49,7 +49,7 @@ Ext.define('Admin.view.user.ModuleViewController', {
 					Ext.Msg.alert('提示', action.result.msg,function(){
 						btn.up('window').close();
 						//form.getViewModel().getStore('roleDataList').reload();
-	                   /Ext.getCmp('moduleGridPanel').getStore().reload();
+	                   Ext.getCmp('moduleGridPanel').getStore().reload();
 						
 					});       
 				},       

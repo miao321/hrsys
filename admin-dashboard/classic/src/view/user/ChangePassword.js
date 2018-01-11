@@ -5,7 +5,7 @@ Ext.define('Admin.view.user.ChangePassword', {
     autoShow: true,
     modal: true,
     layout: 'fit',
-    //items:[],
+    title:'修改密码',   
     afterRender: function () {
         var me = this;
         me.callParent(arguments);
@@ -26,7 +26,8 @@ Ext.define('Admin.view.user.ChangePassword', {
     syncSize: function () {
         var width = Ext.Element.getViewportWidth(),
             height = Ext.Element.getViewportHeight();
-        this.setSize(Math.floor(width * 0.6), Math.floor(height * 0.6));
-        this.setXY([ Math.floor(width * 0.05), Math.floor(height * 0.05) ]);
-    }
+        this.setSize(Math.floor(width * 0.2), Math.floor(height * 0.3));
+        this.setXY([ Math.floor(width * 0.03), Math.floor(height * 0.03) ]);
+    },
+    items: [{xtype:'changePasswordFormPanel'}],
 });

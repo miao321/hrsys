@@ -21,6 +21,7 @@ import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.user.entity.User;
 import com.hrsys.user.entity.dto.UserQueryDTO;
+import com.hrsys.user.entity.dto.UserRoleDTO;
 import com.hrsys.user.entity.dto.UserRoleQueryDTO;
 import com.hrsys.user.service.ILoginService;
 import com.hrsys.user.service.IUserService;
@@ -132,9 +133,19 @@ public class UserController {
 		//return new ExtAjaxResponse(true, "操作成功");
 	}
 	
+	@RequestMapping("/findUserRole2")
+	//@SysControllerLog(module="用户管理",methods="用户角色关联")
+	//@RequiresPermissions("user/findUserRole")
+	//@RequiresRoles("All")
+	public @ResponseBody ExtJsonResult<UserRoleDTO> findUserRole2(){
+		List<UserRoleDTO> findUserRole = userService.findUserRole2();
+		return new ExtJsonResult<UserRoleDTO>(findUserRole);
+		//return new ExtAjaxResponse(true, "操作成功");
+	}
+	
 	@RequestMapping("/refuse")
 	public @ResponseBody ExtAjaxResponse refuse() {
-		return new ExtAjaxResponse(false, "没有权限");
+		return new ExtAjaxResponse(false, "您无权限,请跟管理员申请权限");
 	}
 	
 }
