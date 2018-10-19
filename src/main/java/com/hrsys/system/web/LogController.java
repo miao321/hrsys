@@ -3,6 +3,8 @@ package com.hrsys.system.web;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,10 @@ public class LogController {
 	}	
 	@RequestMapping("/delete")
 	@SysControllerLog(module="日志管理",methods="删除一条数据")
+	@RequiresPermissions("log/delete")
+	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
+		
 		try {
 			Log log = logService.findOne(id);
 			if (log != null) {
@@ -51,6 +56,8 @@ public class LogController {
 	}
 	@RequestMapping("/deleteLogs")
 	@SysControllerLog(module="日志管理",methods="删除多条数据")
+	@RequiresPermissions("log/deleteLogs")
+	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);

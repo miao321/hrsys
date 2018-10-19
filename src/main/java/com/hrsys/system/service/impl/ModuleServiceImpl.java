@@ -55,5 +55,9 @@ public class ModuleServiceImpl implements IModuleService {
 	public Page<Module> findAll(Specification<Module> spec, Pageable pageable) {
 		return moduleRepository.findAll(spec, pageable);
 	}
+	@Override
+	public Module findModule(String moduleName) {
+		return moduleRepository.findModule(moduleName);
+	}
 
 }

@@ -3,10 +3,13 @@ package com.hrsys.employ.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,8 +30,10 @@ public class EmployApply extends BaseEntity implements Serializable {
 	private Long employApplyId;		//应聘者id
 	private String employApplyNo;		//应聘者编号
 	private String employApplyName;		//应聘者名字
-	private String employJobNo;			//招聘职位编号
-	private String employJobName;		//招聘职位名称
+
+//	private EmployJob employJob;
+	   private String employJobNo;			//招聘职位编号
+	   private String employJobName;		//招聘职位名称
 	private String employApplySex;		//性别
 	private String employApplyPlace;	//籍贯
 	private Date employApplyBirth;		//出生日期
@@ -50,7 +55,13 @@ public class EmployApply extends BaseEntity implements Serializable {
 	}
 	public String getEmployApplyName() {
 		return employApplyName;
+	}	
+/*	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="employJobNo")
+	public EmployJob getEmployJob() {
+		return employJob;
 	}
+*/
 	public String getEmployJobNo() {
 		return employJobNo;
 	}
@@ -60,6 +71,7 @@ public class EmployApply extends BaseEntity implements Serializable {
 	public String getEmployApplySex() {
 		return employApplySex;
 	}
+
 	public String getEmployApplyPlace() {
 		return employApplyPlace;
 	}
@@ -99,6 +111,10 @@ public class EmployApply extends BaseEntity implements Serializable {
 	public void setEmployApplyName(String employApplyName) {
 		this.employApplyName = employApplyName;
 	}
+	
+/*	public void setEmployJob(EmployJob employJob) {
+		this.employJob = employJob;
+	}*/
 	public void setEmployJobNo(String employJobNo) {
 		this.employJobNo = employJobNo;
 	}
@@ -136,16 +152,7 @@ public class EmployApply extends BaseEntity implements Serializable {
 		this.employApplySituation = employApplySituation;
 	}
 	
-	@Override
-	public String toString() {
-		return "EmployApply [employApplyId=" + employApplyId + ", employApplyNo=" + employApplyNo + ", employApplyName="
-				+ employApplyName + ", employJobNo=" + employJobNo + ", employJobName=" + employJobName
-				+ ", employApplySex=" + employApplySex + ", employApplyPlace=" + employApplyPlace
-				+ ", employApplyBirth=" + employApplyBirth + ", employApplySchool=" + employApplySchool
-				+ ", employApplyMajor=" + employApplyMajor + ", employApplyEducation=" + employApplyEducation
-				+ ", employApplyPhone=" + employApplyPhone + ", employApplyEmail=" + employApplyEmail
-				+ ", employApplyProfile=" + employApplyProfile + ", employApplySituation=" + employApplySituation + "]";
-	}
+
 
 	
 }

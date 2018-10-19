@@ -42,11 +42,11 @@ public class EmployJobQueryDTO {
 	public String getEmployJobName() {
 		return employJobName;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	public Date getEmployJobStartTime() {
 		return employJobStartTime;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	public Date getEmployJobEndTime() {
 		return employJobEndTime;
 	}
@@ -135,34 +135,50 @@ public class EmployJobQueryDTO {
 					 
 					//2.根据 QueryDTO数据字段的值进行判断以及条件的组装
 					 if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobNo())) {
-						 Predicate  p1 =  cb.like(root.get("employJobNo").as(String.class),"%"+ employJobQueryDTO.getEmployJobNo() + "%");
-						 list.add(p1);
+						 Predicate  p =  cb.like(root.get("employJobNo").as(String.class),"%"+ employJobQueryDTO.getEmployJobNo() + "%");
+						 list.add(p);
 					 }
 					 if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobName())) {
-						 Predicate  p2 =  cb.like(root.get("employJobName").as(String.class),"%"+ employJobQueryDTO.getEmployJobName() + "%");
-						 list.add(p2);
+						 Predicate  p =  cb.like(root.get("employJobName").as(String.class),"%"+ employJobQueryDTO.getEmployJobName() + "%");
+						 list.add(p);
 					 }
 					 if(null != employJobQueryDTO && employJobQueryDTO.getEmployJobStartTime() != null) {
-						 Predicate  p3 =  cb.greaterThanOrEqualTo(root.get("employJobStartTime").as(Date.class), employJobQueryDTO.getEmployJobStartTime());
-						 list.add(p3);
+						 Predicate  p =  cb.equal(root.get("employJobStartTime").as(Date.class), employJobQueryDTO.getEmployJobStartTime());
+						 list.add(p);
 					 }
 					 if(null != employJobQueryDTO && employJobQueryDTO.getEmployJobEndTime() != null) {
-						 Predicate  p4 =  cb.lessThanOrEqualTo(root.get("employJobEndTime").as(Date.class), employJobQueryDTO.getEmployJobEndTime());
-						 list.add(p4);
+						 Predicate  p =  cb.equal(root.get("employJobEndTime").as(Date.class), employJobQueryDTO.getEmployJobEndTime());
+						 list.add(p);
 					 }
-
+					 
+					 if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobDescription())) {
+						 Predicate  p =  cb.like(root.get("employJobDescription").as(String.class),"%"+ employJobQueryDTO.getEmployJobDescription() + "%");
+						 list.add(p);
+					 }
+					 if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobDemand())) {
+						 Predicate  p =  cb.like(root.get("employJobDemand").as(String.class),"%"+ employJobQueryDTO.getEmployJobDemand() + "%");
+						 list.add(p);
+					 }
+					 if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobSalary())) {
+						 Predicate  p =  cb.like(root.get("employJobSalary").as(String.class),"%"+ employJobQueryDTO.getEmployJobSalary() + "%");
+						 list.add(p);
+					 }
 					 if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobPlace())) {
-						 Predicate  p5 =  cb.like(root.get("employJobPlace").as(String.class),"%"+ employJobQueryDTO.getEmployJobPlace() + "%");
-						 list.add(p5);
+						 Predicate  p =  cb.like(root.get("employJobPlace").as(String.class),"%"+ employJobQueryDTO.getEmployJobPlace() + "%");
+						 list.add(p);
 					 }
 					if ( null != employJobQueryDTO && employJobQueryDTO.getEmployJobDate() != null) {
-							Predicate p6 = cb.equal(root.get("employJobDate").as(Date.class),
+							Predicate p = cb.equal(root.get("employJobDate").as(Date.class),
 									employJobQueryDTO.getEmployJobDate());
-							list.add(p6);
+							list.add(p);
 					}
+					if(null != employJobQueryDTO && employJobQueryDTO.getEmployJobNum()!= null) {
+						 Predicate  p =  cb.equal(root.get("employJobNum").as(Integer.class),employJobQueryDTO.getEmployJobNum());
+						 list.add(p);
+					 }
 					if(null != employJobQueryDTO && !StringUtils.isEmpty(employJobQueryDTO.getEmployJobResponsible())) {
-						 Predicate  p7 =  cb.like(root.get("employJobResponsible").as(String.class),"%"+ employJobQueryDTO.getEmployJobResponsible() + "%");
-						 list.add(p7);
+						 Predicate  p =  cb.like(root.get("employJobResponsible").as(String.class),"%"+ employJobQueryDTO.getEmployJobResponsible() + "%");
+						 list.add(p);
 					 }
 					 
 					 //3.Predicate查询条件集合的 size 创建对应的Predicate查询条件数组

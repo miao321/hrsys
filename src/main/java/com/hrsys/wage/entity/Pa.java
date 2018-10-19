@@ -1,6 +1,6 @@
 package com.hrsys.wage.entity;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,16 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.hrsys.common.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 @Entity
 @Table(name="t_pa")
-public class Pa extends BaseEntity implements Serializable { 
-	private int paId;    //考评号
+public class Pa  { 
+	private Long Id;
+	private String paId;    //考评号
 	private String personnelId;   //员工编号
 	private String personnelName;   //员工名字
 	private String department;   //部门
 	private String position;  //职位
+	@DateTimeFormat(pattern="yyyy/MM")  
 	private Date patime;    //考评时间
 	private String pastytle;  //考评类型
 	private String pavalues;  //分值
@@ -29,9 +35,13 @@ public class Pa extends BaseEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public int getPaId() {
+	public Long getId() {
+		return Id;
+	}
+	public String getPaId() {
 		return paId;
 	}
+	
 	public String getPersonnelId() {
 		return personnelId;
 	}
@@ -44,6 +54,7 @@ public class Pa extends BaseEntity implements Serializable {
 	public String getPosition() {
 		return position;
 	}
+	@JsonFormat(pattern = "yyyy/MM",timezone = "GMT+8")
 	public Date getPatime() {
 		return patime;
 	}
@@ -65,7 +76,11 @@ public class Pa extends BaseEntity implements Serializable {
 	public String getEvaluaterPosition() {
 		return evaluaterPosition;
 	}
-	public void setPaId(int paId) {
+	
+	public void setId(Long id) {
+		Id = id;
+	}
+	public void setPaId(String paId) {
 		this.paId = paId;
 	}
 	public void setPersonnelId(String personnelId) {
@@ -100,6 +115,13 @@ public class Pa extends BaseEntity implements Serializable {
 	}
 	public void setEvaluaterPosition(String evaluaterPosition) {
 		this.evaluaterPosition = evaluaterPosition;
+	}
+	@Override
+	public String toString() {
+		return "Pa [Id=" + Id + ", paId=" + paId + ", personnelId=" + personnelId + ", personnelName=" + personnelName
+				+ ", department=" + department + ", position=" + position + ", patime=" + patime + ", pastytle="
+				+ pastytle + ", pavalues=" + pavalues + ", paassessment=" + paassessment + ", evaluaterId="
+				+ evaluaterId + ", evaluaterName=" + evaluaterName + ", evaluaterPosition=" + evaluaterPosition + "]";
 	}
 
 	

@@ -2,6 +2,8 @@ package com.hrsys.attendance.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.data.domain.Page;
 
 import com.hrsys.attendance.dao.DTO.LeaveQueryDTO;
@@ -14,8 +16,6 @@ import com.hrsys.common.ExtPageable;
  * @author Lofu
  */
 public interface ILeaveController {
-	/** 插入一些测试数据 */
-	public String insertTestData();
 	
 	/** 插入或更改请假记录数据 */
 	public ExtAjaxResponse saveOrUpdate(Leave leave);
@@ -34,4 +34,7 @@ public interface ILeaveController {
 	
 	/** 高级查询请假记录数据 */
 	public Page<Leave> findByPage(LeaveQueryDTO leaveQueryDTO, ExtPageable pageable);
+	
+	/** 下载请假记录数据的Excel数据报表 */
+	public void downloadExcel(HttpServletResponse response);
 }

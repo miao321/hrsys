@@ -2,6 +2,8 @@ package com.hrsys.attendance.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.data.domain.Page;
 
 import com.hrsys.attendance.dao.DTO.BreachQueryDTO;
@@ -14,8 +16,6 @@ import com.hrsys.common.ExtPageable;
  * @author Lofu
  */
 public interface IBreachController {
-	/** 插入一些测试数据 */
-	public String insertTestData();
 	
 	/** 插入或更改违规记录数据 */
 	public ExtAjaxResponse saveOrUpdate(Breach breach);
@@ -34,4 +34,7 @@ public interface IBreachController {
 	
 	/** 高级查询违规记录数据 */
 	public Page<Breach> findByPage(BreachQueryDTO breachQueryDTO, ExtPageable pageable);
+	
+	/** 下载违规记录数据的Excel数据报表 */
+	public void downloadExcel(HttpServletResponse response);
 }

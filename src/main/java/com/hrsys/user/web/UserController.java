@@ -34,13 +34,13 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 	@Autowired
-	private ILoginService loginServiceImpl;
+	private ILoginService loginService;
 	@RequestMapping("/saveOrUpdate")
-	//@SysControllerLog(module="用户管理",methods="添加用户")
+	@SysControllerLog(module="用户管理",methods="添加用户")
 	@RequiresPermissions("user/saveOrUpdate")
 	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(User user) {
-		User user2 = loginServiceImpl.findUser(user.getUserName());
+		User user2 = loginService.findUser(user.getUserName());
 		if (user2 != null) {
 			return new ExtAjaxResponse(false, "用户名已经存在");
 		}
@@ -55,7 +55,7 @@ public class UserController {
 		}	
 	}
 	@RequestMapping("/save")
-	//@SysControllerLog(module="用户管理",methods="保存或者更新数据")
+	@SysControllerLog(module="用户管理",methods="保存或者更新数据")
 	@RequiresPermissions("user/save")
 	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse save(User user,@RequestParam Long id) {
@@ -68,12 +68,13 @@ public class UserController {
 		}	
 	}	
 	@RequestMapping("/delete")
-	//@SysControllerLog(module="用户管理",methods="删除一条数据")
+	@SysControllerLog(module="用户管理",methods="删除一条数据")
 	@RequiresPermissions("user/delete")
 	@RequiresRoles("管理员")
-	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
+	public @ResponseBody ExtAjaxResponse delete(@RequestParam String userName) {	
+		System.out.println();
 		try {
-			User user = userService.findOne(id);
+			User user = loginService.findUser(userName);
 			if (user != null) {
 				userService.delete(user);
 			}
@@ -83,7 +84,7 @@ public class UserController {
 		}		
 	}
 	@RequestMapping("/deleteUsers")
-	//@SysControllerLog(module="用户管理",methods="删除多条数据")
+	@SysControllerLog(module="用户管理",methods="删除多条数据")
 	@RequiresPermissions("user/deleteUsers")
 	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {

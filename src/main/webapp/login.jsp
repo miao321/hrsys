@@ -14,12 +14,12 @@
 <style type="text/css">
 	body{
 	
-		background: url("images/login.jpg") no-repeat;
-		background-size: cover;
-		 padding-top: 50px; 
-       overflow: hidden;
-		
-	}
+		background: url("images/login1.jpg") no-repeat;
+		background-size: 1350px 608px;
+		padding-top: 50px; 
+       /* 	//overflow: hidden; */
+		/* //height:768px;*/
+	} 
 </style>
 </head>
 <body onkeydown="keyLogin();">

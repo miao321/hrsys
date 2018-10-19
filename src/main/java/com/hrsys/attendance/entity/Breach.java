@@ -21,19 +21,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Breach {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;			//违规表的id
-	private String employNo;	//员工的id
-	private String employName;	//员工的姓名
-	private String content;		//违规内容（迟到、早退、旷工）
-	private String recordMan;	//记录人姓名
+	private Integer id;			// 违规表的id
+	private String employNo;	// 职工号
+	private String employName;	// 职工姓名
+	private String deptName;	// 所在部门
+	private String content;		// 违规内容（迟到、早退、旷工）
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
-	private Date breachTime;	//违规时间（年/月/日）
+	private Date breachDate;	// 违规日期（年/月/日）
+	private String recordMan;	// 记录人姓名
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
-	private Date createTime;	//记录时间
+	private Date recordDate;	// 记录日期
+	
 	public Integer getId() {
 		return id;
 	}
@@ -52,6 +54,12 @@ public class Breach {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 	public String getContent() {
 		return content;
 	}
@@ -64,16 +72,16 @@ public class Breach {
 	public void setRecordMan(String recordMan) {
 		this.recordMan = recordMan;
 	}
-	public Date getBreachTime() {
-		return breachTime;
+	public Date getBreachDate() {
+		return breachDate;
 	}
-	public void setBreachTime(Date breachTime) {
-		this.breachTime = breachTime;
+	public void setBreachDate(Date breachDate) {
+		this.breachDate = breachDate;
 	}
-	public Date getCreateTime() {
-		return createTime;
+	public Date getRecordDate() {
+		return recordDate;
 	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
 	}
 }

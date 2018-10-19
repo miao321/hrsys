@@ -1,8 +1,13 @@
 package com.hrsys.employ.web.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
+import com.hrsys.employ.entity.EmployApply;
 import com.hrsys.employ.entity.EmployJob;
 import com.hrsys.employ.entity.dto.EmployJobQueryDTO;
 import com.hrsys.employ.service.IEmployJobService;
@@ -94,5 +101,36 @@ public class EmployJobController implements IEmployJobController {
 		Page<EmployJob> page =  employJobService.findAll(EmployJobQueryDTO.getSpecification(employJobQueryDTO), pageable.getPageable());
 		
 		return page;
+	}
+	
+	@RequestMapping("/findByEmployJob")
+	public @ResponseBody ExtJsonResult<EmployJob> findByEmployJob() 
+	{
+		 List<EmployJob> lists =  employJobService.findByEmployJob();
+		
+		return new ExtJsonResult<>(lists);
+	}
+	@RequestMapping("/findAllJson")
+	public @ResponseBody ExtJsonResult<EmployJob> findAllJson() 
+	{		
+		
+		List<EmployJob> lists =employJobService.findByEmployJobNum();
+		return new ExtJsonResult<EmployJob> (lists);
+	}
+	@RequestMapping("/downloadExcel")
+	public void downloadExcel(HttpServletResponse response) {
+		HSSFWorkbook workbook = employJobService.downloadExcel();
+		if(workbook != null) {
+			try {
+				OutputStream output = response.getOutputStream();
+				response.reset();  
+				response.setHeader("Content-disposition", "attachment; filename=employJob.xls");  
+				response.setContentType("application/msexcel");          
+				workbook.write(output);  
+				output.close();  
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}
 	}
 }

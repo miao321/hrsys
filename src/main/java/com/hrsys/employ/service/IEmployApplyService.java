@@ -2,11 +2,14 @@ package com.hrsys.employ.service;
 
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.hrsys.employ.entity.EmployApply;
+import com.hrsys.employ.entity.EmployJob;
+import com.hrsys.employ.entity.dto.EmployJobQueryDTO;
 
 
 
@@ -24,4 +27,10 @@ public interface IEmployApplyService {
 	public List<EmployApply> findAll();
 	//动态条件查询
 	public Page<EmployApply> findAll(Specification<EmployApply> spec, Pageable pageable);
+//	public Page<EmployJob> findByEmployJob(Specification<EmployJob> spec, Pageable pageable);
+	
+	//获取EmployApply数目
+	public List<EmployApply> findByEmployApplyNum();
+	//记录表Excel下载
+	public HSSFWorkbook downloadExcel();
 }

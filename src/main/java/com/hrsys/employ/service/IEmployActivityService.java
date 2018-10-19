@@ -2,6 +2,7 @@ package com.hrsys.employ.service;
 
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,4 +25,8 @@ public interface IEmployActivityService {
 	public List<EmployActivity> findAll();
 	//动态条件查询
 	public Page<EmployActivity> findAll(Specification<EmployActivity> spec, Pageable pageable);
+	public List<EmployActivity> findByEmployActivityNum();
+	//记录表Excel下载
+	public HSSFWorkbook downloadExcel();
+
 }

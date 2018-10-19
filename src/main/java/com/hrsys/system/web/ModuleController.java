@@ -28,7 +28,8 @@ public class ModuleController {
 	@RequestMapping("/saveOrUpdate")
 	@SysControllerLog(module="模块管理",methods="保存或者更新数据")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Module module) {
-		if (module.getModuleName() != null) {
+		
+		if (moduleService.findModule(module.getModuleName()) != null) {
 			return new ExtAjaxResponse(false, "该模块已经存在不用再添加");
 		}
 		try {

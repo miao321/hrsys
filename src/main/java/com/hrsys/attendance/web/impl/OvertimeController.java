@@ -1,8 +1,13 @@
 package com.hrsys.attendance.web.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -29,29 +34,16 @@ public class OvertimeController implements IOvertimeController {
 	@Autowired
 	private IOvertimeService overtimeService;
 
-	@RequestMapping(value = "/insertTestData")
-	@ResponseBody
-	public String insertTestData() {
-		try {
-			for(int i=0; i<100; i++) {
-				Overtime overtime = new Overtime();
-				overtime.setEmployNo("E00"+i);
-				overtime.setEmployName("职工"+i);
-				overtime.setCreateTime(DateUtil.stringToDay("2017-12-25"));
-				overtime.setOtBeginTime(DateUtil.StringToHMS("2017-12-12 19:00:00"));
-				overtime.setOtEndTime(DateUtil.StringToHMS("2017-12-12 21:00:00"));
-				
-				overtimeService.saveOrUpdate(overtime);
-			}
-			return "success";
-		} catch (Exception e) {
-			return "error";
-		}
-	}
-
 	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
 	public ExtAjaxResponse saveOrUpdate(Overtime overtime) {
+		if(overtime.getOvertimeDate()!=null && overtime.getOtEndTime()==null) {
+			overtime.setOtEndTime(DateUtil.getNow());
+		}
+		if(overtime.getOvertimeDate()==null && overtime.getOtBeginTime()==null) {
+			overtime.setOvertimeDate(DateUtil.nowToDate());
+			overtime.setOtBeginTime(DateUtil.getNow());
+		} 
 		try {
 			overtimeService.saveOrUpdate(overtime);
 			return new ExtAjaxResponse(true, "操作成功！");
@@ -105,5 +97,22 @@ public class OvertimeController implements IOvertimeController {
 	public Page<Overtime> findByPage(OvertimeQueryDTO overtimeQueryDTO, ExtPageable pageable) {
 //		pageable.setPage(1);
 		return overtimeService.findAll(OvertimeQueryDTO.getSpecification(overtimeQueryDTO), pageable.getPageable());
+	}
+	
+	@RequestMapping(value = "/downloadExcel")
+	public void downloadExcel(HttpServletResponse response) {
+		HSSFWorkbook workbook = overtimeService.downloadExcel();
+		if(workbook != null) {
+			try {
+				OutputStream output = response.getOutputStream();
+				response.reset();  
+				response.setHeader("Content-disposition", "attachment; filename=overtime.xls");  
+				response.setContentType("application/msexcel");          
+				workbook.write(output);  
+				output.close();  
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}
 	}
 }

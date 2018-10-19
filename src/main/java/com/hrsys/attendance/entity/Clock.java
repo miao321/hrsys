@@ -21,15 +21,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Clock {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;			//登记表的id
-	private String employNo;	//员工的id
-	private String employName;	//员工姓名
-	private String deptName;	//所属部门
-	private String clockType;	//打卡类型(上班、下班)
+	private Integer id;			// 打卡表的id
+	private String employNo;	// 职工号
+	private String employName;	// 职工姓名
+	private String deptName;	// 所属部门
+	private String clockType;	// 打卡类型(上班、下班)
 	
-	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
-	private Date createTime;	//打卡时间
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	private Date clockDate;		// 打卡日期
+	private String clockTime;	// 打卡时间
 
 	public Integer getId() {
 		return id;
@@ -61,10 +62,16 @@ public class Clock {
 	public void setClockType(String clockType) {
 		this.clockType = clockType;
 	}
-	public Date getCreateTime() {
-		return createTime;
+	public Date getClockDate() {
+		return clockDate;
 	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setClockDate(Date clockDate) {
+		this.clockDate = clockDate;
+	}
+	public String getClockTime() {
+		return clockTime;
+	}
+	public void setClockTime(String clockTime) {
+		this.clockTime = clockTime;
 	}
 }

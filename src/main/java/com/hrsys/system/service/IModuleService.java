@@ -15,7 +15,7 @@ public interface IModuleService {
 	public Module findOne(Long id);
 	public List<Module> findAll();
 	
-	
+	public Module findModule(String moduleName);
 	//动态条件查询
 	public Page<Module> findAll(Specification<Module> spec,Pageable pageable);
 

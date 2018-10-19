@@ -47,13 +47,13 @@ public class EmployJob extends BaseEntity implements Serializable {
 	public String getEmployJobName() {
 		return employJobName;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getEmployJobStartTime() {
 		return employJobStartTime;
 	}
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
 	public Date getEmployJobEndTime() {
 		return employJobEndTime;
 	}

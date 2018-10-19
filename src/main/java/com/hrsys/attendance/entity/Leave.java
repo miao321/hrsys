@@ -20,22 +20,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Leave {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;			//请假表的id
-	private String employNo;	//员工的id
-	private String employName;	//员工的姓名
-	
-	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
-	private Date leaveBeginTime;//请假开始时间
-	
-	@DateTimeFormat(pattern="yyyy/MM/dd hh:mm:ss")
-	@JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss", timezone = "GMT+8")
-	private Date leaveEndTime;	//请假结束时间
-	private String agreeMan;	//批准人姓名
+	private Integer id;			// 请假表的id
+	private String employNo;	// 职工号
+	private String employName;	// 职工姓名
+	private String deptName;	// 所属部门
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
-	private Date applyTime;		//申请时间
+	private Date applyDate;		// 申请日期
+	
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	private Date leaveDate;		// 请假日期
+	private String leaveType;	// 请假类型（病假、事假、婚假、丧假、产假、公假）
+	private String timeLong;	// 请假时长（上午、下午、全天）
+	private String agreeMan;	// 批准人姓名
+	
 	public Integer getId() {
 		return id;
 	}
@@ -54,28 +54,40 @@ public class Leave {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public Date getLeaveBeginTime() {
-		return leaveBeginTime;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setLeaveBeginTime(Date leaveBeginTime) {
-		this.leaveBeginTime = leaveBeginTime;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
-	public Date getLeaveEndTime() {
-		return leaveEndTime;
+	public Date getApplyDate() {
+		return applyDate;
 	}
-	public void setLeaveEndTime(Date leaveEndTime) {
-		this.leaveEndTime = leaveEndTime;
+	public void setApplyDate(Date applyDate) {
+		this.applyDate = applyDate;
+	}
+	public Date getLeaveDate() {
+		return leaveDate;
+	}
+	public void setLeaveDate(Date leaveDate) {
+		this.leaveDate = leaveDate;
+	}
+	public String getLeaveType() {
+		return leaveType;
+	}
+	public void setLeaveType(String leaveType) {
+		this.leaveType = leaveType;
+	}
+	public String getTimeLong() {
+		return timeLong;
+	}
+	public void setTimeLong(String timeLong) {
+		this.timeLong = timeLong;
 	}
 	public String getAgreeMan() {
 		return agreeMan;
 	}
 	public void setAgreeMan(String agreeMan) {
 		this.agreeMan = agreeMan;
-	}
-	public Date getApplyTime() {
-		return applyTime;
-	}
-	public void setApplyTime(Date applyTime) {
-		this.applyTime = applyTime;
 	}
 }

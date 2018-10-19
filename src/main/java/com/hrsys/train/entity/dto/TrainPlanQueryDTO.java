@@ -125,11 +125,11 @@ public class TrainPlanQueryDTO {
 					 }
 				
 					 if(null != trainPlanQueryDTO && trainPlanQueryDTO.getTrainPlanStartTime() != null) {
-						 Predicate  p =  cb.greaterThanOrEqualTo(root.get("trainPlanStartTime").as(Date.class), trainPlanQueryDTO.getTrainPlanStartTime());
+						 Predicate  p =  cb.equal(root.get("trainPlanStartTime").as(Date.class), trainPlanQueryDTO.getTrainPlanStartTime());
 						 list.add(p);
 					 }
 					 if(null != trainPlanQueryDTO && trainPlanQueryDTO.getTrainPlanEndTime() != null) {
-						 Predicate  p =  cb.lessThanOrEqualTo(root.get("trainPlanEndTime").as(Date.class), trainPlanQueryDTO.getTrainPlanEndTime());
+						 Predicate  p =  cb.equal(root.get("trainPlanEndTime").as(Date.class), trainPlanQueryDTO.getTrainPlanEndTime());
 						 list.add(p);
 					 }
 					 if(null != trainPlanQueryDTO && !StringUtils.isEmpty(trainPlanQueryDTO.getTrainPlanTutor())) {

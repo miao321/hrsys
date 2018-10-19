@@ -1,8 +1,13 @@
 package com.hrsys.attendance.web.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -29,29 +34,13 @@ public class ClockController implements IClockController {
 	@Autowired
 	private IClockService clockService;
 
-	@RequestMapping(value = "/insertTestData")
-	@ResponseBody
-	public String insertTestData() {
-		try {
-			for(int i=0; i<100; i++) {
-				Clock clock = new Clock();
-				clock.setEmployNo("E00"+i);
-				clock.setEmployName("职工"+i);
-				clock.setDeptName("人事部");
-				clock.setClockType("上班");
-				clock.setCreateTime(DateUtil.getNow());
-				
-				clockService.saveOrUpdate(clock);
-			}
-			return "success";
-		} catch (Exception e) {
-			return "error";
-		}
-	}
-
 	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
 	public ExtAjaxResponse saveOrUpdate(Clock clock) {
+		if(clock.getClockDate() == null && clock.getClockTime() == null) {
+			clock.setClockDate(DateUtil.getNow());
+			clock.setClockTime(DateUtil.nowToStringHMS());
+		}
 		try {
 			clockService.saveOrUpdate(clock);
 			return new ExtAjaxResponse(true, "操作成功！");
@@ -105,5 +94,22 @@ public class ClockController implements IClockController {
 	public Page<Clock> findByPage(ClockQueryDTO clockQueryDTO, ExtPageable pageable) {
 //		pageable.setPage(1);
 		return clockService.findAll(ClockQueryDTO.getSpecification(clockQueryDTO), pageable.getPageable());
+	}
+
+	@RequestMapping(value = "/downloadExcel")
+	public void downloadExcel(HttpServletResponse response) {
+		HSSFWorkbook workbook = clockService.downloadExcel();
+		if(workbook != null) {
+			try {
+				OutputStream output = response.getOutputStream();
+				response.reset();  
+				response.setHeader("Content-disposition", "attachment; filename=clock.xls");  
+				response.setContentType("application/msexcel");          
+				workbook.write(output);  
+				output.close();  
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}
 	}
 }

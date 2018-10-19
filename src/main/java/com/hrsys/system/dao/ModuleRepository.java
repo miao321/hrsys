@@ -8,6 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.hrsys.system.entity.Module;
+import com.hrsys.system.entity.Role;
 import com.hrsys.user.entity.User;
 @Repository
 public interface ModuleRepository extends PagingAndSortingRepository<Module, Long>,JpaSpecificationExecutor<Module> {
@@ -21,4 +22,7 @@ public interface ModuleRepository extends PagingAndSortingRepository<Module, Lon
 	 */
 	@Query("from Module m where m.parentNode.id = ?1")
 	public List<Module> findChildNodes(Long parentId);//null
+	
+	@Query("from Module module where module.moduleName =?1")
+	public Module findModule(String moduleName);
 }

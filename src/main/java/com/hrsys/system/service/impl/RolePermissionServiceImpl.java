@@ -39,12 +39,12 @@ public class RolePermissionServiceImpl implements IRolePermissionService {
 			dto.setUrl(obj[0]+"");
 			dto.setRoleName(obj[1]+"");
 			dto.setRemark(obj[2]+"");
-			dto.setOrderNo(Integer.valueOf(obj[3]+""));
+			//dto.setOrderNo(Integer.valueOf(obj[3]+""));
 			dto.setCreateModule(obj[4]+"");
 			dto.setCreateBy(obj[5]+"");
-			dto.setCreateTime(DateUtil.StringToHMS(obj[6]+""));
+			//dto.setCreateTime(DateUtil.StringToHMS(obj[6]+""));
 			dto.setUpdateBy(obj[7]+"");
-			dto.setUpdateTime(DateUtil.StringToHMS(obj[8]+""));
+			//dto.setUpdateTime(DateUtil.StringToHMS(obj[8]+""));
 			
 			System.out.println(dto);
 		

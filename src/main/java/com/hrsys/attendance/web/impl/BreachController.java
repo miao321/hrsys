@@ -1,8 +1,13 @@
 package com.hrsys.attendance.web.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,7 +21,6 @@ import com.hrsys.attendance.service.IBreachService;
 import com.hrsys.attendance.web.IBreachController;
 import com.hrsys.common.ExtAjaxResponse;
 import com.hrsys.common.ExtPageable;
-import com.hrsys.common.util.DateUtil;
 
 /**
  * 考勤模块-违规记录类控制器实现类
@@ -28,27 +32,6 @@ public class BreachController implements IBreachController {
 	
 	@Autowired
 	private IBreachService breachService;
-
-	@RequestMapping(value = "/insertTestData")
-	@ResponseBody
-	public String insertTestData() {
-		try {
-			for(int i=0; i<100; i++) {
-				Breach breach = new Breach();
-				breach.setEmployNo("E00"+i);
-				breach.setEmployName("职工"+i);
-				breach.setContent("旷工");
-				breach.setRecordMan("考勤部");
-				breach.setBreachTime(DateUtil.stringToDay("2017-12-26"));
-				breach.setCreateTime(DateUtil.stringToDay("2017-12-27"));
-				
-				breachService.saveOrUpdate(breach);
-			}
-			return "success";
-		} catch (Exception e) {
-			return "error";
-		}
-	}
 
 	@RequestMapping(value = "/saveOrUpdate")
 	@ResponseBody
@@ -106,5 +89,22 @@ public class BreachController implements IBreachController {
 	public Page<Breach> findByPage(BreachQueryDTO breachQueryDTO, ExtPageable pageable) {
 //		pageable.setPage(1);
 		return breachService.findAll(BreachQueryDTO.getSpecification(breachQueryDTO), pageable.getPageable());
+	}
+	
+	@RequestMapping(value = "/downloadExcel")
+	public void downloadExcel(HttpServletResponse response) {
+		HSSFWorkbook workbook = breachService.downloadExcel();
+		if(workbook != null) {
+			try {
+				OutputStream output = response.getOutputStream();
+				response.reset();  
+				response.setHeader("Content-disposition", "attachment; filename=breach.xls");  
+				response.setContentType("application/msexcel");          
+				workbook.write(output);  
+				output.close();  
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}
 	}
 }

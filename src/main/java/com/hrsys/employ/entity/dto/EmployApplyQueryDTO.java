@@ -166,7 +166,7 @@ public class EmployApplyQueryDTO {
 					 list.add(p);
 				 }
 				if(null != employApplyQueryDTO && !StringUtils.isEmpty(employApplyQueryDTO.getEmployApplyEducation())) {
-					 Predicate  p =  cb.like(root.get("employApplyEducation").as(String.class),"%"+ employApplyQueryDTO.getEmployApplyEducation() + "%");
+					 Predicate  p =  cb.equal(root.get("employApplyEducation").as(String.class),employApplyQueryDTO.getEmployApplyEducation());
 					 list.add(p);
 				 }
 				if(null != employApplyQueryDTO && !StringUtils.isEmpty(employApplyQueryDTO.getEmployApplyPhone())) {
@@ -178,7 +178,7 @@ public class EmployApplyQueryDTO {
 					 list.add(p);
 				 }
 				if(null != employApplyQueryDTO && !StringUtils.isEmpty(employApplyQueryDTO.getEmployApplySituation())) {
-					 Predicate  p =  cb.like(root.get("employApplySituation").as(String.class),"%"+ employApplyQueryDTO.getEmployApplySituation() + "%");
+					 Predicate  p =  cb.equal(root.get("employApplySituation").as(String.class),employApplyQueryDTO.getEmployApplySituation());
 					 list.add(p);
 				 }
 				 

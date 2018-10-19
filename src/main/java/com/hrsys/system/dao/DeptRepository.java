@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.hrsys.system.entity.Dept;
+import com.hrsys.system.entity.Role;
 import com.hrsys.user.entity.User;
 @Repository
 public interface DeptRepository extends PagingAndSortingRepository<Dept, Long>,JpaSpecificationExecutor<Dept> {
@@ -22,4 +23,7 @@ public interface DeptRepository extends PagingAndSortingRepository<Dept, Long>,J
 	 */
 	@Query("from Dept o where o.parentName.id = ?1")
 	public List<Dept> findChildNodes(Long parentId);//null
+	
+	@Query("from Dept dept where dept.deptName =?1")
+	public Dept findDept(String deptName);
 }

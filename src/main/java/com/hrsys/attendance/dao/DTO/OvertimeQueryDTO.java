@@ -10,6 +10,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
 import com.hrsys.attendance.entity.Overtime;
@@ -19,10 +20,13 @@ import com.hrsys.attendance.entity.Overtime;
  * @author Lofu
  */
 public class OvertimeQueryDTO {
-	private String employNo;	//员工的id
-	private String employName;	//员工姓名
-	private Date otBeginTime;	//加班开始时间
-	private Date otEndTime;		//加班结束时间
+	private String employNo;	// 职工号
+	private String employName;	// 职工姓名
+	private String deptName;	// 所在部门
+
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	private Date overtimeDate;	// 加班日期
+	
 	public String getEmployNo() {
 		return employNo;
 	}
@@ -35,17 +39,17 @@ public class OvertimeQueryDTO {
 	public void setEmployName(String employName) {
 		this.employName = employName;
 	}
-	public Date getOtBeginTime() {
-		return otBeginTime;
+	public String getDeptName() {
+		return deptName;
 	}
-	public void setOtBeginTime(Date otBeginTime) {
-		this.otBeginTime = otBeginTime;
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
-	public Date getOtEndTime() {
-		return otEndTime;
+	public Date getOvertimeDate() {
+		return overtimeDate;
 	}
-	public void setOtEndTime(Date otEndTime) {
-		this.otEndTime = otEndTime;
+	public void setOvertimeDate(Date overtimeDate) {
+		this.overtimeDate = overtimeDate;
 	}
 	
 	/** static的工具方法：根据当前 ClockQueryDTO 对象来组装动态查询条件 */
@@ -56,27 +60,24 @@ public class OvertimeQueryDTO {
 				List<Predicate> list = new ArrayList<Predicate>();
 
 				// 2.根据 QueryDTO数据字段的值进行判断以及条件的组装
-				if (overtimeQueryDTO != null && !StringUtils.isEmpty(overtimeQueryDTO.getEmployNo())) {
-					Predicate p = cb.equal(root.get("employNo").as(String.class),
-							overtimeQueryDTO.getEmployNo());
+				if(overtimeQueryDTO != null && !StringUtils.isEmpty(overtimeQueryDTO.getEmployNo())) {
+					Predicate p = cb.like(root.get("employNo").as(String.class),
+							"%" + overtimeQueryDTO.getEmployNo() + "%");
 					list.add(p);
 				}
-				
-				if (overtimeQueryDTO != null && !StringUtils.isEmpty(overtimeQueryDTO.getEmployName())) {
+				if(overtimeQueryDTO != null && !StringUtils.isEmpty(overtimeQueryDTO.getEmployName())) {
 					Predicate p = cb.like(root.get("employName").as(String.class),
 							"%" + overtimeQueryDTO.getEmployName() + "%");
 					list.add(p);
 				}
-				
-				if (overtimeQueryDTO != null && overtimeQueryDTO.getOtBeginTime() != null) {
-					Predicate p = cb.greaterThanOrEqualTo(root.get("otBeginTime").as(Date.class),
-							overtimeQueryDTO.getOtBeginTime());
+				if(overtimeQueryDTO != null && !StringUtils.isEmpty(overtimeQueryDTO.getDeptName())) {
+					Predicate p = cb.like(root.get("deptName").as(String.class),
+							"%" + overtimeQueryDTO.getDeptName() + "%");
 					list.add(p);
 				}
-				
-				if (overtimeQueryDTO != null && overtimeQueryDTO.getOtEndTime() != null) {
-					Predicate p = cb.lessThanOrEqualTo(root.get("otEndTime").as(Date.class),
-							overtimeQueryDTO.getOtEndTime());
+				if(overtimeQueryDTO != null && overtimeQueryDTO.getOvertimeDate() != null) {
+					Predicate p = cb.equal(root.get("overtimeDate").as(Date.class),
+							overtimeQueryDTO.getOvertimeDate());
 					list.add(p);
 				}
 

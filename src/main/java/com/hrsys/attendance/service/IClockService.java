@@ -2,6 +2,7 @@ package com.hrsys.attendance.service;
 
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,4 +31,7 @@ public interface IClockService {
 	
 	/** 打卡记录高级查询-动态查询 */
 	public Page<Clock> findAll(Specification<Clock> spec, Pageable pageable);
+	
+	/** 下载打卡记录数据的Excel数据报表 */
+	public HSSFWorkbook downloadExcel();
 }

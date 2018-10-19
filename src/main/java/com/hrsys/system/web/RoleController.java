@@ -38,9 +38,10 @@ public class RoleController {
 	//@RequiresPermissions("role/saveOrUpdate")
 	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse saveOrUpdate(Role role) {
-		/*if (role.getRoleName() != null) {
+		
+		if (roleService.findRole(role.getRoleName()) != null) {
 			return new ExtAjaxResponse(false, "该角色已经存在不用再添加");
-		}*/
+		}
 		try {
 			roleService.saveOrUpdate(role);
 			return new ExtAjaxResponse(true, "操作成功");
@@ -50,6 +51,8 @@ public class RoleController {
 	}	
 	@RequestMapping("/delete")
 	@SysControllerLog(module="角色管理",methods="删除一条数据")
+	@RequiresPermissions("role/delete")
+	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long id) {
 		try {
 			Role role = roleService.findOne(id);
@@ -63,6 +66,8 @@ public class RoleController {
 	}
 	@RequestMapping("/deleteRoles")
 	@SysControllerLog(module="角色管理",methods="删除多条数据")
+	@RequiresPermissions("role/deleteRoles")
+	@RequiresRoles("管理员")
 	public @ResponseBody ExtAjaxResponse delete(@RequestParam Long[] ids) {
 		try {
 			List<Long> idsLists = Arrays.asList(ids);

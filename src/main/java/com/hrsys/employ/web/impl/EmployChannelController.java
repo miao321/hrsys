@@ -1,8 +1,13 @@
 package com.hrsys.employ.web.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hrsys.common.ExtAjaxResponse;
+import com.hrsys.common.ExtJsonResult;
 import com.hrsys.common.ExtPageable;
 import com.hrsys.employ.entity.EmployChannel;
 import com.hrsys.employ.entity.EmployJob;
 import com.hrsys.employ.entity.dto.EmployChannelQueryDTO;
 import com.hrsys.employ.service.IEmployChannelService;
 import com.hrsys.employ.web.IEmployChannelController;
+import com.hrsys.train.entity.TrainCourse;
 
 /**
  * 招聘渠道类Web层实现类
@@ -89,11 +96,43 @@ public class EmployChannelController implements IEmployChannelController {
 		return lists;
 	}
 	
+	@RequestMapping("/findAllJson")
+	public @ResponseBody ExtJsonResult<EmployChannel> findAllJson() 
+	{		
+		
+		List<EmployChannel> lists =employChannelService.findByEmployChannelNum();
+		return new ExtJsonResult<EmployChannel> (lists);
+	}
 	@RequestMapping("/findPage")
 	public @ResponseBody Page<EmployChannel> findPage(EmployChannelQueryDTO employChannelQueryDTO,ExtPageable pageable) 
 	{
 		Page<EmployChannel> page =  employChannelService.findAll(EmployChannelQueryDTO.getSpecification(employChannelQueryDTO), pageable.getPageable());
 		
 		return page;
+	}
+	
+	@RequestMapping("/findByEmployChannel")
+	public @ResponseBody ExtJsonResult<EmployChannel> findByEmployChannel() 
+	{
+		 List<EmployChannel> lists =  employChannelService.findByEmployChannel();
+		
+		return new ExtJsonResult<>(lists);
+	}
+	
+	@RequestMapping("/downloadExcel")
+	public void downloadExcel(HttpServletResponse response) {
+		HSSFWorkbook workbook = employChannelService.downloadExcel();
+		if(workbook != null) {
+			try {
+				OutputStream output = response.getOutputStream();
+				response.reset();  
+				response.setHeader("Content-disposition", "attachment; filename=employChannel.xls");  
+				response.setContentType("application/msexcel");          
+				workbook.write(output);  
+				output.close();  
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}
 	}
 }

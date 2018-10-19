@@ -50,5 +50,9 @@ public class DeptServiceImpl implements IDeptService {
 	public Page<Dept> findAll(Specification<Dept> spec, Pageable pageable) {
 		return deptRepository.findAll(spec, pageable);
 	}
+	@Override
+	public Dept findDept(String deptName) {
+		return deptRepository.findDept(deptName);
+	}
 
 }

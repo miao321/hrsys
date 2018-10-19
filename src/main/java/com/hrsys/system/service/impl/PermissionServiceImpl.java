@@ -48,5 +48,9 @@ public class PermissionServiceImpl implements IPermissionService {
 	public Page<Permission> findAll(Specification<Permission> spec, Pageable pageable) {
 		return permissionRepository.findAll(spec, pageable);
 	}
+	@Override
+	public Permission findUrl(String url) {
+		return permissionRepository.findUrl(url);
+	}
 
 }

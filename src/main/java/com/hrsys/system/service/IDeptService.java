@@ -14,7 +14,7 @@ public interface IDeptService {
 	public Dept findOne(Long id);
 	public List<Dept> findAll();
 	
-	
+	public Dept findDept(String deptName);
 	//动态条件查询
 	public Page<Dept> findAll(Specification<Dept> spec,Pageable pageable);
 

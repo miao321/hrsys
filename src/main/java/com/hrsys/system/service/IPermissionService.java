@@ -16,6 +16,8 @@ public interface IPermissionService {
 	public Permission findOne(Long id);
 	public List<Permission> findAll();
 	
+	public Permission findUrl(String url);
+	
 	
 	//动态条件查询
 	public Page<Permission> findAll(Specification<Permission> spec,Pageable pageable);

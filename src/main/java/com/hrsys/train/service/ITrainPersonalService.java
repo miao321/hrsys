@@ -2,6 +2,7 @@ package com.hrsys.train.service;
 
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,4 +25,5 @@ public interface ITrainPersonalService {
 	public List<TrainPersonal> findAll();
 	//动态条件查询
 	public Page<TrainPersonal> findAll(Specification<TrainPersonal> spec, Pageable pageable);
+
 }

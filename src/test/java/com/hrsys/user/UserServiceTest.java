@@ -38,8 +38,10 @@ public class UserServiceTest {
 		
 			User user = new User();
 			user.setUserName("aaa");
-			user.setPassword("123");
+			user.setPassword("123456");
 			user.setBirthday(new Date());
+			user.setAge(21);
+			user.setDeptName("Java开发部");
 			
 			/*Role role = new Role();
 			role.setRoleName("Java工程师");
@@ -53,6 +55,8 @@ public class UserServiceTest {
 			
 			userService.saveOrUpdate(user);
 		//	roleService.saveOrUpdate(role);
+		
+			
 			
 		
 		
